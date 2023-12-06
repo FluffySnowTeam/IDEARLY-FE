@@ -2201,17 +2201,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*":
+"@types/node@*", "@types/node@^20.10.3":
   version "20.10.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.3.tgz#4900adcc7fc189d5af5bb41da8f543cea6962030"
   integrity sha512-XJavIpZqiXID5Yxnxv3RUDKTN5b81ddNC3ecsA0SoFXz/QU8OGBwZGMomiq0zw+uuqbL/krztv/DINAQ/EV4gg==
   dependencies:
     undici-types "~5.26.4"
-
-"@types/node@^16.18.67":
-  version "16.18.67"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.67.tgz#518feb681958dedf2d187b8b4d20bf3530afe1fb"
-  integrity sha512-gUa0tDO9oxyAYO9V9tqxDJguVMDpqUwH5I5Q9ASYBCso+8CUdJlKPKDYS1YSS9kyZWIduDafZvucGM0zGNKFjg==
 
 "@types/parse-json@^4.0.0":
   version "4.0.2"
