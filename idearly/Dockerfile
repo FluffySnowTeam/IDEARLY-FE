@@ -4,11 +4,11 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN npm i
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:stable-alpine
 
