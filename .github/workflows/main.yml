@@ -33,7 +33,7 @@ jobs:
         id: cache
         with:
           # node_modules라는 폴더를 검사하여
-          path: node_modules
+          path: ./idearly/node_modules
           # 아래 키값으로 cache가 돼있는지 확인한다.
           key: npm-packages-${{ hashFiles('**/package-lock.json') }}
 
@@ -47,10 +47,14 @@ jobs:
         # https://fe-developers.kakaoent.com/2022/220106-github-actions/
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install --force
+        run: |
+          cd ./idearly
+          npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd ./idearly
+          npm run build
 
       # Docker에 연결하여 이미지를 빌드하고 Hub에 푸시한다.
       # https://docs.docker.com/build/ci/github-actions/#step-three-define-the-workflow-steps
