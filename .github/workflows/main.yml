@@ -70,8 +70,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          context: ./idearly
-          file: ./Dockerfile
+          context: .
+          file: ./idearly/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jmdb
 
