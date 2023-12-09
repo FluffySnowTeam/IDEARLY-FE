@@ -1,20 +1,8 @@
-import { useState } from "react";
 import { fakeProblem } from "../../../../mocks/problem.mocks";
 import * as S from "./AlgorithmNav.styles";
+import { AlgorithmVoiceChat } from "..";
 
 export const AlgorithmNav = () => {
-  const [toggleState, setToggleState] = useState({
-    speakerOn: true,
-    micOn: true,
-  });
-
-  const toggleFeature = (feature: "speakerOn" | "micOn") => {
-    setToggleState((prev) => ({
-      ...prev,
-      [feature]: !prev[feature],
-    }));
-  };
-
   return (
     <S.AlgorithmNavContainer>
       <div>
@@ -25,22 +13,7 @@ export const AlgorithmNav = () => {
         ))}
       </div>
       <S.NavIcons>
-        <span
-          onClick={() => {
-            toggleFeature("speakerOn");
-          }}
-          className="material-icons"
-        >
-          {toggleState.speakerOn ? "volume_up" : "volume_off"}
-        </span>
-        <span
-          onClick={() => {
-            toggleFeature("micOn");
-          }}
-          className="material-icons"
-        >
-          {toggleState.micOn ? "mic" : "mic_off"}
-        </span>
+        <AlgorithmVoiceChat />
         <span className="material-icons">chat</span>
       </S.NavIcons>
     </S.AlgorithmNavContainer>
