@@ -1,9 +1,12 @@
+import { Box } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
-export const AlgorithmNavContainer = styled.div`
+export const AlgorithmNavContainer = styled(Box)`
+  border-right: 1px solid #cccccc;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 20px;
+  height: 93vh;
 `;
 
 export const ProblemNumber = styled.div`
@@ -23,5 +26,22 @@ export const ProblemNumber = styled.div`
   :hover {
     background-color: #01228a;
     color: white;
+  }
+`;
+
+export const NavIcons = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  margin-top: 15rem;
+  span {
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+    :hover {
+      color: #9999;
+    }
   }
 `;
