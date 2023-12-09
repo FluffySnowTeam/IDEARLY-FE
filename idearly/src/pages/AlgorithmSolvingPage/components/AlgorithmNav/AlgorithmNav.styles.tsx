@@ -11,7 +11,7 @@ export const ProblemNumber = styled.div`
   border-radius: 8px;
   border-style: solid;
   border-color: #01228a;
-  border-width: 1px;
+  border-width: 1.5px;
   padding: 12px;
   display: flex;
   align-items: center;
