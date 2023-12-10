@@ -2,11 +2,11 @@ FROM node:lts as build
 
 WORKDIR /app
 
-COPY idearly/package.json .
+COPY package.json .
 
 RUN yarn install
 
-COPY idearly/ .
+COPY . .
 
 RUN yarn build
 
@@ -14,7 +14,7 @@ FROM nginx:stable-alpine
 
 # nginx의 기본 설정을 삭제하고 앱에서 설정한 파일을 복사
 RUN rm -rf /etc/nginx/conf.d
-COPY idearly/conf /etc/nginx
+COPY conf /etc/nginx
 
 # 위 스테이지에서 생성한 빌드 결과를 nginx의 샘플 앱이 사용하던 폴더로 이동
 COPY --from=build /app/dist /usr/share/nginx/html
