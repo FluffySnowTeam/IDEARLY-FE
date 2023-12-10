@@ -2,9 +2,14 @@ import { Box } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const HeaderContainer = styled(Box)`
+  cursor: pointer;
   border-bottom: 1px solid #cccccc;
   padding: 10px;
   height: 7vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const LogoContainer = styled.div`
@@ -12,4 +17,15 @@ export const LogoContainer = styled.div`
   flex-direction: row;
   align-items: center;
   font-weight: bold;
+`;
+
+export const HeaderNavContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+  div {
+    margin-right: 10px;
+    font-weight: bold;
+  }
 `;
