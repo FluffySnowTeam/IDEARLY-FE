@@ -9,4 +9,5 @@ export const HomeContainer = styled(Box)`
   text-align: center;
   justify-content: center;
   position: relative;
+  margin-bottom: 20px;
 `;

@@ -10,11 +10,14 @@ export const CompetitionsCard = ({
   const navigate = useNavigate();
 
   // 유저정보에서 팀이 존재할 경우
+  // 1. 음성채팅 / 채팅 자동 참가
+  // 2. competition id로 algorithm-solving 페이지 접속
   const handleMoveToAlgorithm = () => {
     navigate(`/algorithm-solving/${id}`);
   };
 
   // 유저정보에서 팀이 존재하지 않을 경우
+  // 1. matching 페이지로 redirect
   //   const handleRedirectPage = () => {
   //     navigate("/matching");
   //   };

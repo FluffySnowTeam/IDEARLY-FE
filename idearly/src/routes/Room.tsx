@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { Socket, io } from "socket.io-client";
+import io, { Socket } from "socket.io-client";
 
 interface IncomingCall {
   sdp: RTCSessionDescriptionInit;
@@ -12,35 +12,7 @@ interface AnswerMessage {
   caller: string;
 }
 
-export const AlgorithmVoiceChat = () => {
-  const [toggleState, setToggleState] = useState({
-    speakerOn: false,
-    micOn: false,
-  });
-
-  const toggleFeature = (feature: "speakerOn" | "micOn") => {
-    setToggleState((prev) => {
-      const newState = {
-        ...prev,
-        [feature]: !prev[feature],
-      };
-
-      // 마이크 상태 업데이트
-      if (feature === "micOn" && userStream.current) {
-        userStream.current.getAudioTracks().forEach((track) => {
-          track.enabled = newState.micOn;
-        });
-      }
-
-      // 스피커 상태 (음소거) 업데이트
-      if (feature === "speakerOn" && userVideo.current) {
-        userVideo.current.muted = !newState.speakerOn;
-      }
-
-      return newState;
-    });
-  };
-
+const Room: React.FC = () => {
   const userVideo = useRef<HTMLVideoElement>(null);
   const partnerVideos = useRef<{ [key: string]: HTMLVideoElement | null }>({});
   const peerRefs = useRef<{ [key: string]: RTCPeerConnection }>({});
@@ -51,33 +23,31 @@ export const AlgorithmVoiceChat = () => {
 
   useEffect(() => {
     navigator.mediaDevices
-      .getUserMedia({ audio: true, video: false })
+      .getUserMedia({ audio: true, video: true })
       .then((stream) => {
         if (userVideo.current) userVideo.current.srcObject = stream;
         userStream.current = stream;
 
         socketRef.current = io("/");
-        if (socketRef.current) {
-          socketRef.current.emit("join room", id);
+        socketRef.current.emit("join room", id);
 
-          socketRef.current.on("other users", (userIDs) => {
-            console.log("Other users in the room: ", userIDs);
-            userIDs.forEach((userID: string) => {
-              const peer = createPeer(userID);
-              peerRefs.current[userID] = peer;
-            });
-          });
-
-          socketRef.current.on("user joined", (userID) => {
-            console.log("User joined in the room: ", userID);
+        socketRef.current.on("other users", (userIDs) => {
+          console.log("Other users in the room: ", userIDs);
+          userIDs.forEach((userID: string) => {
             const peer = createPeer(userID);
             peerRefs.current[userID] = peer;
           });
+        });
 
-          socketRef.current.on("offer", handleRecieveCall);
-          socketRef.current.on("answer", handleAnswer);
-          socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
-        }
+        socketRef.current.on("user joined", (userID) => {
+          console.log("User joined in the room: ", userID);
+          const peer = createPeer(userID);
+          peerRefs.current[userID] = peer;
+        });
+
+        socketRef.current.on("offer", handleRecieveCall);
+        socketRef.current.on("answer", handleAnswer);
+        socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
       });
   }, [id]);
 
@@ -227,25 +197,12 @@ export const AlgorithmVoiceChat = () => {
   }, [partnerVideos.current]);
 
   return (
-    <>
-      <span
-        onClick={() => {
-          toggleFeature("speakerOn");
-        }}
-        className="material-icons"
-      >
-        {toggleState.speakerOn ? "volume_up" : "volume_off"}
-      </span>
-      <span
-        onClick={() => {
-          toggleFeature("micOn");
-        }}
-        className="material-icons"
-      >
-        {toggleState.micOn ? "mic" : "mic_off"}
-      </span>
+    <div>
       <video autoPlay ref={userVideo} />
       <div ref={videoContainerRef} />
-    </>
+      {/* 파트너 비디오 요소는 동적으로 생성되므로 여기에는 포함되지 않습니다. */}
+    </div>
   );
 };
+
+export default Room;
