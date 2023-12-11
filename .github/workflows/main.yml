@@ -1,7 +1,12 @@
 name: Deploy
+
 on:
   push:
-    branches: [main] # main 브랜치에 push 발생하면 트리거
+    branches: [ "main" ]
+  pull_request:
+    types:
+    - closed
+    branches: [ "main" ]
   workflow_dispatch: # 디버깅용, actions 탭에서 직접 버튼 눌러서 트리거
 
 jobs:
@@ -73,7 +78,7 @@ jobs:
           context: .
           file: ./idearly/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jmdb
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/idearly
 
       # 마지막으로 ssh로 인스턴스에 연결하여 이미지를 Pull하고 컨테이너를 재시작한다.
       - name: Pull and restart Docker Container
@@ -83,6 +88,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/jmdb
-            sudo docker stop jmdb
-            sudo docker run -d --rm --name jmdb -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/jmdb
+            sudo docker rm -f $(docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/idearly
+            docker-compose up -d
+            docker image prune -f
