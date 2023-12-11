@@ -1,6 +1,6 @@
 import { fakeProblem } from "../../../../mocks/problem.mocks";
 import * as S from "./AlgorithmNav.styles";
-import { AlgorithmVoiceChat } from "..";
+import { AlgorithmTextChat, AlgorithmVoiceChat } from "..";
 
 export const AlgorithmNav = () => {
   return (
@@ -14,7 +14,7 @@ export const AlgorithmNav = () => {
       </div>
       <S.NavIcons>
         <AlgorithmVoiceChat />
-        <span className="material-icons">chat</span>
+        <AlgorithmTextChat />
       </S.NavIcons>
     </S.AlgorithmNavContainer>
   );
