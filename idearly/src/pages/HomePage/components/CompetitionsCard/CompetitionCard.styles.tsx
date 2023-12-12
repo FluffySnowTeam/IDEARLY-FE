@@ -34,5 +34,10 @@ export const CompeText = styled(Text)`
 `;
 
 export const CompeCardButton = styled(Button)`
-  margin-top: 10px;
+  margin-top: 15px;
+`;
+
+export const CardDetailButton = styled(Button)`
+  margin-top: 15px;
+  margin-right: 10px;
 `;

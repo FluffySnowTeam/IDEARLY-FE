@@ -20,14 +20,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />,
       },
-      // {
-      //   path: "/", // 홈 페이지와 같은 경로입니다. 중복을 피해야 합니다.
-      //   element: <CreateRoom />,
-      // },
-      // {
-      //   path: "/room/:roomID",
-      //   element: <Room />,
-      // },
       {
         path: "/algorithm-solving/:id",
         element: <AlgorithmSolvingPage />,

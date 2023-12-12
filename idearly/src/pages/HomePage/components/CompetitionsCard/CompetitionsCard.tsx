@@ -16,6 +16,11 @@ export const CompetitionsCard = ({
     navigate(`/algorithm-solving/${id}`);
   };
 
+  // 대회 데이터 아이디로 수정해야함
+  const handleMoveToDetail = () => {
+    navigate(`/detail/${id}`);
+  };
+
   // 유저정보에서 팀이 존재하지 않을 경우
   // 1. matching 페이지로 redirect
   //   const handleRedirectPage = () => {
@@ -33,6 +38,9 @@ export const CompetitionsCard = ({
           <S.CompeCardHeading size="md">{title}</S.CompeCardHeading>
           <S.CompeText>{subTitle}</S.CompeText>
           <S.CompeText>대회 시작일: {date}</S.CompeText>
+          <S.CardDetailButton onClick={handleMoveToDetail}>
+            대회 상세보기
+          </S.CardDetailButton>
           <S.CompeCardButton onClick={handleMoveToAlgorithm}>
             대회 참가하기
           </S.CompeCardButton>
