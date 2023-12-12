@@ -11,21 +11,31 @@ export const CompetitionsCard = ({
 
   // 유저정보에서 팀이 존재할 경우
   // 1. 음성채팅 / 채팅 자동 참가
-  // 2. competition id로 algorithm-solving 페이지 접속
+  // 2. competition id로 이동 경로 params 전달
   const handleMoveToAlgorithm = () => {
-    navigate(`/algorithm-solving/${id}`);
+    // 만약 유저가 해당 대회의 소속된 팀 데이터가 없다면
+    // navigate("/matching");
+    // '2023.12.15 / 18:00' 형식의 날짜 문자열을 Date 객체로 변환
+    const dateParts = date.split(" / "); // ['2023.12.15', '18:00']
+    const [year, month, day] = dateParts[0].split(".").map(Number); // ['2023', '12', '15']
+    const [hours, minutes] = dateParts[1].split(":").map(Number); // ['18', '00']
+
+    const competitionDate = new Date(year, month - 1, day, hours, minutes); // JavaScript의 월은 0부터 시작합니다
+
+    const now = new Date();
+
+    // 현재 시간이 대회 시작 시간보다 이전이면 대기 페이지로 이동, 아니면 상세 페이지로 이동
+    if (now < competitionDate) {
+      navigate(`/waiting/${id}`);
+    } else {
+      navigate(`/algorithm-solving/${id}`);
+    }
   };
 
   // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
     navigate(`/detail/${id}`);
   };
-
-  // 유저정보에서 팀이 존재하지 않을 경우
-  // 1. matching 페이지로 redirect
-  //   const handleRedirectPage = () => {
-  //     navigate("/matching");
-  //   };
 
   return (
     <S.CompeCardContainer

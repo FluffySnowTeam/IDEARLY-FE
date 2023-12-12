@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         element: <TeamMatchingPage />,
       },
       {
-        path: "/waiting",
+        path: "/waiting/:id",
         element: <WaitingPage />,
       },
     ],
