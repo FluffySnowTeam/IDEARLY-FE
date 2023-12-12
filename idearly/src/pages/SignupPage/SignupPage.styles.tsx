@@ -8,10 +8,6 @@ import {
 } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
-interface ISubmitButton {
-  isErrorsEmpty?: boolean;
-}
-
 export const SignupTitle = styled.div`
   display: flex;
   flex-direction: row;
@@ -52,7 +48,7 @@ export const CardBodySection = styled(CardBody)`
   text-align: center;
 `;
 export const CardFooterSection = styled(CardFooter)``;
-export const SubmitButton = styled(Button)<ISubmitButton>`
+export const SubmitButton = styled(Button)`
   ${(props) =>
     props.disabled &&
     `

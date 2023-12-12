@@ -16,6 +16,12 @@ export const ValidationInputContainer = styled.div<IValidationInputContainerProp
 `;
 
 export const ValidationButton = styled(Button)`
+  ${(props) =>
+    props.disabled &&
+    `
+    opacity: 0.5;
+    cursor: not-allowed;
+  `}
   margin-top: 1rem;
   margin-left: 0.8rem;
   width: 4rem;

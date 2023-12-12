@@ -7,12 +7,14 @@ import { SignupFormProps } from "./SignupForm.types";
 export const SignupForm = ({
   register,
   errors,
+  watch,
 }: PropsWithChildren<SignupFormProps>) => {
   return (
     <S.SignupFormContainer>
       <ValidationInput
         label="이메일"
         type="email"
+        watch={watch}
         placeholder="이메일을 입력해주세요."
         errors={errors?.email}
         register={register("email")}

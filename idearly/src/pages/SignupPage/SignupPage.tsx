@@ -22,13 +22,13 @@ export const SignupPage = () => {
     },
   });
 
-  const [isFormInitiallyEmpty, setIsFormInitiallyEmpty] = useState(true);
+  const [isFormEmpty, setIsFormEmpty] = useState(true);
   const watchedValues = watch();
 
   // 컴포넌트 마운트 시 폼의 초기 비어있는 상태 확인
   useEffect(() => {
     const isEmpty = Object.values(watchedValues).every((value) => value === "");
-    setIsFormInitiallyEmpty(isEmpty);
+    setIsFormEmpty(isEmpty);
   }, []);
 
   // 폼이 오류 상태인지 확인
@@ -40,7 +40,7 @@ export const SignupPage = () => {
   );
 
   const isNoneOfTheConditionsTrue =
-    !isFormInitiallyEmpty && !hasErrors && !isCurrentlyEmpty;
+    !isFormEmpty && !hasErrors && !isCurrentlyEmpty;
 
   return (
     <S.SignupWrapper>
@@ -53,10 +53,9 @@ export const SignupPage = () => {
           <S.CardHeading size="md">회원가입</S.CardHeading>
         </S.CardHeaderSection>
         <S.CardBodySection>
-          <SignupForm register={register} errors={errors} />
+          <SignupForm register={register} watch={watch} errors={errors} />
         </S.CardBodySection>
         <S.CardFooterSection>
-          {!isNoneOfTheConditionsTrue && <div>hi</div>}
           <S.SubmitButton
             disabled={!isNoneOfTheConditionsTrue}
             colorScheme="blue"
