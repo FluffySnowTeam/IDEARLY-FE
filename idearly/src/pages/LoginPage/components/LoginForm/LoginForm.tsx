@@ -1,17 +1,7 @@
-import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { LoginVaildationInput } from "..";
 import * as S from "./LoginForm.styles";
 import { PropsWithChildren } from "react";
-
-interface FormFields {
-  email: string;
-  password: string;
-}
-
-interface ILoginFormProps {
-  register: UseFormRegister<FormFields>;
-  errors: FieldErrors<FormFields>;
-}
+import type { ILoginFormProps } from "./LoginForm.types";
 
 export const LoginForm = ({
   register,

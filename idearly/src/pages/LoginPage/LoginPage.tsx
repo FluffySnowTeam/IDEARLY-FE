@@ -21,19 +21,13 @@ export const LoginPage = () => {
   });
 
   const watchedValues = watch();
-
-  // 폼이 오류 상태인지 확인
   const hasErrors = Object.keys(errors).length > 0;
-
-  // 폼이 현재 비어있는 상태인지 확인
   const isCurrentlyEmpty = Object.values(watchedValues).every(
     (value) => value === ""
   );
-
   const isAllFieldsFilled = Object.values(watchedValues).every(
     (value) => value !== ""
   );
-
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
