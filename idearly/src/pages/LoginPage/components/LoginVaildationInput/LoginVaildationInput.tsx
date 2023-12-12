@@ -1,20 +1,27 @@
 import { PropsWithChildren } from "react";
-import * as S from "./ValidationInput.styles";
-import type { IValidationInput } from "./ValidationInput.types";
+import * as S from "./LoginVaildationInput.styles";
+import { UseFormRegisterReturn } from "react-hook-form";
 
-export const ValidationInput = ({
+export interface IValidationInput {
+  label: string;
+  type: string;
+  placeholder: string;
+  errors:
+    | {
+        message?: string;
+      }
+    | undefined;
+  register: UseFormRegisterReturn;
+}
+
+export const LoginVaildationInput = ({
   label,
   type,
   placeholder,
   errors,
   register,
-  watch,
 }: PropsWithChildren<IValidationInput>) => {
-  // 중복검사 api 로직 작성 예정
-  const isEmailInput = type === "email";
   const isError = errors && errors.message;
-  const emailValue = watch?.("email");
-
   return (
     <>
       <S.ValidationInputContainer errors={errors}>
@@ -26,11 +33,6 @@ export const ValidationInput = ({
             {...register}
           />
         </S.ValidationInputWrapper>
-        {isEmailInput && (
-          <S.ValidationButton disabled={!emailValue || !!isError}>
-            중복검사
-          </S.ValidationButton>
-        )}
       </S.ValidationInputContainer>
       {isError && <S.InputErrorMessage>{errors.message}</S.InputErrorMessage>}
     </>

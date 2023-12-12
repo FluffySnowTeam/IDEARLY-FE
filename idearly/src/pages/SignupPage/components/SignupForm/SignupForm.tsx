@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 
-import { ValidationInput } from "..";
+import { SignupValidationInput } from "..";
 import * as S from "./SignupForm.styles";
 import { SignupFormProps } from "./SignupForm.types";
 
@@ -11,7 +11,7 @@ export const SignupForm = ({
 }: PropsWithChildren<SignupFormProps>) => {
   return (
     <S.SignupFormContainer>
-      <ValidationInput
+      <SignupValidationInput
         label="이메일"
         type="email"
         watch={watch}
@@ -19,17 +19,17 @@ export const SignupForm = ({
         errors={errors?.email}
         register={register("email")}
       />
-      <ValidationInput
+      <SignupValidationInput
         label="비밀번호"
         type="password"
-        placeholder="이메일을 입력해주세요."
+        placeholder="비밀번호를 입력해주세요."
         errors={errors?.password}
         register={register("password")}
       />
-      <ValidationInput
+      <SignupValidationInput
         label="비밀번호 확인"
         type="password"
-        placeholder="이메일을 입력해주세요."
+        placeholder="비밀번호를 다시 입력해주세요."
         errors={errors?.confirmPassword}
         register={register("confirmPassword")}
       />
