@@ -1,18 +1,6 @@
 import { PropsWithChildren } from "react";
 import * as S from "./LoginVaildationInput.styles";
-import { UseFormRegisterReturn } from "react-hook-form";
-
-export interface IValidationInput {
-  label: string;
-  type: string;
-  placeholder: string;
-  errors:
-    | {
-        message?: string;
-      }
-    | undefined;
-  register: UseFormRegisterReturn;
-}
+import type { IValidationInput } from "./LoginVaildationInput.types";
 
 export const LoginVaildationInput = ({
   label,
