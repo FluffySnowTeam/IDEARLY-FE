@@ -4,13 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as S from "./SignupPage.styles";
 import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
-import { useEffect, useState } from "react";
 
 export const SignupPage = () => {
   const {
     register,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
     // handleSubmit,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(SIGNUP_SCHEMA),
@@ -22,14 +21,7 @@ export const SignupPage = () => {
     },
   });
 
-  const [isFormEmpty, setIsFormEmpty] = useState(true);
   const watchedValues = watch();
-
-  // 컴포넌트 마운트 시 폼의 초기 비어있는 상태 확인
-  useEffect(() => {
-    const isEmpty = Object.values(watchedValues).every((value) => value === "");
-    setIsFormEmpty(isEmpty);
-  }, []);
 
   // 폼이 오류 상태인지 확인
   const hasErrors = Object.keys(errors).length > 0;
@@ -39,8 +31,12 @@ export const SignupPage = () => {
     (value) => value === ""
   );
 
+  const isAllFieldsFilled = Object.values(watchedValues).every(
+    (value) => value !== ""
+  );
+
   const isNoneOfTheConditionsTrue =
-    !isFormEmpty && !hasErrors && !isCurrentlyEmpty;
+    isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
   return (
     <S.SignupWrapper>
