@@ -19,3 +19,14 @@ export const AlgorithmHeaderConfig = [
     text: "도움말",
   },
 ];
+
+export const IsNotLoginHeaderConfig = [
+  {
+    path: "",
+    text: "홈",
+  },
+  {
+    path: "/login",
+    text: "로그인하기",
+  },
+];

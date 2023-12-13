@@ -12,6 +12,8 @@ export const Header = () => {
     else navigate(path);
   };
 
+  //session 여부 확인해서 로그인한 상태일때 IsNotLoginHeaderConfig로 헤더 보여주기
+
   return (
     <S.HeaderContainer>
       <S.LogoContainer
