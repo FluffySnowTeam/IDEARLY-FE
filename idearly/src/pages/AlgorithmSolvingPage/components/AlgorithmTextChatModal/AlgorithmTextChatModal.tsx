@@ -23,12 +23,18 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = useRef<any>(null);
+  const msgEndRef = useRef<HTMLDivElement | null>(null);
   const teamId = 1;
 
   useEffect(() => {
     connect();
     return () => disconnect();
   }, [])
+
+  useEffect(() => {
+    if (!msgEndRef.current) return;
+    msgEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [msg])
 
   const connect = () => {
     client.current = new StompJS.Client({
@@ -128,6 +134,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
                 v.senderName === '강윤지' ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
               )
             }
+            <div ref={msgEndRef}></div>
           </S.ModalBodyContainer>
           <ModalFooter>
             <S.Form onSubmit={(e) => handleSubmit(e, value)}>
