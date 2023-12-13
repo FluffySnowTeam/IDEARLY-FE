@@ -8,11 +8,11 @@ import {
 } from '@chakra-ui/react'
 import { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
 import { useState, useEffect, useRef, FormEvent } from 'react';
-import SockJS from 'sockjs-client';
+// import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 import { fakeChatMsg } from '../../../../mocks/chat.mocks';
 import * as S from './AlgorithmTextChatModal.styles';
-import { TextChatBubbleMe, TextChatBubbleOthers } from '..';
+import { TextChatBubbleMe, TextChatBubbleOthers } from './components';
 
 // Response로 올 내용: chatMessage / senderName / sendDate
 // Request에 담겨야할 내용: chatMessage
@@ -38,12 +38,13 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      brokerURL: 'ws://localhost:3000/ws/chat',
+      brokerURL: 'ws://211.201.26.10:8080/ws/chat',
       // webSocketFactory: () => new SockJS("http://localhost:3000/ws/chat"),
       debug: function (str: string) {
         console.log(str);
       },
       onConnect: () => {   // 연결됐을때 실행할 함수
+        console.log('success');
         subscribe(); // 연결 성공 시 구독하는 로직
       }, 
       onStompError: (frame: StompJS.Frame) => {
@@ -53,11 +54,11 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
     });
 
     // 만약 Websocket을 지원하지 않는 브라우저에서는 SockJS 사용
-    if (typeof WebSocket !== 'function') {
-      client.current.webSocketFactory = function () {
-        return new SockJS('http://localhost:3000/stomp');
-      };
-    }
+    // if (typeof WebSocket !== 'function') {
+    //   client.current.webSocketFactory = function () {
+    //     return new SockJS('ws:/211.201.26.10:8080/ws/chat');
+    //   };
+    // }
     console.log('Trying to connect...');
     client.current.activate(); // client 활성화
   }
