@@ -13,8 +13,6 @@ import { AlgorithmTextChatModal } from '..';
 export const AlgorithmTextChat = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(isOpen);
-
   return (
     <>
       <span 
