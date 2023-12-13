@@ -3,7 +3,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalFooter,
-  ModalBody,
   ModalCloseButton,
   Button
 } from '@chakra-ui/react'
@@ -114,14 +113,14 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
         >
           <ModalHeader>Chat</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <S.ModalBodyContainer>
             {
               // senderName을 보고 컴포넌트 선택
               msg.map((v) => 
                 v.senderName === '강윤지' ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
               )
             }
-          </ModalBody>
+          </S.ModalBodyContainer>
           <ModalFooter>
             <S.Form onSubmit={(e) => handleSubmit(e, value)}>
               <S.TextInput
