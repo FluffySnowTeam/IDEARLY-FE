@@ -1,8 +1,10 @@
 import * as S from "./AlgorithmNav.styles";
 import { AlgorithmVoiceChat } from "..";
 import { fakeProblem } from "../../../../mocks/problem.mocks";
+import type { Prop } from "./AlgorithmNav.types";
 
-export const AlgorithmNav = () => {
+export const AlgorithmNav = ({onOpen}: Prop) => {
+
   return (
     <S.AlgorithmNavContainer>
       <div>
@@ -14,7 +16,12 @@ export const AlgorithmNav = () => {
       </div>
       <S.NavIcons>
         <AlgorithmVoiceChat />
-        <span className="material-icons">chat</span>
+        <span 
+          className="material-icons"
+          onClick={onOpen}
+        >
+          chat
+        </span>
       </S.NavIcons>
     </S.AlgorithmNavContainer>
   );
