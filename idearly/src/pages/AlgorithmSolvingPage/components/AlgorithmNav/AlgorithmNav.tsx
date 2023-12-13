@@ -1,7 +1,7 @@
 import * as S from "./AlgorithmNav.styles";
 import { AlgorithmVoiceChat } from "..";
 import { fakeProblem } from "../../../../mocks/problem.mocks";
-import { Prop } from "./AlgorithmNav.types";
+import type { Prop } from "./AlgorithmNav.types";
 
 export const AlgorithmNav = ({onOpen}: Prop) => {
 

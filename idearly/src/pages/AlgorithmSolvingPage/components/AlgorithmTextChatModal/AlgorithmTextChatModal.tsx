@@ -6,7 +6,7 @@ import {
   ModalCloseButton,
   Button
 } from '@chakra-ui/react'
-import { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
+import type { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
 import { useState, useEffect, useRef, FormEvent } from 'react';
 // import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';

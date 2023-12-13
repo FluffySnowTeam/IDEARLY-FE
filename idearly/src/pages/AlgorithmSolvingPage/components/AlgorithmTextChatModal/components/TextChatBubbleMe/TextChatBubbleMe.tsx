@@ -1,4 +1,4 @@
-import { ChatRecivMessage } from "../../AlgorithmTextChatModal.types"
+import type { ChatRecivMessage } from "../../AlgorithmTextChatModal.types"
 import * as S from "./TextChatBubbleMe.styles"
 
 export const TextChatBubbleMe = ({message}: {message: ChatRecivMessage}) => {

@@ -1,4 +1,4 @@
-import { ChatRecivMessage } from "../pages/AlgorithmSolvingPage/components/AlgorithmTextChatModal/AlgorithmTextChatModal.types";
+import type { ChatRecivMessage } from "../pages/AlgorithmSolvingPage/components/AlgorithmTextChatModal/AlgorithmTextChatModal.types";
 
 export const fakeChatMsg: ChatRecivMessage[] = [
   {
