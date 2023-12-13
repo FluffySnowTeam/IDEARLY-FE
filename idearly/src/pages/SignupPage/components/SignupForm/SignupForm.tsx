@@ -1,8 +1,7 @@
 import { PropsWithChildren } from "react";
-
-import { SignupValidationInput } from "..";
 import * as S from "./SignupForm.styles";
 import { SignupFormProps } from "./SignupForm.types";
+import { SignupValidationInput } from "..";
 
 export const SignupForm = ({
   register,

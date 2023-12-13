@@ -11,8 +11,8 @@ export const Header = () => {
     if (path === "main") navigate("/");
     else navigate(path);
   };
-
-  //session 여부 확인해서 로그인한 상태일때 IsNotLoginHeaderConfig로 헤더 보여주기
+  //추후 로그인상태 session을 확인하여 변경할 예정
+  let isLogin = true;
 
   return (
     <S.HeaderContainer>
@@ -34,6 +34,7 @@ export const Header = () => {
                 {text}
               </div>
             ))}
+        <div>{isLogin ? "로그인" : "로그아웃"}</div>
       </S.HeaderNavContainer>
     </S.HeaderContainer>
   );

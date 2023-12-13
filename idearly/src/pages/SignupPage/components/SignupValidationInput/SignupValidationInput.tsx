@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
+import { IValidationInput } from "./SignupValidationInput.types";
 import * as S from "./SignupValidationInput.styles";
-import type { IValidationInput } from "./SignupValidationInput.types";
 
 export const SignupValidationInput = ({
   label,
