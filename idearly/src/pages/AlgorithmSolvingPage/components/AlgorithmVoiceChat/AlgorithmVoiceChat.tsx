@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Socket, io } from "socket.io-client";
+import { useState } from "react";
+import ConnectLive from "@connectlive/connectlive-web-sdk";
+import type { IRoom, ILocalMedia } from "@connectlive/connectlive-web-sdk";
 
 export const AlgorithmVoiceChat = () => {
   const [toggleState, setToggleState] = useState({
@@ -13,155 +13,120 @@ export const AlgorithmVoiceChat = () => {
         ...prev,
         [feature]: !prev[feature],
       };
-
-      // 마이크 상태 업데이트
-      if (
-        feature === "micOn" &&
-        myAudioRef.current &&
-        myAudioRef.current.srcObject
-      ) {
-        const stream = myAudioRef.current.srcObject as MediaStream;
-        stream.getAudioTracks().forEach((track) => {
-          track.enabled = newState.micOn;
-        });
-      }
-
       return newState;
     });
   };
 
-  const socketRef = useRef<Socket>();
-  const myAudioRef = useRef<HTMLAudioElement>(null);
-  const pcRef = useRef<RTCPeerConnection>();
-  const { id: roomName } = useParams<{ id: string }>();
+  const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
+  const [room, setRoom] = useState<IRoom | null>(null);
+  const [statusText, setStatusText] = useState<string>("Disconnected");
+  const [logs, setLogs] = useState<string[]>(["Ready to connect"]);
+  const roomId = "icl-voice-call";
 
-  const getMedia = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false,
-      });
-
-      stream.getAudioTracks().forEach((track) => {
-        track.enabled = false;
-      });
-
-      if (myAudioRef.current) {
-        myAudioRef.current.srcObject = stream;
-      }
-      if (!(pcRef.current && socketRef.current)) {
-        return;
-      }
-      stream.getTracks().forEach((track) => {
-        if (!pcRef.current) {
-          return;
-        }
-        pcRef.current.addTrack(track, stream);
-      });
-
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-          if (!socketRef.current) {
-            return;
-          }
-          console.log("recv candidate");
-          socketRef.current.emit("candidate", e.candidate, roomName);
-        }
-      };
-    } catch (e) {
-      console.error(e);
-    }
+  const addLog = (text: string) => {
+    setLogs((prevLogs) => [...prevLogs, text]);
   };
 
-  const createOffer = async () => {
-    console.log("create Offer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
+  const connectConference = async () => {
     try {
-      const sdp = await pcRef.current.createOffer();
-      pcRef.current.setLocalDescription(sdp);
-      console.log("sent the offer");
-      socketRef.current.emit("offer", sdp, roomName);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+      setLogs(["Connecting..."]);
+      setStatusText("Connecting...");
 
-  const createAnswer = async (sdp: RTCSessionDescription) => {
-    console.log("createAnswer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
+      // Provisioning
+      await ConnectLive.signIn({
+        serviceId: import.meta.env.VITE_APP_KAKAO_ID,
+        serviceSecret: import.meta.env.VITE_APP_KAKAO_SECRET_KEY,
+      });
+      addLog("User Signed In");
 
-    try {
-      pcRef.current.setRemoteDescription(sdp);
-      const answerSdp = await pcRef.current.createAnswer();
-      pcRef.current.setLocalDescription(answerSdp);
-
-      console.log("sent the answer");
-      socketRef.current.emit("answer", answerSdp, roomName);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    socketRef.current = io("localhost:8080");
-
-    pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302",
+      // Create Local Media
+      const newLocalMedia = await ConnectLive.createLocalMedia({
+        audio: {
+          echoCancellation: { ideal: true },
+          autoGainControl: { ideal: false },
+          noiseSuppression: { ideal: true },
         },
-      ],
-    });
+      });
+      setLocalMedia(newLocalMedia);
+      addLog("Local Media Created");
 
-    socketRef.current.on("all_users", (allUsers: Array<{ id: string }>) => {
-      if (allUsers.length > 0) {
-        createOffer();
-      }
-    });
+      // Create Conference
+      const newRoom = ConnectLive.createRoom();
+      setRoom(newRoom);
+      addLog("Conference Created");
 
-    socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
-      console.log("recv Offer");
-      createAnswer(sdp);
-    });
+      await newRoom.connect(roomId);
+      await newRoom.publish([newLocalMedia]);
+      addLog("Voice Connected");
 
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
-      console.log("recv Answer");
-      if (!pcRef.current) {
-        return;
-      }
-      pcRef.current.setRemoteDescription(sdp);
-    });
+      setStatusText("Connected");
+    } catch (error) {
+      console.error(error);
+      setStatusText("Failed to Connect");
+      alert("Failed to Start Service");
+    }
+  };
 
-    socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
-      if (!pcRef.current) {
-        return;
-      }
+  const disconnectConference = async () => {
+    if (!room || !localMedia) {
+      console.error("No Conference to Stop");
+      setStatusText("No active conference to disconnect");
+      return;
+    }
 
-      await pcRef.current.addIceCandidate(candidate);
-    });
+    try {
+      setStatusText("Disconnecting...");
+      addLog("Active Speaker Check Stopped");
 
-    socketRef.current.emit("join_room", {
-      room: roomName,
-    });
+      room.disconnect();
+      addLog("Conference Disconnected");
 
-    getMedia();
+      localMedia.stop();
+      setLocalMedia(null);
+      addLog("Voice Disconnected");
 
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-      }
-      if (pcRef.current) {
-        pcRef.current.close();
-      }
-    };
-  }, []);
+      addLog("Participants Cleared");
+
+      ConnectLive.signOut();
+      addLog("User Signed Out");
+
+      setRoom(null); // Clear the room state
+      setStatusText("Disconnected");
+    } catch (error) {
+      console.error(error);
+      setStatusText("Failed to Disconnect");
+    }
+  };
 
   return (
     <div>
+      <div id="button-group">
+        <button
+          id="connect"
+          className="cursor-pointer"
+          onClick={connectConference}
+        >
+          Connect
+        </button>
+        <button
+          id="disconnect"
+          className="cursor-pointer"
+          onClick={disconnectConference}
+        >
+          Disconnect
+        </button>
+      </div>
+
+      <div id="status">{statusText}</div>
+
+      <div id="log-list">
+        <h3>Log</h3>
+        <ul id="log">
+          {logs.map((log, index) => (
+            <li key={index}>{log}</li>
+          ))}
+        </ul>
+      </div>
       <span
         onClick={() => {
           toggleFeature("micOn");
@@ -170,7 +135,6 @@ export const AlgorithmVoiceChat = () => {
       >
         {toggleState.micOn ? "mic" : "mic_off"}
       </span>
-      <audio ref={myAudioRef} autoPlay style={{ display: "none" }} />
     </div>
   );
 };
