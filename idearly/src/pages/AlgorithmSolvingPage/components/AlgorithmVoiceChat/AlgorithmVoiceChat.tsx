@@ -3,20 +3,6 @@ import ConnectLive from "@connectlive/connectlive-web-sdk";
 import type { IRoom, ILocalMedia } from "@connectlive/connectlive-web-sdk";
 
 export const AlgorithmVoiceChat = () => {
-  const [toggleState, setToggleState] = useState({
-    micOn: false,
-  });
-
-  const toggleFeature = (feature: "micOn") => {
-    setToggleState((prev) => {
-      const newState = {
-        ...prev,
-        [feature]: !prev[feature],
-      };
-      return newState;
-    });
-  };
-
   const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
   const [room, setRoom] = useState<IRoom | null>(null);
   const [statusText, setStatusText] = useState<string>("Disconnected");
@@ -98,27 +84,32 @@ export const AlgorithmVoiceChat = () => {
     }
   };
 
+  const [toggleState, setToggleState] = useState({
+    micOn: false,
+  });
+
+  const toggleFeature = async (feature: "micOn") => {
+    setToggleState((prev) => {
+      const newState = {
+        ...prev,
+        [feature]: !prev[feature],
+      };
+      if (feature === "micOn") {
+        if (newState.micOn) {
+          connectConference();
+        } else {
+          disconnectConference();
+        }
+      }
+
+      return newState;
+    });
+  };
+
   return (
     <div>
-      <div id="button-group">
-        <button
-          id="connect"
-          className="cursor-pointer"
-          onClick={connectConference}
-        >
-          Connect
-        </button>
-        <button
-          id="disconnect"
-          className="cursor-pointer"
-          onClick={disconnectConference}
-        >
-          Disconnect
-        </button>
-      </div>
-
+      {/* 연결 확인 로그용
       <div id="status">{statusText}</div>
-
       <div id="log-list">
         <h3>Log</h3>
         <ul id="log">
@@ -126,7 +117,7 @@ export const AlgorithmVoiceChat = () => {
             <li key={index}>{log}</li>
           ))}
         </ul>
-      </div>
+      </div> */}
       <span
         onClick={() => {
           toggleFeature("micOn");
