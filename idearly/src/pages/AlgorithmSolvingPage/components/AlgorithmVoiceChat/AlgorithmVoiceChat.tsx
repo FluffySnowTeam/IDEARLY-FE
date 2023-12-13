@@ -1,167 +1,123 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Socket, io } from "socket.io-client";
+import { useState } from "react";
+import ConnectLive from "@connectlive/connectlive-web-sdk";
+import type { IRoom, ILocalMedia } from "@connectlive/connectlive-web-sdk";
 
 export const AlgorithmVoiceChat = () => {
+  const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
+  const [room, setRoom] = useState<IRoom | null>(null);
+  const [statusText, setStatusText] = useState<string>("Disconnected");
+  const [logs, setLogs] = useState<string[]>(["Ready to connect"]);
+  const roomId = "icl-voice-call";
+
+  const addLog = (text: string) => {
+    setLogs((prevLogs) => [...prevLogs, text]);
+  };
+
+  const connectConference = async () => {
+    try {
+      setLogs(["Connecting..."]);
+      setStatusText("Connecting...");
+
+      // Provisioning
+      await ConnectLive.signIn({
+        serviceId: import.meta.env.VITE_APP_KAKAO_ID,
+        serviceSecret: import.meta.env.VITE_APP_KAKAO_SECRET_KEY,
+      });
+      addLog("User Signed In");
+
+      // Create Local Media
+      const newLocalMedia = await ConnectLive.createLocalMedia({
+        audio: {
+          echoCancellation: { ideal: true },
+          autoGainControl: { ideal: false },
+          noiseSuppression: { ideal: true },
+        },
+      });
+      setLocalMedia(newLocalMedia);
+      addLog("Local Media Created");
+
+      // Create Conference
+      const newRoom = ConnectLive.createRoom();
+      setRoom(newRoom);
+      addLog("Conference Created");
+
+      await newRoom.connect(roomId);
+      await newRoom.publish([newLocalMedia]);
+      addLog("Voice Connected");
+
+      setStatusText("Connected");
+    } catch (error) {
+      console.error(error);
+      setStatusText("Failed to Connect");
+      alert("Failed to Start Service");
+    }
+  };
+
+  const disconnectConference = async () => {
+    if (!room || !localMedia) {
+      console.error("No Conference to Stop");
+      setStatusText("No active conference to disconnect");
+      return;
+    }
+
+    try {
+      setStatusText("Disconnecting...");
+      addLog("Active Speaker Check Stopped");
+
+      room.disconnect();
+      addLog("Conference Disconnected");
+
+      localMedia.stop();
+      setLocalMedia(null);
+      addLog("Voice Disconnected");
+
+      addLog("Participants Cleared");
+
+      ConnectLive.signOut();
+      addLog("User Signed Out");
+
+      setRoom(null); // Clear the room state
+      setStatusText("Disconnected");
+    } catch (error) {
+      console.error(error);
+      setStatusText("Failed to Disconnect");
+    }
+  };
+
   const [toggleState, setToggleState] = useState({
     micOn: false,
   });
 
-  const toggleFeature = (feature: "micOn") => {
+  const toggleFeature = async (feature: "micOn") => {
     setToggleState((prev) => {
       const newState = {
         ...prev,
         [feature]: !prev[feature],
       };
-
-      // 마이크 상태 업데이트
-      if (
-        feature === "micOn" &&
-        myAudioRef.current &&
-        myAudioRef.current.srcObject
-      ) {
-        const stream = myAudioRef.current.srcObject as MediaStream;
-        stream.getAudioTracks().forEach((track) => {
-          track.enabled = newState.micOn;
-        });
+      if (feature === "micOn") {
+        if (newState.micOn) {
+          connectConference();
+        } else {
+          disconnectConference();
+        }
       }
 
       return newState;
     });
   };
 
-  const socketRef = useRef<Socket>();
-  const myAudioRef = useRef<HTMLAudioElement>(null);
-  const pcRef = useRef<RTCPeerConnection>();
-  const { id: roomName } = useParams<{ id: string }>();
-
-  const getMedia = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false,
-      });
-
-      stream.getAudioTracks().forEach((track) => {
-        track.enabled = false;
-      });
-
-      if (myAudioRef.current) {
-        myAudioRef.current.srcObject = stream;
-      }
-      if (!(pcRef.current && socketRef.current)) {
-        return;
-      }
-      stream.getTracks().forEach((track) => {
-        if (!pcRef.current) {
-          return;
-        }
-        pcRef.current.addTrack(track, stream);
-      });
-
-      pcRef.current.onicecandidate = (e) => {
-        if (e.candidate) {
-          if (!socketRef.current) {
-            return;
-          }
-          console.log("recv candidate");
-          socketRef.current.emit("candidate", e.candidate, roomName);
-        }
-      };
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const createOffer = async () => {
-    console.log("create Offer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
-    try {
-      const sdp = await pcRef.current.createOffer();
-      pcRef.current.setLocalDescription(sdp);
-      console.log("sent the offer");
-      socketRef.current.emit("offer", sdp, roomName);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const createAnswer = async (sdp: RTCSessionDescription) => {
-    console.log("createAnswer");
-    if (!(pcRef.current && socketRef.current)) {
-      return;
-    }
-
-    try {
-      pcRef.current.setRemoteDescription(sdp);
-      const answerSdp = await pcRef.current.createAnswer();
-      pcRef.current.setLocalDescription(answerSdp);
-
-      console.log("sent the answer");
-      socketRef.current.emit("answer", answerSdp, roomName);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    socketRef.current = io("localhost:8080");
-
-    pcRef.current = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302",
-        },
-      ],
-    });
-
-    socketRef.current.on("all_users", (allUsers: Array<{ id: string }>) => {
-      if (allUsers.length > 0) {
-        createOffer();
-      }
-    });
-
-    socketRef.current.on("getOffer", (sdp: RTCSessionDescription) => {
-      console.log("recv Offer");
-      createAnswer(sdp);
-    });
-
-    socketRef.current.on("getAnswer", (sdp: RTCSessionDescription) => {
-      console.log("recv Answer");
-      if (!pcRef.current) {
-        return;
-      }
-      pcRef.current.setRemoteDescription(sdp);
-    });
-
-    socketRef.current.on("getCandidate", async (candidate: RTCIceCandidate) => {
-      if (!pcRef.current) {
-        return;
-      }
-
-      await pcRef.current.addIceCandidate(candidate);
-    });
-
-    socketRef.current.emit("join_room", {
-      room: roomName,
-    });
-
-    getMedia();
-
-    return () => {
-      if (socketRef.current) {
-        socketRef.current.disconnect();
-      }
-      if (pcRef.current) {
-        pcRef.current.close();
-      }
-    };
-  }, []);
-
   return (
     <div>
+      {/* 연결 확인 로그용
+      <div id="status">{statusText}</div>
+      <div id="log-list">
+        <h3>Log</h3>
+        <ul id="log">
+          {logs.map((log, index) => (
+            <li key={index}>{log}</li>
+          ))}
+        </ul>
+      </div> */}
       <span
         onClick={() => {
           toggleFeature("micOn");
@@ -170,7 +126,6 @@ export const AlgorithmVoiceChat = () => {
       >
         {toggleState.micOn ? "mic" : "mic_off"}
       </span>
-      <audio ref={myAudioRef} autoPlay style={{ display: "none" }} />
     </div>
   );
 };
