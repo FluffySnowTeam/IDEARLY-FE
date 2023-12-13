@@ -5,20 +5,22 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Input,
   Button
 } from '@chakra-ui/react'
 import { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
+import { fakeChatMsg } from '../../../../mocks/chat.mocks';
+import * as S from './AlgorithmTextChatModal.styles';
+import { TextChatBubbleMe, TextChatBubbleOthers } from '..';
 
 // Response로 올 내용: chatMessage / senderName / sendDate
 // Request에 담겨야할 내용: chatMessage
 
 export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
-  const [value, setValue] = useState('')
-  const [msg, setMsg] = useState<ChatRecivMessage[]>([]);
+  const [value, setValue] = useState('');
+  const [msg, setMsg] = useState<ChatRecivMessage[]>(fakeChatMsg);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = useRef<any>(null);
@@ -113,24 +115,21 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
           <ModalHeader>Chat</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {msg.map((v) => 
-            <>
-              <p>{v.senderName}</p>
-              <p>{v.chatMessage}</p>
-              <p>{v.sendDate}</p>
-            </>
-            )}
+            {
+              // senderName을 보고 컴포넌트 선택
+              msg.map((v) => 
+                v.senderName === '강윤지' ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
+              )
+            }
           </ModalBody>
-          <ModalFooter
-            justifyContent="center"
-          >
-            <form onSubmit={(e) => handleSubmit(e, value)}>
-              <Input
+          <ModalFooter>
+            <S.Form onSubmit={(e) => handleSubmit(e, value)}>
+              <S.TextInput
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
               />
               <Button type="submit">입력</Button>
-            </form>
+            </S.Form>
           </ModalFooter>
         </ModalContent>
       </Modal>
