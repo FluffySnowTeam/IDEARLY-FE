@@ -72,6 +72,15 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   // 이렇게 매개변수 하나만 있다면 타입 파일에 따로 뺄 필요는 없겠죠?
   const publish = (message: string) => {
     console.log('Publishing message:', message);
+    setMsg((prev) => [
+      ...prev,
+      {
+        senderName: '강윤지',
+        chatMessage: message,
+        sendDate: '2023-12-13',
+      }
+    ])
+    setValue('');
 
     if (!client.current || !client.current.connected) return;
 
@@ -80,7 +89,6 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
       body: JSON.stringify({chatMessage: message}),
     })
 
-    setValue('');
   }
 
   const subscribe = () => {
