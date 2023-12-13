@@ -6,7 +6,7 @@ export const HomePage = () => {
   return (
     <S.HomeContainer>
       {HomePageConfig.map((config) => (
-        <CompetitionsSection config={config} />
+        <CompetitionsSection key={config.id} config={config} />
       ))}
     </S.HomeContainer>
   );
