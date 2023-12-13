@@ -1476,6 +1476,7 @@
   integrity sha512-3HjvkFFriEQwffUXtKHPiwkfFXUGbs46YATTzzyK1+Pw6Ekd3kwzS50e45qdamWuEXmXxyo5S1zp534LdFG0Rw==
   dependencies:
     "@tanstack/query-core" "5.13.4"
+    
 "@stomp/stompjs@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@stomp/stompjs/-/stompjs-7.0.0.tgz#46b5c454a9dc8262e0b20f3b3dbacaa113993077"
