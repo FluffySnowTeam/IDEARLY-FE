@@ -11,6 +11,12 @@ export const SIGNUP_SCHEMA = z
       .nonempty("이메일을 입력해주세요.")
       .email("이메일 형식을 입력해주세요."),
 
+    name: z
+      .string()
+      .min(2, "2자 이상 입력해주세요.")
+      .regex(SignupPageConfig.REGEX.name, "이름을 입력해주세요.")
+      .nonempty("이름을  입력해주세요."),
+
     password: z
       .string()
       .min(8, "8자 이상 입력해주세요.")

@@ -4,13 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as S from "./SignupPage.styles";
 import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
+import { IUserSignupRequest } from "../../types";
+import { useSignupMutation } from "../../hooks/useSignupMutation";
 
 export const SignupPage = () => {
   const {
     register,
     watch,
     formState: { errors, isDirty },
-    // handleSubmit,
+    handleSubmit,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(SIGNUP_SCHEMA),
     mode: "onChange",
@@ -38,8 +40,27 @@ export const SignupPage = () => {
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
+  // const onValid = (data: IUserSignupRequest) =>
+  //   console.log(
+  //     {
+  //       email: data.email,
+  //       name: data.name,
+  //       password: data.password,
+  //     },
+  //     "onvalid"
+  //   );
+
+  const { mutate } = useSignupMutation();
+  const handleSignup = (data: IUserSignupRequest) => {
+    mutate({
+      email: data.email,
+      name: data.name,
+      password: data.password,
+    });
+  };
+
   return (
-    <S.SignupWrapper>
+    <S.SignupWrapper onSubmit={handleSubmit(handleSignup)}>
       <S.SignupTitle>
         <S.Title>{SignupPageConfig.title}</S.Title>
         <S.SiteName>{SignupPageConfig.SiteName}</S.SiteName>
@@ -53,6 +74,7 @@ export const SignupPage = () => {
         </S.CardBodySection>
         <S.CardFooterSection>
           <S.SubmitButton
+            type="submit"
             disabled={!isNoneOfTheConditionsTrue}
             colorScheme="blue"
           >

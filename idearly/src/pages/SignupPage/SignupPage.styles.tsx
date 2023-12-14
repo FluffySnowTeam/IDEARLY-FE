@@ -25,7 +25,7 @@ export const SiteName = styled.div`
   margin-left: 0.3rem;
 `;
 
-export const SignupWrapper = styled.div`
+export const SignupWrapper = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
