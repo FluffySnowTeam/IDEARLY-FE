@@ -4,3 +4,8 @@ export const AlgorithmSolvingPageContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+export const AlgorithmSolvingWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
