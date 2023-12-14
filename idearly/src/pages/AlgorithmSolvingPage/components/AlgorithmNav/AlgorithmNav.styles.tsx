@@ -23,9 +23,10 @@ export const ProblemNumber = styled.div`
   width: 35px;
   height: 35px;
   transition: background-color 0.3s;
+  font-weight: bold;
   :hover {
-    background-color: #01228a;
-    color: white;
+    background-color: #01228a !important;
+    color: white !important;
   }
 `;
 
