@@ -50,7 +50,7 @@ export const SignupPage = () => {
   //     "onvalid"
   //   );
 
-  const { mutate } = useSignupMutation();
+  const { data, mutate } = useSignupMutation();
   const handleSignup = (data: IUserSignupRequest) => {
     mutate({
       email: data.email,
@@ -58,6 +58,7 @@ export const SignupPage = () => {
       password: data.password,
     });
   };
+  console.log(data);
 
   return (
     <S.SignupWrapper onSubmit={handleSubmit(handleSignup)}>
