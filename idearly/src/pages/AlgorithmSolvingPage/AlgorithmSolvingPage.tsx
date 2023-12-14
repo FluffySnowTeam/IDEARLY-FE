@@ -1,7 +1,9 @@
 import {
   AlgorithmEditor,
   AlgorithmNav,
+  AlgorithmProHeader,
   AlgorithmProblem,
+  AlgorithmResult,
   AlgorithmTextChatModal,
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
@@ -16,7 +18,18 @@ export const AlgorithmSolvingPage = () => {
       <AlgorithmNav onOpen={onOpen} />
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />
-        <AlgorithmEditor />
+        <S.AlgorithmEditorWrapper>
+          <AlgorithmProHeader />
+          <AlgorithmEditor />
+          <AlgorithmResult />
+          <S.EditorButtonWrapper>
+            <div>
+              <S.EditorButton>초기화</S.EditorButton>
+              <S.EditorButton>실행</S.EditorButton>
+              <S.SubmitButton colorScheme="blue">제출</S.SubmitButton>
+            </div>
+          </S.EditorButtonWrapper>
+        </S.AlgorithmEditorWrapper>
       </S.AlgorithmSolvingWrapper>
     </S.AlgorithmSolvingPageContainer>
   );

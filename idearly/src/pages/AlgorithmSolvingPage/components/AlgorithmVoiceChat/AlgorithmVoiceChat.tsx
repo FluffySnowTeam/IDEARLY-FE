@@ -183,7 +183,7 @@ export const AlgorithmVoiceChat = () => {
 
   useEffect(() => {
     navigator.mediaDevices
-      .getUserMedia({ audio: true, video: false })
+      .getUserMedia({ audio: false, video: false })
       .then((stream) => {
         if (userVideo.current) userVideo.current.srcObject = stream;
         userStream.current = stream;
@@ -376,8 +376,8 @@ export const AlgorithmVoiceChat = () => {
       >
         {toggleState.micOn ? "mic" : "mic_off"}
       </span>
-      <video autoPlay ref={userVideo} />
-      <div ref={videoContainerRef} />
+      <video autoPlay ref={userVideo} style={{ display: "none" }} />
+      <div ref={videoContainerRef} style={{ display: "none" }} />
     </>
   );
 };

@@ -1,7 +1,9 @@
+import * as S from "./AlgorithmEditor.styles";
+
 export const AlgorithmEditor = () => {
   return (
-    <div>
-      <div>AlgorithmEditor</div>
-    </div>
+    <S.AlgorithmEditorContainer>
+      <div></div>
+    </S.AlgorithmEditorContainer>
   );
 };
