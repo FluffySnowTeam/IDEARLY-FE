@@ -40,16 +40,6 @@ export const SignupPage = () => {
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
-  // const onValid = (data: IUserSignupRequest) =>
-  //   console.log(
-  //     {
-  //       email: data.email,
-  //       name: data.name,
-  //       password: data.password,
-  //     },
-  //     "onvalid"
-  //   );
-
   const { data, mutate } = useSignupMutation();
   const handleSignup = (data: IUserSignupRequest) => {
     mutate({
