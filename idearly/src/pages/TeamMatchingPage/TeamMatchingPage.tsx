@@ -3,40 +3,46 @@ import * as S from './TeamMatchingPage.styles';
 import { useState } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 
+const waitMembers = [
+  {
+    id: 1,
+    name: '홍길동',
+    email: 'user1@example.com'
+  },
+  {
+    id: 2,
+    name: '홍길동2',
+    email: 'user2@example.com'
+  }
+]
+const addedMembers = [
+  {
+    id:1,
+    name: '홍길동',
+    email: 'user1@example.com'
+  },
+  {
+    id:2,
+    name: '홍길동2',
+    email: 'user2@example.com'
+  },
+  {
+    id:3,
+    name: '홍길동2',
+    email: 'user2@example.com'
+  }
+]
+
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
   const [userMail, setUserMail] = useState<string>('');
 
   const [input, setInput] = useState('')
 
-  const handleInputChange = (e:any) => setTeamName(e.target.value)
-  const isErrorName = false;
-  const isErrorCount = teamName === ''; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
-  const waitMembers = [
-    {
-      id: 1,
-      name: '홍길동',
-      email: 'user1@example.com'
-    },
-    {
-      id: 2,
-      name: '홍길동2',
-      email: 'user2@example.com'
-    }
-  ]
-  const addedMembers = [
-    {
-      id:1,
-      name: '홍길동',
-      email: 'user1@example.com'
-    },
-    {
-      id:2,
-      name: '홍길동2',
-      email: 'user2@example.com'
-    }
-  ]
-  console.log('teamName:', teamName);
+  const isErrorName = teamName === '';
+  const isErrorCount = addedMembers.length !== 3; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
+  const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
+
   return (
     <S.TeamMathingWrapper>
       <S.CardContainer>
@@ -48,9 +54,9 @@ export const TeamMatchingPage = () => {
           <Stack spacing='8'>
             <Box>
               <S.MiniTitle>팀 이름</S.MiniTitle>
-              <FormControl isInvalid={isErrorCount}>
-                <Input placeholder='팀 이름을 입력해주세요.' value={teamName} onChange={handleInputChange} />
-                {!isErrorCount || <FormErrorMessage>팀 이름은 필수입니다.</FormErrorMessage>}
+              <FormControl isInvalid={isErrorName}>
+                <Input placeholder='팀 이름을 입력해주세요.' value={teamName} onChange={(e) => setTeamName(e.target.value)} />
+                {!isErrorName || <FormErrorMessage>팀 이름은 필수입니다.</FormErrorMessage>}
               </FormControl>
             </Box>
             <Box>
@@ -85,7 +91,7 @@ export const TeamMatchingPage = () => {
             <Button colorScheme='facebook' variant='solid'>
               취소하기
             </Button>
-            <Button colorScheme='facebook' variant='outline'>
+            <Button colorScheme='facebook' variant='outline' isDisabled={!isErrorTeamMatching}>
               팀 생성하기
             </Button>
           </Stack>
