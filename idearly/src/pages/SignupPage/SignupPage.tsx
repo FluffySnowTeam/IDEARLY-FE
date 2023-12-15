@@ -40,7 +40,7 @@ export const SignupPage = () => {
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
-  const { data, mutate } = useSignupMutation();
+  const { mutate } = useSignupMutation();
   const handleSignup = (data: IUserSignupRequest) => {
     mutate({
       email: data.email,
@@ -48,7 +48,6 @@ export const SignupPage = () => {
       password: data.password,
     });
   };
-  console.log(data);
 
   return (
     <S.SignupWrapper onSubmit={handleSubmit(handleSignup)}>

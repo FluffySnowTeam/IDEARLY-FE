@@ -52,6 +52,10 @@ export const LoginPage = () => {
           <S.CardBodySection>
             <LoginForm register={register} errors={errors} />
           </S.CardBodySection>
+          <div>
+            회원이 아니신가신가요?
+            <div>회원가입하기</div>
+          </div>
           <S.CardFooterSection>
             <S.SubmitButton
               disabled={!isNoneOfTheConditionsTrue}

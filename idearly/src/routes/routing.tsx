@@ -12,31 +12,12 @@ import {
   TeamMatchingPage,
   WaitingPage,
 } from "../pages";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/algorithm-solving/:id",
-        element: <AlgorithmSolvingPage />,
-      },
-      {
-        path: "/admin",
-        element: <AdminPage />,
-      },
-      {
-        path: "/complete",
-        element: <CompletePage />,
-      },
-      {
-        path: "/detail/:id",
-        element: <DetailPage />,
-      },
       {
         path: "/login",
         element: <LoginPage />,
@@ -46,16 +27,42 @@ const router = createBrowserRouter([
         element: <SignupPage />,
       },
       {
-        path: "/mypage",
-        element: <MyPage />,
+        path: "/",
+        element: <HomePage />,
       },
       {
-        path: "/matching",
-        element: <TeamMatchingPage />,
-      },
-      {
-        path: "/waiting/:id",
-        element: <WaitingPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/algorithm-solving/:id",
+            element: <AlgorithmSolvingPage />,
+          },
+          {
+            path: "/admin",
+            element: <AdminPage />,
+          },
+          {
+            path: "/complete",
+            element: <CompletePage />,
+          },
+          {
+            path: "/detail/:id",
+            element: <DetailPage />,
+          },
+
+          {
+            path: "/mypage",
+            element: <MyPage />,
+          },
+          {
+            path: "/matching",
+            element: <TeamMatchingPage />,
+          },
+          {
+            path: "/waiting/:id",
+            element: <WaitingPage />,
+          },
+        ],
       },
     ],
   },
