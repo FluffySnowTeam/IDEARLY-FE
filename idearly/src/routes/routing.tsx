@@ -1,5 +1,5 @@
-import { createBrowserRouter } from 'react-router-dom'
-import Layout from '../layout/Layout'
+import { createBrowserRouter } from "react-router-dom";
+import Layout from "../layout/Layout";
 import {
   AdminPage,
   AlgorithmSolvingPage,
@@ -8,52 +8,57 @@ import {
   HomePage,
   LoginPage,
   MyPage,
+  SignupPage,
   TeamMatchingPage,
   WaitingPage,
-} from '../pages'
+} from "../pages";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <HomePage />,
       },
       {
-        path: '/algorithm-solving',
+        path: "/algorithm-solving/:id",
         element: <AlgorithmSolvingPage />,
       },
       {
-        path: '/admin',
+        path: "/admin",
         element: <AdminPage />,
       },
       {
-        path: '/complete',
+        path: "/complete",
         element: <CompletePage />,
       },
       {
-        path: '/detail/:id',
+        path: "/detail/:id",
         element: <DetailPage />,
       },
       {
-        path: '/login',
+        path: "/login",
         element: <LoginPage />,
       },
       {
-        path: '/mypage',
+        path: "/signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "/mypage",
         element: <MyPage />,
       },
       {
-        path: '/matching',
+        path: "/matching",
         element: <TeamMatchingPage />,
       },
       {
-        path: '/waiting',
+        path: "/waiting/:id",
         element: <WaitingPage />,
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;
