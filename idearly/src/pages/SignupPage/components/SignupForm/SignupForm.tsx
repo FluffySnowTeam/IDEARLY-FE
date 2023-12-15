@@ -19,6 +19,13 @@ export const SignupForm = ({
         register={register("email")}
       />
       <SignupValidationInput
+        label="이름"
+        type="name"
+        placeholder="이름을 입력해주세요."
+        errors={errors?.name}
+        register={register("name")}
+      />
+      <SignupValidationInput
         label="비밀번호"
         type="password"
         placeholder="비밀번호를 입력해주세요."

@@ -25,7 +25,7 @@ export const SiteName = styled.div`
   margin-left: 0.3rem;
 `;
 
-export const LoginWrapper = styled.div`
+export const LoginWrapper = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

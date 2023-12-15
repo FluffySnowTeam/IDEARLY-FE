@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { IValidationInput } from "./SignupValidationInput.types";
 import * as S from "./SignupValidationInput.styles";
+import { useEmailCheckMutation } from "../../../../hooks/useSignupMutation";
 
 export const SignupValidationInput = ({
   label,
@@ -10,10 +11,17 @@ export const SignupValidationInput = ({
   register,
   watch,
 }: PropsWithChildren<IValidationInput>) => {
-  // 중복검사 api 로직 작성 예정
   const isEmailInput = type === "email";
   const isError = errors && errors.message;
   const emailValue = watch?.("email");
+
+  // 수정될 수 있음
+  const { mutate: emailCheckMutate } = useEmailCheckMutation();
+  const handleEmailCheck = () => {
+    if (emailValue) {
+      emailCheckMutate({ email: emailValue });
+    }
+  };
 
   return (
     <>
@@ -27,7 +35,10 @@ export const SignupValidationInput = ({
           />
         </S.ValidationInputWrapper>
         {isEmailInput && (
-          <S.ValidationButton disabled={!emailValue || !!isError}>
+          <S.ValidationButton
+            onClick={handleEmailCheck}
+            disabled={!emailValue || !!isError}
+          >
             중복검사
           </S.ValidationButton>
         )}
