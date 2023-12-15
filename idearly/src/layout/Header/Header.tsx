@@ -15,7 +15,7 @@ export const Header = () => {
   };
 
   const handleLogout = () => {
-    console.log("코드 작성중");
+    console.log("코드 작성 예정");
   };
 
   return (
@@ -38,7 +38,7 @@ export const Header = () => {
                 {text}
               </div>
             ))}
-        {!accessToken ? (
+        {!!accessToken ? (
           <div onClick={handleLogout}>로그아웃</div>
         ) : (
           <div onClick={() => handleMoveToPath("/login")}>로그인</div>
