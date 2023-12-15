@@ -1,13 +1,19 @@
 import type { IUserRequest } from "../../types";
 import { axiosInstance } from "./axios";
 
-// 회원가입 요청 fetcher
+// 회원가입 요청
 export const registerUser = async (payload: IUserRequest) => {
-  const response = await axiosInstance.post("/api/register", payload);
-  return response.data; // 서버의 응답을 반환합니다.
+  const response = await axiosInstance.post("/api/signup", payload);
+  return response.data;
 };
 
-export const checkEmailDuplication = async (payload: string) => {
-  const response = await axiosInstance.post("/api/check-email", { payload });
-  return response.data; // 여기서 서버의 응답을 반환합니다.
+// 이메일 중복 체크 요청
+export const checkEmailDuplication = async (payload: { email: string }) => {
+  const response = await axiosInstance.post("/api/check-email", payload);
+  return response.data;
+};
+
+// 로그인 요청
+export const loginUser = async (payload: IUserRequest) => {
+  return await axiosInstance.post("/api/login", payload);
 };
