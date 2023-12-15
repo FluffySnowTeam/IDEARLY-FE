@@ -11,7 +11,7 @@ interface IUserType {
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
-  // const [userMail, setUserMail] = useState<string>('');
+  const [userMail, setUserMail] = useState<string>('');
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<IUserType>({
     name: '',
@@ -37,6 +37,7 @@ export const TeamMatchingPage = () => {
   let timer: any;
 
   const debounceSearch = (value: string) => {
+    setUserMail(value);
     clearTimeout(timer);
     timer = setTimeout(() => {
       // setUserMail(value);
@@ -59,6 +60,11 @@ export const TeamMatchingPage = () => {
   const handleUserClick = () => {
     setIsShowUser(false);
     setAddedMembers((prev) => [...prev, userInfo]);
+    setUserMail('');
+  }
+
+  const handleDelete = (email: string) => {
+    setAddedMembers(addedMembers.filter((user) => user.email !== email));
   }
 
   return (
@@ -78,8 +84,14 @@ export const TeamMatchingPage = () => {
               </FormControl>
             </Box>
             <Box>
-              <S.MiniTitle>맴버 추가({addedMembers.length}/3)</S.MiniTitle>
+              <S.MiniTitle>맴버 추가({addedMembers.length+1}/3)</S.MiniTitle>
               <S.HStackWrapper spacing={5}>
+                <S.TagWrapper
+                  size='lg'
+                  borderRadius='full'
+                  variant='solid'
+                >                  나
+                </S.TagWrapper>
                 {addedMembers.map((user) => (
                   <S.TagWrapper
                     size='lg'
@@ -89,7 +101,7 @@ export const TeamMatchingPage = () => {
                   >
                     <S.TagLabelName>{user.name}</S.TagLabelName>
                     <S.TagLabeEmail>({user.email})</S.TagLabeEmail>
-                    <TagCloseButton />
+                    <TagCloseButton onClick={() => handleDelete(user.email)} />
                   </S.TagWrapper>
                 ))}
               </S.HStackWrapper>
@@ -97,6 +109,7 @@ export const TeamMatchingPage = () => {
                 type='email' 
                 placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' 
                 onChange={(e)=>debounceSearch(e.target.value)}
+                value={userMail}
               />
               {/* 유저 보여주는데 버튼을 사용하는게 적절할까요? 처음에는 Tag를 사용해볼까 했는데... */}
               {
