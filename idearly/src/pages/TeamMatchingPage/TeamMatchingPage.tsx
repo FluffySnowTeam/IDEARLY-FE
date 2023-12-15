@@ -72,21 +72,6 @@ export const TeamMatchingPage = () => {
               </FormControl>
               <Input placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' onChange={(e)=>setUserMail(e.target.value)} />
             </Box>
-
-            <Box>
-              <S.MiniTitle>수락 대기중인 맴버</S.MiniTitle>
-              {
-                waitMembers.map((user) => {
-                  return (
-                    <S.WatingWrapper key={user.id}>
-                      <S.MemberText>{user.name}({user.email})</S.MemberText>
-                      <Button variant='link'>취소하기</Button>
-                    </S.WatingWrapper>
-                  )
-                })
-              }
-            </Box>
-
           </Stack>
         </S.CardBodySection>
         
