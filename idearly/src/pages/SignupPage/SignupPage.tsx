@@ -6,6 +6,7 @@ import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
 import { IUserSignupRequest } from "../../types";
 import { useSignupMutation } from "../../hooks/useSignupMutation";
+import { useNavigate } from "react-router-dom";
 
 export const SignupPage = () => {
   const {
@@ -49,6 +50,12 @@ export const SignupPage = () => {
     });
   };
 
+  const navigate = useNavigate();
+
+  const handleMoveToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <S.SignupWrapper onSubmit={handleSubmit(handleSignup)}>
       <S.SignupTitle>
@@ -62,6 +69,10 @@ export const SignupPage = () => {
         <S.CardBodySection>
           <SignupForm register={register} watch={watch} errors={errors} />
         </S.CardBodySection>
+        <S.LoginPrompt>
+          회원이신가요?
+          <div onClick={handleMoveToLogin}>로그인하기</div>
+        </S.LoginPrompt>
         <S.CardFooterSection>
           <S.SubmitButton
             type="submit"

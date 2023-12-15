@@ -6,6 +6,7 @@ import { LoginForm } from "./components";
 import { LOGIN_SCHEMA, RegisterSchemaType } from "../../schemas/login.schema";
 import { useLoginMutation } from "../../hooks";
 import { IUserRequest } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const {
@@ -38,6 +39,12 @@ export const LoginPage = () => {
     mutate(data);
   };
 
+  const navigate = useNavigate();
+
+  const handleMoveToSignup = () => {
+    navigate("/signup");
+  };
+
   return (
     <div>
       <S.LoginWrapper onSubmit={handleSubmit(handleLogin)}>
@@ -52,10 +59,10 @@ export const LoginPage = () => {
           <S.CardBodySection>
             <LoginForm register={register} errors={errors} />
           </S.CardBodySection>
-          <div>
+          <S.SignupPrompt>
             회원이 아니신가신가요?
-            <div>회원가입하기</div>
-          </div>
+            <div onClick={handleMoveToSignup}>회원가입하기</div>
+          </S.SignupPrompt>
           <S.CardFooterSection>
             <S.SubmitButton
               disabled={!isNoneOfTheConditionsTrue}
