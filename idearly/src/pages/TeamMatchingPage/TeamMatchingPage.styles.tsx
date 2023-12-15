@@ -51,14 +51,3 @@ export const MiniTitle = styled(Text)`
   font-weight: bold;
   margin-bottom: 8px;
 `
-
-export const WatingWrapper = styled.div`
-  display: flex;
-  width: 60%;
-  // background-color: red;
-  justify-content: space-between;
-`;
-
-export const MemberText = styled(Text)`
-  color: #718096;
-`;
