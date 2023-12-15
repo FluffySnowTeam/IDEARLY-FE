@@ -3,29 +3,33 @@ import * as S from './TeamMatchingPage.styles';
 import { useState, useEffect } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 
-const addedMembers = [
-  {
-    id:1,
-    name: '홍길동',
-    email: 'user1@example.com'
-  },
-  {
-    id:2,
-    name: '홍길동2',
-    email: 'user2@example.com'
-  },
-  {
-    id:3,
-    name: '홍길동2',
-    email: 'user3@example.com'
-  }
-]
+
+interface IUserType {
+  name: string,
+  email: string,
+}
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
   // const [userMail, setUserMail] = useState<string>('');
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState('');
+  const [userInfo, setUserInfo] = useState<IUserType>({
+    name: '',
+    email: ''
+  });
+  const [addedMembers, setAddedMembers] = useState<IUserType[]>([
+    {
+      name: '홍길동',
+      email: 'user1@example.com'
+    },
+    {
+      name: '홍길동2',
+      email: 'user2@example.com'
+    },
+
+  ]);
+
+
   const isErrorName = teamName === '';
   const isErrorCount = addedMembers.length !== 3; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
@@ -39,12 +43,22 @@ export const TeamMatchingPage = () => {
       // 여기에서 백엔드로 api 요청 보내기
       if (value === 'user@example.com'){
         setIsShowUser(true);
-        setUserInfo('홍길동(user@example.com)');
+        setUserInfo({name: '홍길동3', email: 'user4@example.com'});
+
+        // setUserInfo('홍길동(user@example.com)');
       } else {
         setIsShowUser(false);
-        setUserInfo('');
+        setUserInfo({
+          name: '',
+          email: ''
+        });
       }
     }, 400);
+  }
+
+  const handleUserClick = () => {
+    setIsShowUser(false);
+    setAddedMembers((prev) => [...prev, userInfo]);
   }
 
   return (
@@ -88,9 +102,10 @@ export const TeamMatchingPage = () => {
               {
                 isShowUser
                   &&
-                <S.ShowUserBtn colorScheme='gray'>
+                <S.ShowUserBtn colorScheme='gray' onClick={handleUserClick}>
                   <TagLeftIcon boxSize='12px' as={AddIcon} />
-                  {userInfo}
+                  {userInfo.name}
+                  {userInfo.email}
                 </S.ShowUserBtn>
               }
 
