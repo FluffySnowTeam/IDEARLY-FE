@@ -4,13 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as S from "./LoginPage.styles";
 import { LoginForm } from "./components";
 import { LOGIN_SCHEMA, RegisterSchemaType } from "../../schemas/login.schema";
+import { useLoginMutation } from "../../hooks";
+import { IUserRequest } from "../../types";
 
 export const LoginPage = () => {
   const {
     register,
     formState: { errors, isDirty },
     watch,
-    // handleSubmit,
+    handleSubmit,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(LOGIN_SCHEMA),
     mode: "onChange",
@@ -31,9 +33,14 @@ export const LoginPage = () => {
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
+  const { mutate } = useLoginMutation();
+  const handleLogin = (data: IUserRequest) => {
+    mutate(data);
+  };
+
   return (
     <div>
-      <S.LoginWrapper>
+      <S.LoginWrapper onSubmit={handleSubmit(handleLogin)}>
         <S.LoginTitle>
           <S.Title>{SignupPageConfig.title}</S.Title>
           <S.SiteName>{SignupPageConfig.SiteName}</S.SiteName>
@@ -49,6 +56,7 @@ export const LoginPage = () => {
             <S.SubmitButton
               disabled={!isNoneOfTheConditionsTrue}
               colorScheme="blue"
+              type="submit"
             >
               로그인하기
             </S.SubmitButton>

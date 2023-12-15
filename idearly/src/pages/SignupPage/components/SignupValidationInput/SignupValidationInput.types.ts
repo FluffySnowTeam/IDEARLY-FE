@@ -5,6 +5,7 @@ export interface IValidationInput {
   placeholder: string;
   watch?: UseFormWatch<{
     email: string;
+    name: string;
     password: string;
     confirmPassword: string;
   }>;
