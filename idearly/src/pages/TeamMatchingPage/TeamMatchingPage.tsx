@@ -13,6 +13,7 @@ export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
   const [userMail, setUserMail] = useState<string>('');
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
+  const MAX_MEMBER = 2;
   const [userInfo, setUserInfo] = useState<IUserType>({
     name: '',
     email: ''
@@ -31,7 +32,7 @@ export const TeamMatchingPage = () => {
 
 
   const isErrorName = teamName === '';
-  const isErrorCount = addedMembers.length !== 3; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
+  const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
   let timer: any;
@@ -79,12 +80,16 @@ export const TeamMatchingPage = () => {
             <Box>
               <S.MiniTitle>팀 이름</S.MiniTitle>
               <FormControl isInvalid={isErrorName}>
-                <Input placeholder='팀 이름을 입력해주세요.' value={teamName} onChange={(e) => setTeamName(e.target.value)} />
+                <Input
+                  placeholder='팀 이름을 입력해주세요.' 
+                  value={teamName} 
+                  onChange={(e) => setTeamName(e.target.value)}
+                />
                 {!isErrorName || <FormErrorMessage>팀 이름은 필수입니다.</FormErrorMessage>}
               </FormControl>
             </Box>
             <Box>
-              <S.MiniTitle>맴버 추가({addedMembers.length+1}/3)</S.MiniTitle>
+              <S.MiniTitle>맴버 추가({addedMembers.length+1}/{MAX_MEMBER+1})</S.MiniTitle>
               <S.HStackWrapper spacing={5}>
                 <S.TagWrapper
                   size='lg'
@@ -110,6 +115,7 @@ export const TeamMatchingPage = () => {
                 placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' 
                 onChange={(e)=>debounceSearch(e.target.value)}
                 value={userMail}
+                isDisabled={!isErrorCount}
               />
               {/* 유저 보여주는데 버튼을 사용하는게 적절할까요? 처음에는 Tag를 사용해볼까 했는데... */}
               {
