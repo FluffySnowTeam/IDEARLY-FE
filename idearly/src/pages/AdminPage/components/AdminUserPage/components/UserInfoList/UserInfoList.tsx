@@ -1,17 +1,7 @@
 import { Tbody, Td, Tr } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
-
-interface IUserInfo {
-  id: string;
-  name: string;
-  email: string;
-  competition: string[];
-  team: string[];
-}
-
-interface IUserInfoList {
-  userInfo: IUserInfo;
-}
+import type { IUserInfoList } from "./UserInfoList.types";
+import * as S from "./UserInfoList.styles";
 
 export const UserInfoList = ({
   userInfo,
@@ -25,9 +15,8 @@ export const UserInfoList = ({
         <Td>{id}</Td>
         <Td>{name}</Td>
         <Td>{email}</Td>
-        <Td>{competitionStr}</Td>{" "}
-        {/* competition 배열을 하나의 문자열로 변환하여 표시 */}
-        <Td>{teamStr}</Td> {/* team 배열을 하나의 문자열로 변환하여 표시 */}
+        <S.WrapTextTd>{competitionStr}</S.WrapTextTd>
+        <S.WrapTextTd>{teamStr}</S.WrapTextTd>
       </Tr>
     </Tbody>
   );

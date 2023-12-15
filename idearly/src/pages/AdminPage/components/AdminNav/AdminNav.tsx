@@ -8,6 +8,7 @@ export const AdminNav = () => {
   const handleMoveToNav = (path: string) => {
     navigate(`/admin/${path}`);
   };
+
   return (
     <S.AdminNavContainer>
       <S.AdminNavTitle>관리자 페이지</S.AdminNavTitle>

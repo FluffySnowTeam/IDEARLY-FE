@@ -9,6 +9,8 @@ export const AdminNavContainer = styled(Box)`
   padding: 20px;
   width: 15vw;
   height: 93vh;
+  position: sticky;
+  top: 7vh;
 `;
 
 export const AdminNavTitle = styled.div`
