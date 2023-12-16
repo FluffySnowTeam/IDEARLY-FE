@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <AlgorithmSolvingPage />,
       },
       {
-        path: "/admin",
+        path: "/admin/:path",
         element: <AdminPage />,
       },
       {
