@@ -6,6 +6,7 @@ import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
 import { IUserSignupRequest } from "../../types";
 import { useSignupMutation } from "../../hooks/useSignupMutation";
+import { useNavigate } from "react-router-dom";
 
 export const SignupPage = () => {
   const {
@@ -40,17 +41,7 @@ export const SignupPage = () => {
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
-  // const onValid = (data: IUserSignupRequest) =>
-  //   console.log(
-  //     {
-  //       email: data.email,
-  //       name: data.name,
-  //       password: data.password,
-  //     },
-  //     "onvalid"
-  //   );
-
-  const { data, mutate } = useSignupMutation();
+  const { mutate } = useSignupMutation();
   const handleSignup = (data: IUserSignupRequest) => {
     mutate({
       email: data.email,
@@ -58,7 +49,12 @@ export const SignupPage = () => {
       password: data.password,
     });
   };
-  console.log(data);
+
+  const navigate = useNavigate();
+
+  const handleMoveToLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <S.SignupWrapper onSubmit={handleSubmit(handleSignup)}>
@@ -73,6 +69,10 @@ export const SignupPage = () => {
         <S.CardBodySection>
           <SignupForm register={register} watch={watch} errors={errors} />
         </S.CardBodySection>
+        <S.LoginPrompt>
+          회원이신가요?
+          <div onClick={handleMoveToLogin}>로그인하기</div>
+        </S.LoginPrompt>
         <S.CardFooterSection>
           <S.SubmitButton
             type="submit"
