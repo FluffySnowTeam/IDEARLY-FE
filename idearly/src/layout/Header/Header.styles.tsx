@@ -10,6 +10,10 @@ export const HeaderContainer = styled(Box)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
 `;
 
 export const LogoContainer = styled.div`
