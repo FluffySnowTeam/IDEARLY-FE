@@ -2,6 +2,7 @@ import { Box, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, 
 import * as S from './TeamMatchingPage.styles';
 import { useState, useEffect } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
+import useDebounce from '../../hooks/useDebounce';
 
 
 interface IUserType {
@@ -35,28 +36,21 @@ export const TeamMatchingPage = () => {
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
-  let timer: any;
+  const debouncedValue = useDebounce(userMail, 400);
 
-  const debounceSearch = (value: string) => {
-    setUserMail(value);
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      // setUserMail(value);
-      // 여기에서 백엔드로 api 요청 보내기
-      if (value === 'user@example.com'){
-        setIsShowUser(true);
-        setUserInfo({name: '홍길동3', email: 'user4@example.com'});
-
-        // setUserInfo('홍길동(user@example.com)');
-      } else {
-        setIsShowUser(false);
-        setUserInfo({
-          name: '',
-          email: ''
-        });
-      }
-    }, 400);
-  }
+  useEffect(() => {
+    if (debouncedValue === 'user@example.com'){
+      setIsShowUser(true);
+      setUserInfo({name: '홍길동3', email: 'user4@example.com'});
+      // setUserInfo('홍길동(user@example.com)');
+    } else {
+      setIsShowUser(false);
+      setUserInfo({
+        name: '',
+        email: ''
+      });
+    }
+  }, [debouncedValue]);
 
   const handleUserClick = () => {
     setIsShowUser(false);
@@ -113,7 +107,7 @@ export const TeamMatchingPage = () => {
               <Input 
                 type='email' 
                 placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' 
-                onChange={(e)=>debounceSearch(e.target.value)}
+                onChange={(e)=>setUserMail(e.target.value)}
                 value={userMail}
                 isDisabled={!isErrorCount}
               />
