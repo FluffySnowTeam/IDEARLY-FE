@@ -8,8 +8,9 @@ import { useState } from 'react';
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const navigate = useNavigate();
   const path = useLocation();
+  path.search = `?id=${fakeProblem[0].id}`;
   const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
-    null
+    fakeProblem[0].id
   );
   const selectedStyle = {
     backgroundColor: '#01228a',
