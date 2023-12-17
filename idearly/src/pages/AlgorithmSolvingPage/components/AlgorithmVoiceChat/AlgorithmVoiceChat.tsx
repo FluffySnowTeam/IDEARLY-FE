@@ -130,9 +130,9 @@
 //   );
 // };
 
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Socket, io } from "socket.io-client";
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Socket, io } from 'socket.io-client';
 
 interface IncomingCall {
   sdp: RTCSessionDescriptionInit;
@@ -150,7 +150,7 @@ export const AlgorithmVoiceChat = () => {
     micOn: false,
   });
 
-  const toggleFeature = (feature: "speakerOn" | "micOn") => {
+  const toggleFeature = (feature: 'speakerOn' | 'micOn') => {
     setToggleState((prev) => {
       const newState = {
         ...prev,
@@ -158,14 +158,14 @@ export const AlgorithmVoiceChat = () => {
       };
 
       // 마이크 상태 업데이트
-      if (feature === "micOn" && userStream.current) {
+      if (feature === 'micOn' && userStream.current) {
         userStream.current.getAudioTracks().forEach((track) => {
           track.enabled = newState.micOn;
         });
       }
 
       // 스피커 상태 (음소거) 업데이트
-      if (feature === "speakerOn" && userVideo.current) {
+      if (feature === 'speakerOn' && userVideo.current) {
         userVideo.current.muted = !newState.speakerOn;
       }
 
@@ -188,27 +188,27 @@ export const AlgorithmVoiceChat = () => {
         if (userVideo.current) userVideo.current.srcObject = stream;
         userStream.current = stream;
 
-        socketRef.current = io("/");
+        socketRef.current = io('/');
         if (socketRef.current) {
-          socketRef.current.emit("join room", id);
+          socketRef.current.emit('join room', id);
 
-          socketRef.current.on("other users", (userIDs) => {
-            console.log("Other users in the room: ", userIDs);
+          socketRef.current.on('other users', (userIDs) => {
+            console.log('Other users in the room: ', userIDs);
             userIDs.forEach((userID: string) => {
               const peer = createPeer(userID);
               peerRefs.current[userID] = peer;
             });
           });
 
-          socketRef.current.on("user joined", (userID) => {
-            console.log("User joined in the room: ", userID);
+          socketRef.current.on('user joined', (userID) => {
+            console.log('User joined in the room: ', userID);
             const peer = createPeer(userID);
             peerRefs.current[userID] = peer;
           });
 
-          socketRef.current.on("offer", handleRecieveCall);
-          socketRef.current.on("answer", handleAnswer);
-          socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
+          socketRef.current.on('offer', handleRecieveCall);
+          socketRef.current.on('answer', handleAnswer);
+          socketRef.current.on('ice-candidate', handleNewICECandidateMsg);
         }
       });
   }, [id]);
@@ -218,12 +218,12 @@ export const AlgorithmVoiceChat = () => {
     const peer = new RTCPeerConnection({
       iceServers: [
         {
-          urls: "stun:stun.stunprotocol.org",
+          urls: 'stun:stun.stunprotocol.org',
         },
         {
-          urls: "turn:numb.viagenie.ca",
-          credential: "muazkh",
-          username: "webrtc@live.com",
+          urls: 'turn:numb.viagenie.ca',
+          credential: 'muazkh',
+          username: 'webrtc@live.com',
         },
       ],
     });
@@ -237,7 +237,7 @@ export const AlgorithmVoiceChat = () => {
 
     peer.onicecandidate = (event) => {
       if (event.candidate) {
-        socketRef.current?.emit("ice-candidate", {
+        socketRef.current?.emit('ice-candidate', {
           target: userID,
           candidate: event.candidate,
         });
@@ -266,7 +266,7 @@ export const AlgorithmVoiceChat = () => {
           caller: socketRef.current?.id,
           sdp: peer.localDescription,
         };
-        socketRef.current?.emit("offer", payload);
+        socketRef.current?.emit('offer', payload);
       })
       .catch((e) => console.log(e));
   }
@@ -298,7 +298,7 @@ export const AlgorithmVoiceChat = () => {
           caller: socketRef.current?.id,
           sdp: peer.localDescription,
         };
-        socketRef.current?.emit("answer", payload);
+        socketRef.current?.emit('answer', payload);
       });
   }
 
@@ -325,13 +325,13 @@ export const AlgorithmVoiceChat = () => {
 
   function handleTrackEvent(e: RTCTrackEvent, userID: string) {
     if (!userID) {
-      console.error("UserID is null or undefined.");
+      console.error('UserID is null or undefined.');
       return;
     }
 
     let videoElement = partnerVideos.current[userID];
     if (!videoElement) {
-      videoElement = document.createElement("video");
+      videoElement = document.createElement('video');
       videoElement.autoplay = true;
       partnerVideos.current[userID] = videoElement;
       videoContainerRef.current?.appendChild(videoElement);
@@ -353,31 +353,31 @@ export const AlgorithmVoiceChat = () => {
 
     return () => {
       if (videoContainer) {
-        videoContainer.innerHTML = "";
+        videoContainer.innerHTML = '';
       }
     };
   }, [partnerVideos.current]);
 
   return (
     <>
-      <span
+      {/* <span
         onClick={() => {
           toggleFeature("speakerOn");
         }}
         className="material-icons"
       >
         {toggleState.speakerOn ? "volume_up" : "volume_off"}
-      </span>
+      </span> */}
       <span
         onClick={() => {
-          toggleFeature("micOn");
+          toggleFeature('micOn');
         }}
-        className="material-icons"
+        className='material-icons'
       >
-        {toggleState.micOn ? "mic" : "mic_off"}
+        {toggleState.micOn ? 'mic' : 'mic_off'}
       </span>
-      <video autoPlay ref={userVideo} style={{ display: "none" }} />
-      <div ref={videoContainerRef} style={{ display: "none" }} />
+      <video autoPlay ref={userVideo} style={{ display: 'none' }} />
+      <div ref={videoContainerRef} style={{ display: 'none' }} />
     </>
   );
 };
