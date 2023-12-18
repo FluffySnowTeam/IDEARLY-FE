@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./Header.styles";
 import Cookies from "js-cookie";
 import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
+import { useLogoutMutation } from "../../hooks/useLogoutMutation";
 
 export const Header = () => {
   const { pathname } = useLocation();
@@ -14,8 +15,9 @@ export const Header = () => {
     else navigate(path);
   };
 
+  const { mutate } = useLogoutMutation();
   const handleLogout = () => {
-    console.log("코드 작성 예정");
+    mutate();
   };
 
   return (
