@@ -109,11 +109,11 @@ export const TeamMatchingPage = () => {
               {
                 isShowUser
                   &&
-                <S.ShowUserBtn colorScheme='gray' onClick={handleUserClick}>
+                <S.ShowUserTag colorScheme='gray' onClick={handleUserClick}>
                   <TagLeftIcon boxSize='12px' as={AddIcon} />
                   {userInfo.name}
                   {userInfo.email}
-                </S.ShowUserBtn>
+                </S.ShowUserTag>
               }
             </Box>
           </Stack>

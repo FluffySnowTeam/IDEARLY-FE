@@ -52,7 +52,8 @@ export const MiniTitle = styled(Text)`
   margin-bottom: 8px;
 `
 
-export const ShowUserBtn = styled(Button)`
+export const ShowUserTag = styled(Tag)`
   width: 100%;
   margin-top: 10px;
+  padding: 10px;
 `
