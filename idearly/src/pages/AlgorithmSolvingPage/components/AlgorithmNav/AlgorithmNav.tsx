@@ -1,9 +1,9 @@
-import * as S from './AlgorithmNav.styles';
-import { AlgorithmVoiceChat } from '..';
-import { fakeProblem } from '../../../../mocks/problem.mocks';
-import type { Prop } from './AlgorithmNav.types';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import * as S from "./AlgorithmNav.styles";
+import { AlgorithmVoiceChat } from "..";
+import { fakeProblem } from "../../../../mocks/problem.mocks";
+import type { Prop } from "./AlgorithmNav.types";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const navigate = useNavigate();
@@ -13,12 +13,12 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     fakeProblem[0].id
   );
   const selectedStyle = {
-    backgroundColor: '#01228a',
-    color: 'white',
+    backgroundColor: "#01228a",
+    color: "white",
   };
   const defaultStyle = {
-    backgroundColor: 'initial',
-    color: '#01228a',
+    backgroundColor: "initial",
+    color: "#01228a",
   };
 
   const handleProblems = (id: string) => {

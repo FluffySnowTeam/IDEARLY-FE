@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import yorkie from 'yorkie-js-sdk';
-import { basicSetup, EditorView } from 'codemirror';
-import { keymap } from '@codemirror/view';
+import React, { useEffect, useRef } from "react";
+import yorkie from "yorkie-js-sdk";
+import { basicSetup, EditorView } from "codemirror";
+import { keymap } from "@codemirror/view";
 import {
   markdown,
   markdownKeymap,
   markdownLanguage,
-} from '@codemirror/lang-markdown';
-import { Transaction } from '@codemirror/state';
-import './style.css';
+} from "@codemirror/lang-markdown";
+import { Transaction } from "@codemirror/state";
+import "./style.css";
 
 const CodeMirrorComponent = () => {
   const editorParentRef = useRef();
@@ -16,11 +16,11 @@ const CodeMirrorComponent = () => {
   const viewRef = useRef();
 
   useEffect(() => {
-    console.log('useEffect is running');
+    console.log("useEffect is running");
     const initYorkie = async () => {
       // 01. create client with RPCAddr(envoy) then activate it.
-      const client = new yorkie.Client('https://api.yorkie.dev', {
-        apiKey: 'clskuqbj2k70uv115dv0',
+      const client = new yorkie.Client("https://api.yorkie.dev", {
+        apiKey: "clskuqbj2k70uv115dv0",
       });
       await client.activate();
 
@@ -29,7 +29,7 @@ const CodeMirrorComponent = () => {
         `codemirror6-${new Date()
           .toISOString()
           .substring(0, 10)
-          .replace(/-/g, '')}`
+          .replace(/-/g, "")}`
       );
       // const doc = new yorkie.Document('editor')
       await client.attach(doc);
@@ -38,7 +38,7 @@ const CodeMirrorComponent = () => {
         if (!root.content) {
           root.content = new yorkie.Text();
         }
-      }, 'create content if not exists');
+      }, "create content if not exists");
 
       // 02-2. subscribe document event.
       const syncText = () => {
@@ -54,14 +54,14 @@ const CodeMirrorComponent = () => {
       };
 
       doc.subscribe((event) => {
-        if (event.type === 'snapshot') {
+        if (event.type === "snapshot") {
           // The text is replaced to snapshot and must be re-synced.
           syncText();
         }
       });
 
-      doc.subscribe('$.content', (event) => {
-        if (event.type === 'remote-change') {
+      doc.subscribe("$.content", (event) => {
+        if (event.type === "remote-change") {
           const { operations } = event.value;
           handleOperations(operations);
         }
@@ -74,16 +74,14 @@ const CodeMirrorComponent = () => {
         if (viewUpdate.docChanged) {
           for (const tr of viewUpdate.transactions) {
             const events = [
-              'select',
-              'input',
-              'delete',
-              'move',
-              'undo',
-              'redo',
+              "select",
+              "input",
+              "delete",
+              "move",
+              "undo",
+              "redo",
             ];
-            if (
-              !events.map((event) => tr.isUserEvent(event)).some(Boolean)
-            ) {
+            if (!events.map((event) => tr.isUserEvent(event)).some(Boolean)) {
               continue;
             }
             if (tr.annotation(Transaction.remote)) {
@@ -91,11 +89,7 @@ const CodeMirrorComponent = () => {
             }
             tr.changes.iterChanges((fromA, toA, _, __, inserted) => {
               doc.update((root) => {
-                root.content.edit(
-                  fromA,
-                  toA,
-                  inserted.toJSON().join('\n')
-                );
+                root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
               }, `update content byA ${client.getID()}`);
             });
           }
@@ -104,7 +98,7 @@ const CodeMirrorComponent = () => {
 
       // 03-2. create codemirror instance
       const view = new EditorView({
-        doc: '',
+        doc: "",
         extensions: [
           basicSetup,
           markdown({ base: markdownLanguage }),
@@ -121,7 +115,7 @@ const CodeMirrorComponent = () => {
       // 03-3. define event handler that apply remote changes to local
       function handleOperations(operations) {
         operations.forEach((op) => {
-          if (op.type === 'edit') {
+          if (op.type === "edit") {
             handleEditOp(op);
           }
         });
@@ -150,9 +144,9 @@ const CodeMirrorComponent = () => {
 
   return (
     <>
-      <div ref={editorParentRef} className="editor"/>
+      <div ref={editorParentRef} className='editor' />
     </>
-  )
+  );
 };
 
 export default CodeMirrorComponent;

@@ -1,4 +1,4 @@
-import * as S from './AlgorithmProHeader.styles';
+import * as S from "./AlgorithmProHeader.styles";
 
 export const AlgorithmProHeader = () => {
   return (
