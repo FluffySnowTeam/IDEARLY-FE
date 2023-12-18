@@ -4,7 +4,13 @@ import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export const useLogoutMutation = ({ setIsLoginState }) => {
+interface UseLogoutMutationOptions {
+  setIsLoginState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const useLogoutMutation = ({
+  setIsLoginState,
+}: UseLogoutMutationOptions) => {
   const toast = useToast();
   const navigate = useNavigate();
   return useMutation({
