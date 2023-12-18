@@ -13,13 +13,16 @@ import * as StompJS from '@stomp/stompjs';
 import { fakeChatMsg } from '../../../../mocks/chat.mocks';
 import * as S from './AlgorithmTextChatModal.styles';
 import { TextChatBubbleMe, TextChatBubbleOthers } from './components';
+import { userInfoAtom } from '../../../../store';
+import { useAtomValue } from "jotai";
 
-// Response로 올 내용: chatMessage / senderName / sendDate
+// Response로 올 내용: chatMessage / senderName / senderEmail / sendDate / messageId
 // Request에 담겨야할 내용: chatMessage
 
 export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   const [value, setValue] = useState('');
   const [msg, setMsg] = useState<ChatRecivMessage[]>(fakeChatMsg);
+  const userInfo = useAtomValue(userInfoAtom);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = useRef<any>(null);
@@ -38,10 +41,13 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      brokerURL: 'ws://211.201.26.10:8080/ws/chat',
+      brokerURL: 'wss://idearly.site/ws/chat',
       // webSocketFactory: () => new SockJS("http://localhost:3000/ws/chat"),
       debug: function (str: string) {
         console.log(str);
+      },
+      connectHeaders: {
+        // accessToken: window.localStorage.getItem('authorization'),
       },
       onConnect: () => {   // 연결됐을때 실행할 함수
         console.log('success');
@@ -82,7 +88,9 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
     setMsg((prev) => [
       ...prev,
       {
-        senderName: '강윤지',
+        messageId: '12',
+        senderName: userInfo.name,
+        senderEmail: userInfo.email,
         chatMessage: message,
         sendDate: '2023-12-13',
       }
@@ -132,7 +140,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
             {
               // senderName을 보고 컴포넌트 선택
               msg.map((v) => 
-                v.senderName === '강윤지' ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
+                v.senderEmail === userInfo.email ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
               )
             }
             <div ref={msgEndRef}></div>

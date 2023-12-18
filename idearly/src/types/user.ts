@@ -5,7 +5,7 @@ export interface IUserRequest {
 
 export interface IUserResponse {
   status: "success";
-  data: IUserRequest;
+  data: IUserInfoResponse;
 }
 
 export interface IUserSignupRequest {
