@@ -1,20 +1,14 @@
-import { Box, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, HStack, Input, Stack, Tag, TagCloseButton, TagLabel, TagLeftIcon, Text } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton, TagLeftIcon } from '@chakra-ui/react'
 import * as S from './TeamMatchingPage.styles';
 import { useState, useEffect } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import useDebounce from '../../hooks/useDebounce';
-
-
-interface IUserType {
-  name: string,
-  email: string,
-}
+import { IUserType } from './TeamMatchingPage.types';
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
   const [userMail, setUserMail] = useState<string>('');
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
-  const MAX_MEMBER = 2;
   const [userInfo, setUserInfo] = useState<IUserType>({
     name: '',
     email: ''
@@ -30,7 +24,7 @@ export const TeamMatchingPage = () => {
     },
 
   ]);
-
+  const MAX_MEMBER = 2;
 
   const isErrorName = teamName === '';
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
@@ -41,8 +35,7 @@ export const TeamMatchingPage = () => {
   useEffect(() => {
     if (debouncedValue === 'user@example.com'){
       setIsShowUser(true);
-      setUserInfo({name: '홍길동3', email: 'user4@example.com'});
-      // setUserInfo('홍길동(user@example.com)');
+      setUserInfo({name: '홍길동3', email: 'user4@example.com'}); // 임시
     } else {
       setIsShowUser(false);
       setUserInfo({
@@ -89,7 +82,8 @@ export const TeamMatchingPage = () => {
                   size='lg'
                   borderRadius='full'
                   variant='solid'
-                >                  나
+                >
+                  나
                 </S.TagWrapper>
                 {addedMembers.map((user) => (
                   <S.TagWrapper
@@ -121,9 +115,7 @@ export const TeamMatchingPage = () => {
                   {userInfo.email}
                 </S.ShowUserBtn>
               }
-
             </Box>
-
           </Stack>
         </S.CardBodySection>
         
@@ -137,8 +129,7 @@ export const TeamMatchingPage = () => {
             </Button>
           </Stack>
         </S.CardFooterSection>
-
-    </S.CardContainer>
+      </S.CardContainer>
     </S.TeamMathingWrapper>
   );
 }
