@@ -1,13 +1,17 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./Header.styles";
-import Cookies from "js-cookie";
 import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
 import { useLogoutMutation } from "../../hooks/useLogoutMutation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const accessToken = Cookies.get("accessToken");
+  const [isLoginState, setIsLoginState] = useState(
+    !!Cookies.get("accessToken")
+  );
   const isAlgorithmPage = pathname.startsWith("/algorithm-solving");
 
   const handleMoveToPath = (path: string) => {
@@ -15,10 +19,27 @@ export const Header = () => {
     else navigate(path);
   };
 
-  const { mutate } = useLogoutMutation();
+  const { mutate } = useLogoutMutation({ setIsLoginState });
   const handleLogout = () => {
     mutate();
   };
+
+  useEffect(() => {
+    const axiosInterceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          setIsLoginState(false);
+          Cookies.remove("accessToken");
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(axiosInterceptor);
+    };
+  }, []);
 
   return (
     <S.HeaderContainer>
@@ -40,7 +61,7 @@ export const Header = () => {
                 {text}
               </div>
             ))}
-        {!!accessToken ? (
+        {isLoginState ? (
           <div onClick={handleLogout}>로그아웃</div>
         ) : (
           <div onClick={() => handleMoveToPath("/login")}>로그인</div>
