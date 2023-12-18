@@ -18,7 +18,7 @@ export default function MonacoY() {
 
   useEffect(() => {
     if (!editorRef.current) return;
-    
+
     awarenessRef.current = provider.awareness;
 
     // Monaco Editor의 커서 상태 변경 이벤트를 구독
@@ -61,25 +61,26 @@ export default function MonacoY() {
         defaultValue={`a: 2\nb: a + 30`}
         onMount={handleEditorDidMount}
       />
-      {Object.entries(cursorPositions).map(([clientId, cursor]) => (
-        clientId !== provider.awareness.clientID && (
-          <div
-            key={clientId}
-            className="cursor"
-            style={{
-              left: `${cursor.column * 10}px`, // Adjust styling as needed
-              top: `${cursor.lineNumber * 20}px`, // Adjust styling as needed
-            }}
-          ></div>
-        )
-      ))}
+      {Object.entries(cursorPositions).map(
+        ([clientId, cursor]) =>
+          clientId !== provider.awareness.clientID && (
+            <div
+              key={clientId}
+              className="cursor"
+              style={{
+                left: `${cursor.column * 10}px`, // Adjust styling as needed
+                top: `${cursor.lineNumber * 20}px`, // Adjust styling as needed
+              }}
+            ></div>
+          )
+      )}
       {currentUserCursor && (
         <div
           className="cursor"
           style={{
             left: `${currentUserCursor.column * 10}px`, // Adjust styling as needed
             top: `${currentUserCursor.lineNumber * 20}px`, // Adjust styling as needed
-            background: 'transparent', // Make it transparent or hide as needed
+            background: "transparent", // Make it transparent or hide as needed
           }}
         ></div>
       )}

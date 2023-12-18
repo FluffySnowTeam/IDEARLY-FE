@@ -5,12 +5,12 @@ export const AlgorithmProHeader = () => {
     <S.AlgorithmContainer>
       <div>
         <S.AlgorithmLanguage>
-          <option value='none'>언어 선택</option>
-          <option value='Python' selected>
+          <option value="none">언어 선택</option>
+          <option value="Python" selected>
             Python
           </option>
-          <option value='Java'>Java</option>
-          <option value='JavaScript'>JavaScript</option>
+          <option value="Java">Java</option>
+          <option value="JavaScript">JavaScript</option>
         </S.AlgorithmLanguage>
       </div>
     </S.AlgorithmContainer>

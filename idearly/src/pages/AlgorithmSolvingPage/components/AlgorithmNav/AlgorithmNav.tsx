@@ -44,7 +44,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
       </div>
       <S.NavIcons>
         <AlgorithmVoiceChat />
-        <span className='material-icons' onClick={onOpen}>
+        <span className="material-icons" onClick={onOpen}>
           chat
         </span>
       </S.NavIcons>

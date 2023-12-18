@@ -372,7 +372,7 @@ export const AlgorithmVoiceChat = () => {
         onClick={() => {
           toggleFeature("micOn");
         }}
-        className='material-icons'
+        className="material-icons"
       >
         {toggleState.micOn ? "mic" : "mic_off"}
       </span>

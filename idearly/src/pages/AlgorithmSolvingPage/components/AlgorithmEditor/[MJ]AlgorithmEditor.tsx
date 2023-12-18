@@ -37,9 +37,9 @@ export const AlgorithmEditor = () => {
       UOUO2
       <button onClick={showValue}>Show value</button>
       <Editor
-        height='90vh'
-        theme='vs-dark'
-        defaultLanguage='javascript'
+        height="90vh"
+        theme="vs-dark"
+        defaultLanguage="javascript"
         defaultValue={`a: 2
 b: a + 30`}
         onMount={handleEditorDidMount}

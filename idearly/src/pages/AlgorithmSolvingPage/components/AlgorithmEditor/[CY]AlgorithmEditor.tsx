@@ -144,7 +144,7 @@ const CodeMirrorComponent = () => {
 
   return (
     <>
-      <div ref={editorParentRef} className='editor' />
+      <div ref={editorParentRef} className="editor" />
     </>
   );
 };

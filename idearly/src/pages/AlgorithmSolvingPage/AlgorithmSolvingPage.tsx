@@ -5,9 +5,9 @@ import {
   AlgorithmProblem,
   AlgorithmResult,
   AlgorithmTextChatModal,
-} from './components';
-import * as S from './AlgorithmSolvingPage.styles';
-import { useDisclosure } from '@chakra-ui/react';
+} from "./components";
+import * as S from "./AlgorithmSolvingPage.styles";
+import { useDisclosure } from "@chakra-ui/react";
 
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,7 +26,7 @@ export const AlgorithmSolvingPage = () => {
             <div>
               <S.EditorButton>초기화</S.EditorButton>
               <S.EditorButton>실행</S.EditorButton>
-              <S.SubmitButton colorScheme='blue'>제출</S.SubmitButton>
+              <S.SubmitButton colorScheme="blue">제출</S.SubmitButton>
             </div>
           </S.EditorButtonWrapper>
         </S.AlgorithmEditorWrapper>
