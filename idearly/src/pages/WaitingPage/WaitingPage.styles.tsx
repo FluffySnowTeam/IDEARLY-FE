@@ -42,7 +42,7 @@ export const WaitingCardSubHeading = styled(Heading)`
 `;
 
 export const WaitingCardText = styled(Text)`
-  padding: 0rem 4rem 0rem 4rem;
+  padding: 1.5rem 4rem 0rem 4rem;
   font-size: 0.95rem;
 `;
 
