@@ -18,6 +18,7 @@ export const loginUser = async (payload: IUserRequest) => {
   return await axiosInstance.post("/api/login", payload);
 };
 
+// 로그아웃 요청
 export const logoutUser = async () => {
   return await axiosInstance.post("/api/logout");
 };
