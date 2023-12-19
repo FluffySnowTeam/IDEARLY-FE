@@ -2,8 +2,8 @@ export const fakeCompetitions = [
   {
     competitionId: "A201",
     title: "Global Algorithm Challenge 2024",
-    startDateTime: "2023-12-19T10:05:00.000Z",
-    endDateTime: "2023-12-19T10:05:30.000Z",
+    startDateTime: "2023-12-19T11:11:00.000Z",
+    endDateTime: "2023-12-19T11:11:30.000Z",
     description: `이 대회는 전 세계의 개발자들이 모여 복잡한 알고리즘 문제를 해결합니다. \n 참가자들은 최적화, 자료 구조, 알고리즘 설계 등 다양한 주제의 문제를 해결하며, 코딩 기술과 논리적 사고력을 겨룹니다.\n\n주의사항:\n1. 대회 기간 중에는 인터넷 사용이 제한됩니다.\n2. 모든 참가자는 대회 시작 전에 등록을 완료해야 합니다.\n3. 대회 중에는 외부 도움을 받을 수 없습니다.\n\n자세한 정보:\n- 대회는 2일간 진행되며, 다양한 난이도의 문제가 제공됩니다.\n- 참가자들은 개인 또는 팀으로 참여할 수 있습니다.\n- 모든 참가자에게는 대회 기념품이 제공됩니다.`,
     login: true,
     participate: true,
