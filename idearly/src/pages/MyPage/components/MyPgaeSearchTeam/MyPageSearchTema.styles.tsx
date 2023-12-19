@@ -31,3 +31,8 @@ export const SearchTeamTableContainer = styled(TableContainer)`
   padding: 0.5rem;
   margin-top: 1rem;
 `;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
