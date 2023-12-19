@@ -30,7 +30,6 @@ export const Header = () => {
       (error) => {
         if (error.response && error.response.status === 401) {
           setIsLoginState(false);
-          Cookies.remove("accessToken");
         }
         return Promise.reject(error);
       }
