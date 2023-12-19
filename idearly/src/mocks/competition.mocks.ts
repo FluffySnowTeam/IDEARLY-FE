@@ -18,9 +18,21 @@ export const fakeCompetitions = [
     description:
       "이 대회는 데이터 구조에 중점을 두고, 참가자들이 트리, 그래프, 해시 테이블 등의 복잡한 데이터 구조를 사용하여 효율적인 솔루션을 개발하도록 도전합니다. 창의적인 문제 해결과 효율적인 메모리 관리가 핵심입니다.",
     login: true,
-    participate: false,
+    participate: true,
     teamId: 1022,
     teamName: "Structure Wizards",
+  },
+  {
+    competitionId: "A205",
+    title: "Global Algorithm Challenge 2024",
+    startDateTime: "2024-05-10T08:00:00.000Z",
+    endDateTime: "2024-05-12T20:00:00.000Z",
+    description:
+      "이 대회는 전 세계의 개발자들이 모여 복잡한 알고리즘 문제를 해결합니다. 참가자들은 최적화, 자료 구조, 알고리즘 설계 등 다양한 주제의 문제를 해결하며, 코딩 기술과 논리적 사고력을 겨룹니다.",
+    login: true,
+    participate: true,
+    teamId: 10214,
+    teamName: "Code Masters",
   },
 ];
 
