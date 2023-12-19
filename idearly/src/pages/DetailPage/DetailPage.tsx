@@ -17,13 +17,6 @@ export const DetailPage = () => {
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition[0]);
 
-  // const handleMoveToPage = () => {
-  //   if (participate) {
-  //     navigate(`/waiting/${id}`);
-  //   } else {
-  //     navigate(`/matching`);
-  //   }
-  // };
   return (
     <>
       <CompetitionsModal
