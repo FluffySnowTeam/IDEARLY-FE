@@ -1,47 +1,95 @@
-import { Button } from "@chakra-ui/react";
+import * as S from "./WaitingPage.styles";
 import { WaitingPageConfig } from "../../constants";
+import { useParams } from "react-router-dom";
+import { fakeCompetitions } from "../../mocks/competition.mocks";
+import { useEffect, useState } from "react";
 
 export const WaitingPage = () => {
   const { title, subTitle } = WaitingPageConfig;
-  // const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const [timeLeft, setTimeLeft] = useState("");
 
-  // 대회 데이터 요청 필요
+  // 특정 대회 정보 상세
+  const selectedCompetition = fakeCompetitions.filter(
+    (competition) => competition.competitionId === id
+  );
 
-  // 유저정보에서 팀이 존재할 경우
-  // 1. 음성채팅 / 채팅 자동 참가
-  // 2. competition id로 이동 경로 params 전달
-  // const handleMoveToAlgorithm = () => {
-  // '2023.12.15 / 18:00' 형식의 날짜 문자열을 Date 객체로 변환
-  // const dateParts = date.split(" / ");
-  // const [year, month, day] = dateParts[0].split(".").map(Number);
-  // const [hours, minutes] = dateParts[1].split(":").map(Number);
+  const [timerVisible, setTimerVisible] = useState(false);
 
-  // const competitionDate = new Date(year, month - 1, day, hours, minutes);
-  // const now = new Date();
+  useEffect(() => {
+    if (!selectedCompetition) return;
+    const { startDateTime, endDateTime } = selectedCompetition[0];
+    const startLocal = new Date(
+      new Date(startDateTime).getTime() + new Date().getTimezoneOffset() * 60000
+    );
+    const endLocal = new Date(
+      new Date(endDateTime).getTime() + new Date().getTimezoneOffset() * 60000
+    );
 
-  // 현재 시간이 대회 시작 시간보다 이전이면 대기 페이지로 이동, 아니면 상세 페이지로 이동
-  //   if (now < competitionDate) {
-  //     navigate(`/waiting/${id}`);
-  //   } else {
-  //     navigate(`/algorithm-solving/${id}`);
-  //   }
-  // };
+    const updateTimer = () => {
+      const now = new Date();
+
+      if (now >= endLocal) {
+        setTimeLeft("대회가 종료되었습니다.");
+        setTimerVisible(false);
+      } else if (now >= startLocal) {
+        const elapsedSeconds = Math.floor(
+          (now.getTime() - startLocal.getTime()) / 1000
+        );
+        const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+        const remainingSeconds = elapsedSeconds % 60;
+        setTimeLeft(`대회시작 ${elapsedMinutes}분 ${remainingSeconds}초 경과`);
+        setTimerVisible(true);
+      } else {
+        const diff = startLocal.getTime() - now.getTime();
+        const minutes = Math.floor(diff / 1000 / 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft(`대회시작 ${minutes}분 ${seconds}초 전`);
+      }
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, [selectedCompetition]);
 
   return (
-    <div>
-      <div>
-        <div>{title}</div>
-        <div>{subTitle}</div>
-        <div>
-          <Button>주의사항</Button>
-          <Button>대회 입장</Button>
-          {/* {isCompetitionOpen ? (
-          ) : (
-            <Button>대회 시작까지 {restTime}</Button>
-          )} */}
-        </div>
-      </div>
-      <div></div>
-    </div>
+    <S.WaitingCardWrapper>
+      <S.WaitingCardBox
+        direction={{ base: "column", sm: "row" }}
+        overflow="hidden"
+        variant="outline"
+      >
+        <S.WaitingCardImage
+          objectFit="cover"
+          maxW={{ base: "100%", sm: "200px" }}
+          src="https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+          alt="Caffe Latte"
+        />
+
+        <S.WaitingCardStack>
+          <S.WaitingCardBody>
+            <S.WaitingCardHeading size="md">
+              대회 시작 전 주의사항
+            </S.WaitingCardHeading>
+
+            <S.WaitingCardText py="2">
+              Caffè latte is a coffee beverage of Italian origin made with
+              espresso and steamed milk.
+            </S.WaitingCardText>
+          </S.WaitingCardBody>
+
+          <S.WaitingCardFooter>
+            <S.WaitingCardButton
+              timerVisible={timerVisible}
+              variant="solid"
+              colorScheme="blue"
+            >
+              {timeLeft}
+            </S.WaitingCardButton>
+          </S.WaitingCardFooter>
+        </S.WaitingCardStack>
+      </S.WaitingCardBox>
+    </S.WaitingCardWrapper>
   );
 };
