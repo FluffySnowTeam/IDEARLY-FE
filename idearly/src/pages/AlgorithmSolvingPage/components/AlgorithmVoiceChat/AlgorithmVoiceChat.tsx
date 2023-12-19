@@ -360,14 +360,14 @@ export const AlgorithmVoiceChat = () => {
 
   return (
     <>
-      <span
+      {/* <span
         onClick={() => {
           toggleFeature("speakerOn");
         }}
         className="material-icons"
       >
         {toggleState.speakerOn ? "volume_up" : "volume_off"}
-      </span>
+      </span> */}
       <span
         onClick={() => {
           toggleFeature("micOn");
