@@ -14,12 +14,16 @@ export const AdminCompeTitleBox = styled.div`
   padding: 1.2rem 0;
 `;
 
-export const AdminCompeTitleModal = styled(Button)`
+export const AdminCompeAddButton = styled(Button)`
   margin-right: 4rem;
   width: 8rem;
   height: 3.5rem;
   background-color: #01228a;
   color: white;
+  :hover {
+    background-color: #01228a;
+    opacity: 0.5;
+  }
 `;
 
 export const AdminCompeTitle = styled.div`

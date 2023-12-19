@@ -6,6 +6,7 @@ import { fakeAllCompetitions } from "../../../../mocks/competition.mocks";
 import { Pagination } from "../../../../components";
 import { useState } from "react";
 import { AddProblemModal } from "..";
+import { AddCompetitionModal } from "../AddCompetitionModal/AddCompetitionModal";
 
 export const AdminCompetition = () => {
   const { id, name, date, edit } = AdminCompePageConfig;
@@ -13,14 +14,32 @@ export const AdminCompetition = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const startIdx = currentPage * itemsPerPage;
   const endIdx = (currentPage + 1) * itemsPerPage;
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isProblemModalOpen,
+    onOpen: onProblemModalOpen,
+    onClose: onProblemModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isCompetitionModalOpen,
+    onOpen: onCompetitionModalOpen,
+    onClose: onCompetitionModalClose,
+  } = useDisclosure();
 
   return (
     <S.AdminCompeContainer>
-      <AddProblemModal isOpen={isOpen} onClose={onClose} />
+      <AddProblemModal
+        isOpen={isProblemModalOpen}
+        onClose={onProblemModalClose}
+      />
+      <AddCompetitionModal
+        isOpen={isCompetitionModalOpen}
+        onClose={onCompetitionModalClose}
+      />
       <S.AdminCompeTitleBox>
         <S.AdminCompeTitle>대회 정보 리스트</S.AdminCompeTitle>
-        <S.AdminCompeTitleModal>대회 추가하기</S.AdminCompeTitleModal>
+        <S.AdminCompeAddButton onClick={onCompetitionModalOpen}>
+          대회 추가하기
+        </S.AdminCompeAddButton>
       </S.AdminCompeTitleBox>
       <S.AdminCompeTableContainer>
         <S.AdminTableContainer>
@@ -37,7 +56,7 @@ export const AdminCompetition = () => {
               <CompetitionInfoList
                 key={competition.competitionId}
                 competition={competition}
-                onOpen={onOpen}
+                onOpen={onProblemModalOpen}
               />
             ))}
           </Table>
