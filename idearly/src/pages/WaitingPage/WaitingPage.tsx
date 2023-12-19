@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export const WaitingPage = () => {
   const { title, subTitle, content } = WaitingPageConfig;
-  const contentWithLineBreaks = content.replace(/\n/g, "<br />");
   const { id } = useParams<{ id: string }>();
   const [timeLeft, setTimeLeft] = useState("");
   const [timerVisible, setTimerVisible] = useState(false);
@@ -66,7 +65,6 @@ export const WaitingPage = () => {
           src="/images/restImage.gif"
           alt="Caffe Latte"
         />
-
         <S.WaitingCardStack>
           <S.WaitingCardBody>
             <S.WaitingCardHeading size="md">{title}</S.WaitingCardHeading>
@@ -74,7 +72,9 @@ export const WaitingPage = () => {
               [ {subTitle} ]
             </S.WaitingCardSubHeading>
             <S.WaitingCardText
-              dangerouslySetInnerHTML={{ __html: contentWithLineBreaks }}
+              dangerouslySetInnerHTML={{
+                __html: content.replace(/\n/g, "<br />"),
+              }}
             ></S.WaitingCardText>
             <S.WaitingCardButton
               disabled={!timerVisible}
