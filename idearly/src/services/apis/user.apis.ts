@@ -17,3 +17,7 @@ export const checkEmailDuplication = async (payload: { email: string }) => {
 export const loginUser = async (payload: IUserRequest) => {
   return await axiosInstance.post("/api/login", payload);
 };
+
+export const logoutUser = async () => {
+  return await axiosInstance.post("/api/logout");
+};
