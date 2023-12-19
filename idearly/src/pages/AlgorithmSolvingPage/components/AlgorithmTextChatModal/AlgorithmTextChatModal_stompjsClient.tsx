@@ -20,7 +20,7 @@ import { useAtomValue } from "jotai";
 // Response로 올 내용: chatMessage / senderName / senderEmail / sendDate / messageId
 // Request에 담겨야할 내용: chatMessage
 
-export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
+export const AlgorithmTextChatModal_stompClient = ({isOpen, onClose}: Prop) => {
   const [value, setValue] = useState('');
   const [msg, setMsg] = useState<ChatRecivMessage[]>(fakeChatMsg);
   const userInfo = useAtomValue(userInfoAtom);
