@@ -1,4 +1,4 @@
-import { Table, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
+import { Button, Table, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./AdminCompetition.styles";
 import { AdminCompePageConfig } from "../../../../constants";
 import { CompetitionInfoList } from "./components";
@@ -20,6 +20,7 @@ export const AdminCompetition = () => {
       <AddProblemModal isOpen={isOpen} onClose={onClose} />
       <S.AdminCompeTitleBox>
         <S.AdminCompeTitle>대회 정보 리스트</S.AdminCompeTitle>
+        <S.AdminCompeTitleModal>대회 추가하기</S.AdminCompeTitleModal>
       </S.AdminCompeTitleBox>
       <S.AdminCompeTableContainer>
         <S.AdminTableContainer>
