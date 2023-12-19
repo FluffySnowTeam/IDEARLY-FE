@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { fakeCompetitions } from "../../mocks/competition.mocks";
 import { Button } from "@chakra-ui/react";
+import ReactMarkdown from "react-markdown";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
@@ -31,11 +32,9 @@ export const DetailPage = () => {
           <div>시작: {dateChange({ date: startDateTime })}</div>
           <div>종료: {dateChange({ date: endDateTime })}</div>
         </S.CompeDetailDate>
-        <S.CompeDetailDescription
-          dangerouslySetInnerHTML={{
-            __html: description.replace(/\n/g, "<br />"),
-          }}
-        ></S.CompeDetailDescription>
+        <S.CompeDetailDescription>
+          <ReactMarkdown>{description}</ReactMarkdown>
+        </S.CompeDetailDescription>
         <Button onClick={handleMoveToWaiting}>대회 참여하기</Button>
       </S.CompetitionDetailContainer>
     </>
