@@ -6,19 +6,19 @@ import { useNavigate } from "react-router-dom";
 export const CompetitionsCard = ({
   competition,
 }: PropsWithChildren<ICompetitionCard>) => {
-  const { id, title, subTitle, date } = competition;
+  const { competitionId, title, startDateTime, endDateTime } = competition;
   const navigate = useNavigate();
 
   const handleMoveToWaiting = () => {
     // 만약 대회에 소속된 팀이 있다면
-    navigate(`/waiting/${id}`);
+    navigate(`/waiting/${competitionId}`);
     // 만약 대회에 소속된 팀이 있다면 없다면?
     // navigate(`/waiting/${id}`);
   };
 
   // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
-    navigate(`/detail/${id}`);
+    navigate(`/detail/${competitionId}`);
   };
 
   return (
@@ -30,8 +30,8 @@ export const CompetitionsCard = ({
         <img src="/images/trophy.jpg" />
         <S.CompeCardBody>
           <S.CompeCardHeading size="md">{title}</S.CompeCardHeading>
-          <S.CompeText>{subTitle}</S.CompeText>
-          <S.CompeText>대회 시작일: {date}</S.CompeText>
+          <S.CompeText>대회 시작: {startDateTime}</S.CompeText>
+          <S.CompeText>대회 종료: {endDateTime}</S.CompeText>
           <S.CardDetailButton onClick={handleMoveToDetail}>
             대회 상세보기
           </S.CardDetailButton>

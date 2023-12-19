@@ -15,7 +15,10 @@ export const CompetitionsSection = ({
       <S.CompeSectionSubTitle>{subTitle}</S.CompeSectionSubTitle>
       <S.CompeCardContainer>
         {fakeCompetitions.map((competition) => (
-          <CompetitionsCard key={competition.id} competition={competition} />
+          <CompetitionsCard
+            key={competition.competitionId}
+            competition={competition}
+          />
         ))}
       </S.CompeCardContainer>
     </S.CompeSectionContainer>
