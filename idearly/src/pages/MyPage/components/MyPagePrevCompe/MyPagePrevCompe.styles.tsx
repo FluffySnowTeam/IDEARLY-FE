@@ -9,7 +9,7 @@ export const TableContainerWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 50px;
+  padding: 4rem;
 `;
 
 export const MyPagePrevCompeTitleBox = styled.div`

@@ -1,25 +1,24 @@
 import { useParams } from "react-router-dom";
-import { MyPageModifyInfo, MyPageNav, MyPagePrevCompe, MyPageSearchTeam, MyPageWithdraw } from "."
+import { MyPageCurrentTeam, MyPageModifyInfo, MyPageNav, MyPagePrevCompe, MyPageWithdraw } from "."
 import * as S from "./MyPage.styles";
 
 export const MyPage = () => {
   const { path } = useParams();
   console.log(path);
 
-  const render = () => {
+  const renderMyPage = () => {
     switch(path) {
-      case 'prev': return <MyPagePrevCompe /> 
-      case 'current': return <MyPageSearchTeam /> 
-      case 'modify': return <MyPageModifyInfo /> 
+      case 'previousCompetition': return <MyPagePrevCompe /> 
+      case 'currentTeam': return <MyPageCurrentTeam /> 
+      case 'modifyMyInfo': return <MyPageModifyInfo /> 
       case 'withdrawal': return <MyPageWithdraw /> 
-      default: return <MyPageSearchTeam /> 
+      default: return <MyPageCurrentTeam /> 
     }
   }
   return (
     <S.MyPageContainer>
       <MyPageNav />
-      {render()}
-      {/* <MyPageSearchTeam /> */}
+      {renderMyPage()}
     </S.MyPageContainer>
   )
 }

@@ -1,9 +1,9 @@
 import { Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import * as S from "./MyPageSearchTema.styles";
+import * as S from "./MyPageCurrentTeam.styles";
 import { curCompetition } from "../../../../mocks/curCompetition.mocks";
 import { dateChange } from "../../../../utils/dateChange";
 
-export const MyPageSearchTeam = () => {
+export const MyPageCurrentTeam = () => {
   return (
     <S.SearchTeamWrapper>
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
