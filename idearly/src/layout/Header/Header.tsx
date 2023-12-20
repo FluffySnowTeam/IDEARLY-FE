@@ -60,7 +60,7 @@ export const Header = () => {
                 {text}
               </div>
             ))}
-        {isLoginState ? (
+        {!isLoginState ? (
           <div onClick={handleLogout}>로그아웃</div>
         ) : (
           <div onClick={() => handleMoveToPath("/login")}>로그인</div>

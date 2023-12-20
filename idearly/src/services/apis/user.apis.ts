@@ -8,8 +8,10 @@ export const registerUser = async (payload: IUserRequest) => {
 };
 
 // 이메일 중복 체크 요청
-export const checkEmailDuplication = async (payload: { email: string }) => {
-  const response = await axiosInstance.post("/api/check-email", payload);
+export const checkEmailDuplication = async (payload: string) => {
+  const response = await axiosInstance.get(
+    `api/signup/email-check?email=${payload}`
+  );
   return response.data;
 };
 

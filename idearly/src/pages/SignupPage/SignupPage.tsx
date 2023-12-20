@@ -5,8 +5,13 @@ import * as S from "./SignupPage.styles";
 import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
 import { IUserSignupRequest } from "../../types";
-import { useSignupMutation } from "../../hooks/useSignupMutation";
+import {
+  useEmailCheckMutation,
+  useSignupMutation,
+} from "../../hooks/useSignupMutation";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { checkEmailDuplication } from "../../services/apis/user.apis";
 
 export const SignupPage = () => {
   const {
