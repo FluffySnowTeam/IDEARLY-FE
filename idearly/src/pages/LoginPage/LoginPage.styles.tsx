@@ -36,6 +36,17 @@ export const LoginWrapper = styled.form`
   margin-bottom: 20px;
 `;
 
+export const SignupPrompt = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 0.9rem;
+  div {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+  }
+`;
+
 export const CardContainer = styled(Card)`
   width: 38rem;
 `;

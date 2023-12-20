@@ -15,11 +15,16 @@ export const SignupValidationInput = ({
   const isError = errors && errors.message;
   const emailValue = watch?.("email");
 
-  // 수정될 수 있음
-  const { mutate: emailCheckMutate } = useEmailCheckMutation();
+  // const { mutate: emailCheckMutate } = useEmailCheckMutation();
+  // const handleEmailCheck = () => {
+  //   if (emailValue) {
+  //     emailCheckMutate({ email: emailValue });
+  //   }
+  // };
+  const { mutate: checkEmailMutate } = useEmailCheckMutation();
   const handleEmailCheck = () => {
     if (emailValue) {
-      emailCheckMutate({ email: emailValue });
+      checkEmailMutate(emailValue);
     }
   };
 
