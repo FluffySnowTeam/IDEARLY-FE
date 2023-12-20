@@ -1,8 +1,13 @@
 export interface ICompetition {
-  id: string;
+  competitionId: string;
   title: string;
-  subTitle: string;
-  date: string;
+  startDateTime: string;
+  endDateTime: string;
+  description: string;
+  login: boolean;
+  participate: boolean;
+  teamId: number;
+  teamName: string;
 }
 
 export interface ICompetitionInfoList {

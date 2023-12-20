@@ -34,7 +34,7 @@ export const AdminCompetition = () => {
             </Thead>
             {fakeAllCompetitions.slice(startIdx, endIdx).map((competition) => (
               <CompetitionInfoList
-                key={competition.id}
+                key={competition.competitionId}
                 competition={competition}
                 onOpen={onOpen}
               />
