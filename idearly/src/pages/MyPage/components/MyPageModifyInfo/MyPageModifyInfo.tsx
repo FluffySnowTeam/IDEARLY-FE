@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Input, Text } from "@chakra-ui/react"
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading } from "@chakra-ui/react"
 import * as S from "./MyPageModifyInfo.styles";
 
 export const MyPageModifyInfo = () => {

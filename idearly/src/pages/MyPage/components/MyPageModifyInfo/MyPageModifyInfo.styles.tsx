@@ -1,4 +1,4 @@
-import { Card, Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const CardWrapper = styled.div`
