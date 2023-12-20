@@ -12,3 +12,16 @@ export interface ICompetition {
 export interface ICompetitionProp {
   competition: ICompetition;
 }
+
+export interface ITeamMember {
+  name: string,
+  email: string,
+  inviteStatus: string,
+}
+
+export interface ITeamlModal {
+  isOpen: boolean;
+  onClose: () => void;
+  currentMemberList: ITeamMember[];
+  inviteMemberList: ITeamMember[];
+}

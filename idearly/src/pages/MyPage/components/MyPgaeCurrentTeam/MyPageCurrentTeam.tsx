@@ -1,14 +1,24 @@
-import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
+import { Button, Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
-import { curCompetition } from "../../../../mocks/curCompetition.mocks";
-import { CurrentTeamList, WaitingTeamList } from "./components";
+import { curCompetition, TeamMembers } from "../../../../mocks/curCompetition.mocks";
+import { CurrentTeamList, TeamDetailModal, TeamModifyModal, WaitingTeamList } from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
+import { ITeamMember } from "./MyPageCurrentTeam.types";
 
 export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
+  const currentMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "accept");
+  const inviteMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "invite");
 
   return (
     <S.SearchTeamWrapper>
+      {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
+      <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+      
+      <Button onClick={onOpen}>Open Modal</Button>
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
@@ -25,7 +35,7 @@ export const MyPageCurrentTeam = () => {
           <Tbody>
             {
               curCompetition.map((competition) => (
-                <CurrentTeamList competition={competition} />
+                <CurrentTeamList key={competition.competitionId} competition={competition} />
               ))
             }
           </Tbody>
@@ -47,7 +57,7 @@ export const MyPageCurrentTeam = () => {
           <Tbody>
             {
               curCompetition.map((competition) => (
-                <WaitingTeamList competition={competition} />
+                <WaitingTeamList key={competition.competitionId} competition={competition} />
               ))
             }
           </Tbody>
