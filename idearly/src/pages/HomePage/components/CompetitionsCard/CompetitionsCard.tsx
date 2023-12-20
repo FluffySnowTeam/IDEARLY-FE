@@ -11,8 +11,6 @@ export const CompetitionsCard = ({
 }: PropsWithChildren<ICompetitionCard>) => {
   const { competitionId, title, startDateTime, endDateTime } = competition;
   const navigate = useNavigate();
-
-  console.log("competition", competition);
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition);
 
