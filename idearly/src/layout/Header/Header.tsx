@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./Header.styles";
-import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
-import { useLogoutMutation } from "../../hooks/useLogoutMutation";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
+import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
+import { useEffect, useState } from "react";
+import { useLogoutMutation } from "../../hooks";
+import axios from "axios";
 
 export const Header = () => {
   const { pathname } = useLocation();
