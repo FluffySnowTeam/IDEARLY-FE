@@ -1,4 +1,4 @@
-export const MyPageWithdraw = () => {
+export const MyPageWithdrawal = () => {
   return (
     <div>MyPageWithdraw</div>
   )

@@ -2,4 +2,4 @@ export * from "./components/MyPageNav/MyPageNav";
 export * from "./components/MyPgaeCurrentTeam/MyPageCurrentTeam";
 export * from "./components/MyPageModifyInfo/MyPageModifyInfo";
 export * from "./components/MyPagePrevCompe/MyPagePrevCompe";
-export * from "./components/MyPageWithdraw/MyPageWithdraw";
+export * from "./components/MyPageWithdrawal/MyPageWithdrawal";

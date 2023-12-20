@@ -1,7 +1,7 @@
-import { Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
 import { curCompetition } from "../../../../mocks/curCompetition.mocks";
-import { dateChange } from "../../../../utils/dateChange";
+import { CurrentTeamList, WaitingTeamList } from "./components";
 
 export const MyPageCurrentTeam = () => {
   return (
@@ -21,17 +21,9 @@ export const MyPageCurrentTeam = () => {
           </Thead>
           <Tbody>
             {
-              curCompetition.map((competiton) => {
+              curCompetition.map((competition) => {
                 return (
-                  <Tr key={competiton.competitionId}>
-                    <Td>{competiton.competitionTitle}</Td>
-                    <Td>{competiton.teamName}</Td>
-                    <Td>{competiton.leaderName}</Td>
-                    <Td>{dateChange({ date: competiton.startDateTime })}</Td>
-                    <Td>
-                      <Button>상세 보기</Button>  
-                    </Td>
-                  </Tr>
+                  <CurrentTeamList competition={competition} />
                 )
               })
             }
@@ -54,20 +46,9 @@ export const MyPageCurrentTeam = () => {
           </Thead>
           <Tbody>
             {
-              curCompetition.map((competiton) => {
+              curCompetition.map((competition) => {
                 return (
-                  <Tr key={competiton.competitionId}>
-                    <Td>{competiton.competitionTitle}</Td>
-                    <Td>{competiton.teamName}</Td>
-                    <Td>{competiton.leaderName}</Td>
-                    <Td>{dateChange({ date: competiton.startDateTime })}</Td>
-                    <Td>
-                      <S.ButtonGroup>
-                        <Button>수락</Button>  
-                        <Button>거절</Button>  
-                      </S.ButtonGroup>
-                    </Td>
-                  </Tr>
+                  <WaitingTeamList competition={competition} />
                 )
               })
             }
