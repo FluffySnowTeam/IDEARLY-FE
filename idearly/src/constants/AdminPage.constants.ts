@@ -17,3 +17,10 @@ export const AdminCompePageConfig = {
   date: "대회 기간",
   edit: "문제 수정",
 };
+
+export const CompetitionInfoFormConfig = [
+  "대회 이름",
+  "대회 시작일시",
+  "대회 종료일시",
+  "대회 내용",
+];

@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import type { IAddCompetitionModal } from "./AddCompetitionModal.types";
+import { CompetitionInfoForm } from "./components";
 
 export const AddCompetitionModal = ({
   onClose,
@@ -25,16 +26,18 @@ export const AddCompetitionModal = ({
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
+        <ModalHeader>대회 정보 추가하기</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Input />
+          <CompetitionInfoForm />
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
+          <Button variant="ghost" mr={3} onClick={onClose}>
+            닫기
           </Button>
-          <Button variant="ghost">Secondary Action</Button>
+          <Button colorScheme="blue" mr={3}>
+            저장하기
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
