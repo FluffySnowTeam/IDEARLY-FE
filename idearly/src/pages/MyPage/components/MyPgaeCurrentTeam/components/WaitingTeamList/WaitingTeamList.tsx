@@ -5,12 +5,14 @@ import { dateChange } from "../../../../../../utils/dateChange"
 import * as S from "./WaitingTeamList.styles";
 
 export const WaitingTeamList = ({competition}: PropsWithChildren<ICompetitionProp>) => {
+  const {competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
+
   return (
-    <Tr key={competition.competitionId}>
-      <Td>{competition.competitionTitle}</Td>
-      <Td>{competition.teamName}</Td>
-      <Td>{competition.leaderName}</Td>
-      <Td>{dateChange({ date: competition.startDateTime })}</Td>
+    <Tr key={competitionId}>
+      <Td>{competitionTitle}</Td>
+      <Td>{teamName}</Td>
+      <Td>{leaderName}</Td>
+      <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
         <S.ButtonGroup>
           <Button>수락</Button>  

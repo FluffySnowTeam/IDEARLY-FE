@@ -4,12 +4,14 @@ import { dateChange } from "../../../../../../utils/dateChange"
 import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
 
 export const CurrentTeamList = ({competition}: PropsWithChildren<ICompetitionProp>) => {
+  const {competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
+  
   return (
-    <Tr key={competition.competitionId}>
-      <Td>{competition.competitionTitle}</Td>
-      <Td>{competition.teamName}</Td>
-      <Td>{competition.leaderName}</Td>
-      <Td>{dateChange({ date: competition.startDateTime })}</Td>
+    <Tr key={competitionId}>
+      <Td>{competitionTitle}</Td>
+      <Td>{teamName}</Td>
+      <Td>{leaderName}</Td>
+      <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
         <Button>상세 보기</Button>  
       </Td>
