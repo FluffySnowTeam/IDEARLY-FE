@@ -7,20 +7,20 @@ export const CompetitionInfoList = ({
   competition,
   onOpen,
 }: PropsWithChildren<ICompetitionInfoList>) => {
-  const { id, title, date } = competition;
+  const { competitionId, title, startDateTime } = competition;
   const navigate = useNavigate();
 
   const handleModalOpen = () => {
-    navigate(`/admin/competition?id=${id}`);
+    navigate(`/admin/competition?id=${competitionId}`);
     onOpen();
   };
 
   return (
     <Tbody>
       <Tr>
-        <Td>{id}</Td>
+        <Td>{competitionId}</Td>
         <Td>{title}</Td>
-        <Td>{date}</Td>
+        <Td>{startDateTime}</Td>
         <Td>
           <Button onClick={handleModalOpen}>문제 수정</Button>
         </Td>
