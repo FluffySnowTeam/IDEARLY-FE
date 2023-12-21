@@ -16,7 +16,7 @@ export interface ICompetitionProp {
 export interface ITeamMember {
   name: string,
   email: string,
-  inviteStatus: string,
+  inviteStatus?: string,
 }
 
 export interface ITeamlModal {
