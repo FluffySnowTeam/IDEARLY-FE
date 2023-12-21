@@ -10,9 +10,6 @@ import { LoginStateAtom } from "../../store/LoginPage.atoms";
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  // const [isLoginState, setIsLoginState] = useState(
-  //   !!Cookies.get("accessToken")
-  // );
   const [isLoginState, setIsLoginState] = useAtom(LoginStateAtom);
   const isAlgorithmPage = pathname.startsWith("/algorithm-solving");
 
