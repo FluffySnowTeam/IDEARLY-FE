@@ -4,6 +4,7 @@ import { useToast } from "@chakra-ui/react";
 import { useSetAtom } from "jotai";
 import { LoginStateAtom } from "../store/LoginPage.atoms";
 import { modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
+import { userInfoAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
   const setIsLoginState = useSetAtom(LoginStateAtom);
@@ -44,6 +45,7 @@ export const useWithdrawalMutation = () => {
 export const useModifyUerMutation = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
     mutationFn: (name: string) => modifyUser(name),
@@ -58,7 +60,12 @@ export const useModifyUerMutation = () => {
       });
     },
     onSuccess: (data) => {
-      console.log(data);
+      console.log('check: ', data);
+      console.log('check: ', data.data.data.name);
+
+      // 이 부분도 storage에 저장해야되겠죠?
+      setUserInfoState((prev) => ({ ...prev, name: data.data.data.name }));
+
       toast({
         title: "회원 정보 수정 성공",
         description: "회원 정보 수정에 성공하였습니다!",
