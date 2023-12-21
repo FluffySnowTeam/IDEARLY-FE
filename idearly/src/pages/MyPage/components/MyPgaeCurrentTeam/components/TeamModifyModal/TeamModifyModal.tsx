@@ -66,25 +66,9 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
           <ModalHeader>팀 상세 정보</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <S.ModalSubTitle>맴버 추가(2/3)</S.ModalSubTitle>
-            {/* <AddTeamMembers addedMembers={addedMembers} setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} /> */}
-            <Input 
-              type='email' 
-              placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' 
-              onChange={(e)=>setUserMail(e.target.value)}
-              value={userMail}
-              isDisabled={!isErrorCount}
-            />
-            {
-              isShowUser
-                &&
-              <ShowUserTag colorScheme='gray' onClick={handleUserClick}>
-                <TagLeftIcon boxSize='12px' as={AddIcon} />
-                {userInfo.name}
-                {userInfo.email}
-              </ShowUserTag>
-            }
-
+            <S.ModalSubTitle>맴버 추가({addedMembers.length+1}/{MAX_MEMBER+1})</S.ModalSubTitle>
+            <AddTeamMembers setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
+            <S.MemberListWrapper>
               <S.ModalContent>
                 나
               </S.ModalContent>
@@ -94,8 +78,11 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
                   <S.IconWrapper as={CloseIcon} onClick={() => handleDelete(user.email)} />
                 </S.MemberWrapper>
               ))}
+            </S.MemberListWrapper>
+            
               
             <S.ModalSubTitle>수락 대기중인 맴버</S.ModalSubTitle>
+            <S.MemberListWrapper>
             {
               addedInviteMembers.map(member => (
                 <S.MemberWrapper key={member.email}>
@@ -104,6 +91,8 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
                 </S.MemberWrapper>
               ))
             }
+            </S.MemberListWrapper>
+            
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Button colorScheme='blue' onClick={handleSubmit} >
                 수정

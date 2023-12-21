@@ -15,11 +15,21 @@ export const ModalContent = styled.div`
 export const MemberWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 13rem;
+  width: 15rem;
   align-items: center;
 `;
 
 export const IconWrapper = styled(Icon)`
   color: gray;
   cursor: pointer;
+  &:hover {
+    color: black;
+  }
+`;
+
+export const MemberListWrapper = styled.div`
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 `;
