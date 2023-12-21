@@ -32,7 +32,6 @@ export const useSignupMutation = () => {
         duration: 2000,
         isClosable: true,
       });
-
       setTimeout(() => {
         navigate("/login");
       }, 1000);

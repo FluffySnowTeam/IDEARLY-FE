@@ -2,14 +2,11 @@ import * as S from "./WaitingPage.styles";
 import { WaitingPageConfig } from "../../constants";
 import { useParams } from "react-router-dom";
 import { fakeCompetitions } from "../../mocks/competition.mocks";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import DOMPurify from "dompurify";
+
 import { useEffect, useState } from "react";
 
 export const WaitingPage = () => {
   const { title, subTitle, content } = WaitingPageConfig;
-  const sanitizedContent = DOMPurify.sanitize(content);
   const { id } = useParams<{ id: string }>();
   const [timeLeft, setTimeLeft] = useState("");
   const [timerVisible, setTimerVisible] = useState(false);
@@ -75,11 +72,7 @@ export const WaitingPage = () => {
             <S.WaitingCardSubHeading size="md">
               [ {subTitle} ]
             </S.WaitingCardSubHeading>
-            <S.WaitingCardText>
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-                {sanitizedContent}
-              </ReactMarkdown>
-            </S.WaitingCardText>
+            <S.WaitingCardText>{content}</S.WaitingCardText>
             <S.WaitingCardButton
               disabled={!timerVisible}
               variant="solid"
