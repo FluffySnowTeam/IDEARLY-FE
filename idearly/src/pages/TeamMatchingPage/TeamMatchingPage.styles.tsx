@@ -1,5 +1,15 @@
 import styled from "@emotion/styled";
-import { Button, Card, CardBody, CardFooter, CardHeader, HStack, Heading, Tag, TagLabel, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  HStack,
+  Heading,
+  Tag,
+  TagLabel,
+  Text,
+} from "@chakra-ui/react";
 
 export const TeamMathingWrapper = styled.div`
   width: 100%;
@@ -19,11 +29,9 @@ export const CardHeaderSection = styled(CardHeader)`
   text-align: center;
 `;
 
-export const TeamMatchingTitle = styled(Heading)`
-`;
+export const TeamMatchingTitle = styled(Heading)``;
 
-export const CardBodySection = styled(CardBody)`
-`;
+export const CardBodySection = styled(CardBody)``;
 
 export const CardFooterSection = styled(CardFooter)`
   display: flex;
@@ -43,17 +51,17 @@ export const TagLabeEmail = styled(TagLabel)`
 `;
 
 export const TagWrapper = styled(Tag)`
-  background-color: #CBD5E0;
-  color: #4A5568;
+  background-color: #cbd5e0;
+  color: #4a5568;
 `;
 
 export const MiniTitle = styled(Text)`
   font-weight: bold;
   margin-bottom: 8px;
-`
+`;
 
 export const ShowUserTag = styled(Tag)`
   width: 100%;
   margin-top: 10px;
   padding: 10px;
-`
+`;
