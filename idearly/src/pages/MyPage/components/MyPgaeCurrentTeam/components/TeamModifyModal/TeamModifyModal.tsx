@@ -1,53 +1,23 @@
-import { Button, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, TagCloseButton, TagLeftIcon } from "@chakra-ui/react"
-import { PropsWithChildren, useEffect, useState } from "react";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay} from "@chakra-ui/react"
+import { PropsWithChildren, useState } from "react";
 import { ITeamMember, ITeamlModal } from "../../MyPageCurrentTeam.types";
 import { AddTeamMembers } from "../../../../../../components/AddTeamMembers/AddTeamMembers";
 import { IUserType } from "../../../../../TeamMatchingPage/TeamMatchingPage.types";
 import * as S from "./TeamModifyModal.styles";
-import { AddIcon, CloseIcon } from "@chakra-ui/icons";
-import { ShowUserTag } from "../../../../../../components/AddTeamMembers/AddTeamMembers.styles";
-import useDebounce from "../../../../../../hooks/useDebounce";
+import { CloseIcon } from "@chakra-ui/icons";
 
 export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<ITeamlModal>) => {
   const [addedMembers, setAddedMembers] = useState<ITeamMember[]>(currentMemberList);
-  const [isShowUser, setIsShowUser] = useState<boolean>(false);
-  const [userMail, setUserMail] = useState<string>('');
-  (currentMemberList);
-  const [userInfo, setUserInfo] = useState<IUserType>({
-    name: '',
-    email: ''
-  });
   const MAX_MEMBER = 2;
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
 
   const [addedInviteMembers, setAddedInviteMembers] = useState(inviteMemberList);
-
-  const debouncedValue = useDebounce(userMail, 400);
-
-  useEffect(() => {
-    if (debouncedValue === 'user@example.com'){
-      setIsShowUser(true);
-      setUserInfo({name: '홍길동3', email: 'user4@example.com'}); // 임시
-    } else {
-      setIsShowUser(false);
-      setUserInfo({
-        name: '',
-        email: ''
-      });
-    }
-  }, [debouncedValue]);
   
   const handleDropoutMember = (email: string) => {
     // 해당 email을 가지고 있는 유저 삭제
     setAddedInviteMembers(addedInviteMembers.filter(member => member.email !== email));
 
     // 강퇴 api 
-  }
-
-  const handleUserClick = () => {
-    setIsShowUser(false);
-    setAddedMembers((prev) => [...prev, userInfo]);
-    setUserMail('');
   }
 
   const handleDelete = (email: string) => {
@@ -66,12 +36,11 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
           <ModalHeader>팀 상세 정보</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <S.ModalSubTitle>맴버 추가({addedMembers.length+1}/{MAX_MEMBER+1})</S.ModalSubTitle>
+            <S.ModalSubTitle>총 맴버 수({addedMembers.length+inviteMemberList.length + 1}/{MAX_MEMBER+1})</S.ModalSubTitle>
             <AddTeamMembers setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
+            <S.ModalSubTitle>수락 대기중인 맴버</S.ModalSubTitle>
+
             <S.MemberListWrapper>
-              <S.ModalContent>
-                나
-              </S.ModalContent>
               {addedMembers.map((user: IUserType) => (
                 <S.MemberWrapper key={user.email}>
                   <S.ModalContent key={user.email}>{user.name}({user.email})</S.ModalContent>
@@ -81,24 +50,26 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
             </S.MemberListWrapper>
             
               
-            <S.ModalSubTitle>수락 대기중인 맴버</S.ModalSubTitle>
+            <S.ModalSubTitle>수락완료한 맴버</S.ModalSubTitle>
+            <S.ModalContent>
+                나
+              </S.ModalContent>
             <S.MemberListWrapper>
             {
               addedInviteMembers.map(member => (
                 <S.MemberWrapper key={member.email}>
                   <S.ModalContent key={member.email}>{member.name}({member.email})</S.ModalContent>
-                  <S.IconWrapper as={CloseIcon} onClick={() => handleDropoutMember(member.email)} />
+                  <S.Dropout onClick={() => handleDropoutMember(member.email)}>강퇴</S.Dropout>
                 </S.MemberWrapper>
               ))
             }
             </S.MemberListWrapper>
-            
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <Button colorScheme='blue' onClick={handleSubmit} >
-                수정
-              </Button>
-            </div>
           </ModalBody>
+          <ModalFooter>
+            <Button colorScheme='blue' onClick={handleSubmit} >
+              수정
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
   )

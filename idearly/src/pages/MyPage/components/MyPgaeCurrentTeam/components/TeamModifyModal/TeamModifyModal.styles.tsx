@@ -27,6 +27,14 @@ export const IconWrapper = styled(Icon)`
   }
 `;
 
+export const Dropout = styled.div`
+  color: gray;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
+`;
+
 export const MemberListWrapper = styled.div`
   margin-top: 0.5rem;
   display: flex;
