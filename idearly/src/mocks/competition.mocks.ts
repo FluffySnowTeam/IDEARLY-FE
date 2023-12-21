@@ -1,6 +1,6 @@
 export const fakeCompetitions = [
   {
-    competitionId: "A201",
+    competitionId: 201,
     title: "Global Algorithm Challenge 2024",
     startDateTime: "2023-12-19T11:11:00.000Z",
     endDateTime: "2023-12-19T11:11:30.000Z",
@@ -11,7 +11,7 @@ export const fakeCompetitions = [
     teamName: "Code Masters",
   },
   {
-    competitionId: "A202",
+    competitionId: 202,
     title: "Data Structures Pro League 2024",
     startDateTime: "2024-06-15T09:00:00.000Z",
     endDateTime: "2024-06-17T18:00:00.000Z",
@@ -23,7 +23,7 @@ export const fakeCompetitions = [
     teamName: "Structure Wizards",
   },
   {
-    competitionId: "A205",
+    competitionId: 205,
     title: "Global Algorithm Challenge 2024",
     startDateTime: "2024-05-10T08:00:00.000Z",
     endDateTime: "2024-05-12T20:00:00.000Z",
@@ -38,7 +38,7 @@ export const fakeCompetitions = [
 
 export const fakePreviousCompetitions = [
   {
-    competitionId: "A203",
+    competitionId: 203,
     title: "AI Coding Marathon 2024",
     startDateTime: "2024-07-20T10:00:00.000Z",
     endDateTime: "2024-07-22T22:00:00.000Z",
@@ -50,7 +50,7 @@ export const fakePreviousCompetitions = [
     teamName: "AI Enthusiasts",
   },
   {
-    competitionId: "A204",
+    competitionId: 204,
     title: "Cyber Security Hackathon 2024",
     startDateTime: "2024-08-05T07:00:00.000Z",
     endDateTime: "2024-08-07T19:00:00.000Z",
@@ -65,7 +65,7 @@ export const fakePreviousCompetitions = [
 
 export const fakeAllCompetitions = [
   {
-    competitionId: "A205",
+    competitionId: 2051,
     title: "Global Algorithm Challenge 2024",
     startDateTime: "2024-05-10T08:00:00.000Z",
     endDateTime: "2024-05-12T20:00:00.000Z",
@@ -77,7 +77,7 @@ export const fakeAllCompetitions = [
     teamName: "Code Masters",
   },
   {
-    competitionId: "A206",
+    competitionId: 2062,
     title: "Data Structures Pro League 2024",
     startDateTime: "2024-06-15T09:00:00.000Z",
     endDateTime: "2024-06-17T18:00:00.000Z",
@@ -89,7 +89,7 @@ export const fakeAllCompetitions = [
     teamName: "Structure Wizards",
   },
   {
-    competitionId: "A207",
+    competitionId: 2072,
     title: "Web Development Wars 2024",
     startDateTime: "2024-09-01T11:00:00.000Z",
     endDateTime: "2024-09-03T21:00:00.000Z",
@@ -101,7 +101,7 @@ export const fakeAllCompetitions = [
     teamName: "Web Innovators",
   },
   {
-    competitionId: "A208",
+    competitionId: 2081,
     title: "Quantum Computing Codefest 2024",
     startDateTime: "2024-10-10T09:00:00.000Z",
     endDateTime: "2024-10-12T17:00:00.000Z",
@@ -113,7 +113,7 @@ export const fakeAllCompetitions = [
     teamName: "Quantum Coders",
   },
   {
-    competitionId: "A209",
+    competitionId: 2090,
     title: "Mobile App Development Challenge 2024",
     startDateTime: "2024-11-05T10:00:00.000Z",
     endDateTime: "2024-11-07T20:00:00.000Z",
@@ -125,7 +125,7 @@ export const fakeAllCompetitions = [
     teamName: "Mobile Innovators",
   },
   {
-    competitionId: "A210",
+    competitionId: 2100,
     title: "Blockchain Hackathon 2024",
     startDateTime: "2024-12-15T08:00:00.000Z",
     endDateTime: "2024-12-17T18:00:00.000Z",
@@ -137,7 +137,7 @@ export const fakeAllCompetitions = [
     teamName: "Blockchain Pioneers",
   },
   {
-    competitionId: "A211",
+    competitionId: 2112,
     title: "Cloud Computing Challenge 2024",
     startDateTime: "2024-01-20T11:00:00.000Z",
     endDateTime: "2024-01-22T21:00:00.000Z",
@@ -149,7 +149,7 @@ export const fakeAllCompetitions = [
     teamName: "Cloud Innovators",
   },
   {
-    competitionId: "A212",
+    competitionId: 2120,
     title: "Future of Robotics Programming Contest 2024",
     startDateTime: "2024-02-25T09:30:00.000Z",
     endDateTime: "2024-02-27T19:30:00.000Z",
@@ -161,7 +161,7 @@ export const fakeAllCompetitions = [
     teamName: "Robotic Geniuses",
   },
   {
-    competitionId: "A213",
+    competitionId: 2131,
     title: "Mobile App Development Challenge 2024",
     startDateTime: "2024-11-05T10:00:00.000Z",
     endDateTime: "2024-11-07T20:00:00.000Z",
@@ -173,7 +173,7 @@ export const fakeAllCompetitions = [
     teamName: "Mobile Innovators",
   },
   {
-    competitionId: "A214",
+    competitionId: 2141,
     title: "Blockchain Hackathon 2024",
     startDateTime: "2024-12-15T08:00:00.000Z",
     endDateTime: "2024-12-17T18:00:00.000Z",
@@ -185,7 +185,7 @@ export const fakeAllCompetitions = [
     teamName: "Blockchain Pioneers",
   },
   {
-    competitionId: "A215",
+    competitionId: 2115,
     title: "Cloud Computing Challenge 2024",
     startDateTime: "2024-01-20T11:00:00.000Z",
     endDateTime: "2024-01-22T21:00:00.000Z",
@@ -197,7 +197,7 @@ export const fakeAllCompetitions = [
     teamName: "Cloud Innovators",
   },
   {
-    competitionId: "A216",
+    competitionId: 1216,
     title: "Future of Robotics Programming Contest 2024",
     startDateTime: "2024-02-25T09:30:00.000Z",
     endDateTime: "2024-02-27T19:30:00.000Z",

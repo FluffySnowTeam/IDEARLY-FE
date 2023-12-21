@@ -13,7 +13,7 @@ export const WaitingPage = () => {
 
   // 특정 대회 정보 상세
   const selectedCompetition = fakeCompetitions.filter(
-    (competition) => competition.competitionId === id
+    (competition) => competition.competitionId === Number(id)
   );
 
   useEffect(() => {

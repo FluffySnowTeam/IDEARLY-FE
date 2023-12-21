@@ -9,7 +9,7 @@ import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/Comp
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const competition = fakeCompetitions.filter(
-    (competition) => competition.competitionId === id
+    (competition) => competition.competitionId === Number(id)
   );
   const { title, description, startDateTime, endDateTime } = competition[0];
   // const sanitizedContent = DOMPurify.sanitize(description);

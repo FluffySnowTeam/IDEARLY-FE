@@ -5,6 +5,7 @@ import {
   AlgorithmSolvingPage,
   CompletePage,
   DetailPage,
+  ErrorPage,
   HomePage,
   LoginPage,
   MyPage,
@@ -12,6 +13,7 @@ import {
   TeamMatchingPage,
   WaitingPage,
 } from "../pages";
+
 // import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -61,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/waiting/:id",
         element: <WaitingPage />,
+      },
+      {
+        path: "/error",
+        element: <ErrorPage />,
       },
     ],
     //   },

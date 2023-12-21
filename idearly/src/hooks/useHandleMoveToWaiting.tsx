@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ICompetition {
-  competitionId: string;
+  competitionId: number;
   title: string;
   startDateTime: string;
   endDateTime: string;
