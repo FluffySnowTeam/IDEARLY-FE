@@ -11,6 +11,7 @@ export interface ICompetition {
 
 export interface ICompetitionProp {
   competition: ICompetition;
+  onOpen?: () => void;
 }
 
 export interface ITeamMember {

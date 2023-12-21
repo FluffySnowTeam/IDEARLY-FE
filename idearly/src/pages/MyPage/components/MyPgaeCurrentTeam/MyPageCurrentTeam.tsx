@@ -1,7 +1,7 @@
-import { Button, Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
+import { Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
 import { curCompetition, TeamMembers } from "../../../../mocks/curCompetition.mocks";
-import { CurrentTeamList, TeamDetailModal, TeamModifyModal, WaitingTeamList } from "./components";
+import { CurrentTeamList, TeamModifyModal, WaitingTeamList } from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
 import { ITeamMember } from "./MyPageCurrentTeam.types";
 
@@ -18,7 +18,6 @@ export const MyPageCurrentTeam = () => {
       {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
       <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
       
-      <Button onClick={onOpen}>Open Modal</Button>
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
@@ -35,7 +34,7 @@ export const MyPageCurrentTeam = () => {
           <Tbody>
             {
               curCompetition.map((competition) => (
-                <CurrentTeamList key={competition.competitionId} competition={competition} />
+                <CurrentTeamList key={competition.competitionId} competition={competition} onOpen={onOpen} />
               ))
             }
           </Tbody>
