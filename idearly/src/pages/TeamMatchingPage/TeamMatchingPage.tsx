@@ -26,8 +26,8 @@ export const TeamMatchingPage = () => {
 
   ]);
   const MAX_MEMBER = 2;
+  const [isErrorName, setIsErrorName] = useState(false);
 
-  const isErrorName = teamName === '';
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
@@ -67,6 +67,13 @@ export const TeamMatchingPage = () => {
     mutate({competitionId: '123', payload});
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTeamName(e.target.value);
+    setIsErrorName(e.target.value.trim() === '');
+  }
+
+  // isDirty와 같이, 한번 수정이 되었는지 확인하는 로직이 필요.
+  
   return (
     <S.TeamMathingWrapper>
       <S.CardContainer>
@@ -82,7 +89,7 @@ export const TeamMatchingPage = () => {
                 <Input
                   placeholder='팀 이름을 입력해주세요.' 
                   value={teamName} 
-                  onChange={(e) => setTeamName(e.target.value)}
+                  onChange={handleChange}
                 />
                 {!isErrorName || <FormErrorMessage>팀 이름은 필수입니다.</FormErrorMessage>}
               </FormControl>
