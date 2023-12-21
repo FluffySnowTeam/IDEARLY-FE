@@ -40,7 +40,6 @@ export const useSignupMutation = () => {
 };
 
 export const useEmailCheckMutation = () => {
-  const navigate = useNavigate();
   const toast = useToast();
 
   return useMutation({
@@ -64,10 +63,6 @@ export const useEmailCheckMutation = () => {
         duration: 2000,
         isClosable: true,
       });
-
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
     },
   });
 };
