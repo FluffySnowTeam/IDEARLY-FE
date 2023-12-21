@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { IUserInfoResponse } from "../types";
+import type { IUserInfoResponse } from "../types";
 
 export const userInfoAtom = atom<IUserInfoResponse>({
   memberId: '',
