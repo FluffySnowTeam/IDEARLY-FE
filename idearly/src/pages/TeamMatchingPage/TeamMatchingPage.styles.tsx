@@ -41,8 +41,8 @@ export const TagLabeEmail = styled(TagLabel)`
 `;
 
 export const TagWrapper = styled(Tag)`
-  background-color: #CBD5E0;
-  color: #4A5568;
+  background-color: #cbd5e0;
+  color: #4a5568;
 `;
 
 export const MiniTitle = styled(Text)`

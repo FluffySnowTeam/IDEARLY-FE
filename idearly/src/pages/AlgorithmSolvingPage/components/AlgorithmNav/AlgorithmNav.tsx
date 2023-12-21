@@ -1,5 +1,5 @@
 import * as S from "./AlgorithmNav.styles";
-import { AlgorithmVoiceChat } from "..";
+// import { AlgorithmVoiceChat } from "..";
 import { fakeProblem } from "../../../../mocks/problem.mocks";
 import type { Prop } from "./AlgorithmNav.types";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -43,7 +43,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         ))}
       </div>
       <S.NavIcons>
-        <AlgorithmVoiceChat />
+        {/* <AlgorithmVoiceChat /> */}
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>

@@ -12,5 +12,5 @@ export const dateChange = ({ date }: { date: string }) => {
   const minutes = dateObj.getMinutes().toString().padStart(2, "0");
 
   // 변환된 날짜 형식을 반환합니다.
-  return `${year}.${month}.${day} / ${hours}:${minutes}`;
+  return `${year}년 ${month}월 ${day}일 ${hours}시${minutes}분`;
 };
