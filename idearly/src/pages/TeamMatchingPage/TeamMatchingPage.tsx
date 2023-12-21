@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton } from '@chakra-ui/react'
 import * as S from './TeamMatchingPage.styles';
 import { useState } from 'react';
-import { IUserType } from './TeamMatchingPage.types';
+import type { IUserType } from './TeamMatchingPage.types';
 import { AddTeamMembers } from '../../components/AddTeamMembers/AddTeamMembers';
 
 export const TeamMatchingPage = () => {

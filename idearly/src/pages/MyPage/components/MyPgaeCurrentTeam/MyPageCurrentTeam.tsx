@@ -1,9 +1,9 @@
 import { Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
 import { curCompetition, TeamMembers } from "../../../../mocks/curCompetition.mocks";
-import { CurrentTeamList, TeamModifyModal, WaitingTeamList } from "./components";
+import { CurrentTeamList, TeamModifyModal, TeamDetailModal, WaitingTeamList } from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
-import { ITeamMember } from "./MyPageCurrentTeam.types";
+import type { ITeamMember } from "./MyPageCurrentTeam.types";
 
 export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
@@ -15,8 +15,8 @@ export const MyPageCurrentTeam = () => {
 
   return (
     <S.SearchTeamWrapper>
-      {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
-      <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+      <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+      {/* <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
       
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>
