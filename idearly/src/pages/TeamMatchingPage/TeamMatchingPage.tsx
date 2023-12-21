@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import useDebounce from '../../hooks/useDebounce';
 import { IUserType } from './TeamMatchingPage.types';
+import { useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
@@ -53,6 +54,17 @@ export const TeamMatchingPage = () => {
 
   const handleDelete = (email: string) => {
     setAddedMembers(addedMembers.filter((user) => user.email !== email));
+  }
+
+  const { mutate } = useTeamMatchingMutation();
+
+
+  const handleCreate = () => {
+    const payload = {
+      teamName,
+      members: addedMembers,
+    }
+    mutate({competitionId: '123', payload});
   }
 
   return (
@@ -124,7 +136,12 @@ export const TeamMatchingPage = () => {
             <Button colorScheme='facebook' variant='solid'>
               취소하기
             </Button>
-            <Button colorScheme='facebook' variant='outline' isDisabled={!isErrorTeamMatching}>
+            <Button 
+              colorScheme='facebook' 
+              variant='outline' 
+              isDisabled={!isErrorTeamMatching}
+              onClick={handleCreate}
+            >
               팀 생성하기
             </Button>
           </Stack>
