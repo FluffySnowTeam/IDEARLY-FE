@@ -1,17 +1,19 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./Header.styles";
-import Cookies from "js-cookie";
 import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLogoutMutation } from "../../hooks";
 import axios from "axios";
+import { useAtom } from "jotai";
+import { LoginStateAtom } from "../../store/LoginPage.atoms";
 
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [isLoginState, setIsLoginState] = useState(
-    !!Cookies.get("accessToken")
-  );
+  // const [isLoginState, setIsLoginState] = useState(
+  //   !!Cookies.get("accessToken")
+  // );
+  const [isLoginState, setIsLoginState] = useAtom(LoginStateAtom);
   const isAlgorithmPage = pathname.startsWith("/algorithm-solving");
 
   const handleMoveToPath = (path: string) => {
@@ -19,7 +21,7 @@ export const Header = () => {
     else navigate(path);
   };
 
-  const { mutate } = useLogoutMutation({ setIsLoginState });
+  const { mutate } = useLogoutMutation();
   const handleLogout = () => {
     mutate();
   };
