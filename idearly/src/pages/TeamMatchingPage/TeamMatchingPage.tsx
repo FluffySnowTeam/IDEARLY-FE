@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormErrorMessage, Input, Stack } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton } from '@chakra-ui/react'
 import * as S from './TeamMatchingPage.styles';
 import { useState } from 'react';
 import { IUserType } from './TeamMatchingPage.types';
@@ -23,6 +23,10 @@ export const TeamMatchingPage = () => {
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
+  const handleDelete = (email: string) => {
+    setAddedMembers(addedMembers.filter((user) => user.email !== email));
+  }
+
   return (
     <S.TeamMathingWrapper>
       <S.CardContainer>
@@ -45,7 +49,28 @@ export const TeamMatchingPage = () => {
             </Box>
             <Box>
               <S.MiniTitle>맴버 추가({addedMembers.length+1}/{MAX_MEMBER+1})</S.MiniTitle>
-              <AddTeamMembers addedMembers={addedMembers} setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
+              <S.HStackWrapper spacing={5}>
+                <S.TagWrapper
+                  size='lg'
+                  borderRadius='full'
+                  variant='solid'
+                >
+                  나
+                </S.TagWrapper>
+                {addedMembers.map((user) => (
+                  <S.TagWrapper
+                    size='lg'
+                    key={user.email}
+                    borderRadius='full'
+                    variant='solid'
+                  >
+                    <S.TagLabelName>{user.name}</S.TagLabelName>
+                    <S.TagLabeEmail>({user.email})</S.TagLabeEmail>
+                    <TagCloseButton onClick={() => handleDelete(user.email)} />
+                  </S.TagWrapper>
+                ))}
+              </S.HStackWrapper>
+              <AddTeamMembers setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
             </Box>
           </Stack>
         </S.CardBodySection>
