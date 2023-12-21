@@ -1,9 +1,6 @@
 import { useParams } from "react-router-dom";
 import { fakeCompetitions } from "../../mocks/competition.mocks";
 import { Button } from "@chakra-ui/react";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
-import DOMPurify from "dompurify";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
@@ -15,7 +12,7 @@ export const DetailPage = () => {
     (competition) => competition.competitionId === id
   );
   const { title, description, startDateTime, endDateTime } = competition[0];
-  const sanitizedContent = DOMPurify.sanitize(description);
+  // const sanitizedContent = DOMPurify.sanitize(description);
   console.log("competition", competition);
 
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
@@ -36,9 +33,10 @@ export const DetailPage = () => {
           <div>종료: {dateChange({ date: endDateTime })}</div>
         </S.CompeDetailDate>
         <S.CompeDetailDescription>
-          <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+          {description}
+          {/* <ReactMarkdown rehypePlugins={[rehypeRaw]}>
             {sanitizedContent}
-          </ReactMarkdown>
+          </ReactMarkdown> */}
         </S.CompeDetailDescription>
         <Button onClick={handleMoveToWaiting}>대회 참여하기</Button>
       </S.CompetitionDetailContainer>

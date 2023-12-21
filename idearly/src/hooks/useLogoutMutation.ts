@@ -2,17 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import { logoutUser } from "../services/apis/user.apis";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+import { useSetAtom } from "jotai";
+import { LoginStateAtom } from "../store/LoginPage.atoms";
 
-interface UseLogoutMutationOptions {
-  setIsLoginState: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const useLogoutMutation = ({
-  setIsLoginState,
-}: UseLogoutMutationOptions) => {
+export const useLogoutMutation = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const setIsLoginState = useSetAtom(LoginStateAtom);
   return useMutation({
     mutationFn: () => logoutUser(),
     onError: (error) => {
@@ -20,7 +16,6 @@ export const useLogoutMutation = ({
     },
     onSuccess: (data) => {
       console.log(data);
-      Cookies.remove("accessToken");
       setIsLoginState(false);
       toast({
         title: "로그아웃 완료",
