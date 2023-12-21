@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { AddIcon } from '@chakra-ui/icons';
 import useDebounce from '../../hooks/useDebounce';
 import { IUserType } from './TeamMatchingPage.types';
-import { useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
+import { useSearchMemberQuery, useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
+import { useNavigate } from 'react-router-dom';
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
@@ -14,29 +15,23 @@ export const TeamMatchingPage = () => {
     name: '',
     email: ''
   });
-  const [addedMembers, setAddedMembers] = useState<IUserType[]>([
-    {
-      name: '홍길동',
-      email: 'user1@example.com'
-    },
-    {
-      name: '홍길동2',
-      email: 'user2@example.com'
-    },
-
-  ]);
-  const MAX_MEMBER = 2;
+  const [addedMembers, setAddedMembers] = useState<IUserType[]>([]);
   const [isErrorName, setIsErrorName] = useState(false);
+  const { mutate } = useTeamMatchingMutation();
+  const navigate = useNavigate();
+  const MAX_MEMBER = 2;
 
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
   const debouncedValue = useDebounce(userMail, 400);
 
+  const data = useSearchMemberQuery({competitionId: '123', email: debouncedValue});
+
   useEffect(() => {
-    if (debouncedValue === 'user@example.com'){
+    if (data?.exist){
       setIsShowUser(true);
-      setUserInfo({name: '홍길동3', email: 'user4@example.com'}); // 임시
+      setUserInfo({name: data.memberName, email: data.email});
     } else {
       setIsShowUser(false);
       setUserInfo({
@@ -56,9 +51,6 @@ export const TeamMatchingPage = () => {
     setAddedMembers(addedMembers.filter((user) => user.email !== email));
   }
 
-  const { mutate } = useTeamMatchingMutation();
-
-
   const handleCreate = () => {
     const payload = {
       teamName,
@@ -71,8 +63,6 @@ export const TeamMatchingPage = () => {
     setTeamName(e.target.value);
     setIsErrorName(e.target.value.trim() === '');
   }
-
-  // isDirty와 같이, 한번 수정이 되었는지 확인하는 로직이 필요.
   
   return (
     <S.TeamMathingWrapper>
@@ -124,7 +114,6 @@ export const TeamMatchingPage = () => {
                 value={userMail}
                 isDisabled={!isErrorCount}
               />
-              {/* 유저 보여주는데 버튼을 사용하는게 적절할까요? 처음에는 Tag를 사용해볼까 했는데... */}
               {
                 isShowUser
                   &&
@@ -140,7 +129,7 @@ export const TeamMatchingPage = () => {
         
         <S.CardFooterSection>
           <Stack direction='row' spacing={4} align='center'>
-            <Button colorScheme='facebook' variant='solid'>
+            <Button colorScheme='facebook' variant='solid' onClick={() => navigate('../')}>
               취소하기
             </Button>
             <Button 
