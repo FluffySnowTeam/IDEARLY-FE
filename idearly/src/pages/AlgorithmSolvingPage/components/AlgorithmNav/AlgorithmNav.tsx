@@ -8,7 +8,6 @@ import { useState } from "react";
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const navigate = useNavigate();
   const path = useLocation();
-  path.search = `?id=${fakeProblem[0].id}`;
   const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
     fakeProblem[0].id
   );
@@ -20,6 +19,15 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     backgroundColor: "initial",
     color: "#01228a",
   };
+
+  window.onload = () => {
+    navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
+  };
+
+  // window.addEventListener("DOMContentLoaded", () => {
+  //   navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
+  //   console.log("22");
+  // });
 
   const handleProblems = (id: string) => {
     navigate(`${path.pathname}?id=${id}`);
