@@ -38,7 +38,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      brokerURL: 'ws://211.201.26.10:8080/ws/chat',
+      brokerURL: 'wss://idearly.site/ws/chat',
       // webSocketFactory: () => new SockJS("http://localhost:3000/ws/chat"),
       debug: function (str: string) {
         console.log(str);

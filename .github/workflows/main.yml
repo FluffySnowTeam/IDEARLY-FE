@@ -2,11 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    types:
-    - closed
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch: # 디버깅용, actions 탭에서 직접 버튼 눌러서 트리거
 
 jobs:
@@ -32,7 +28,7 @@ jobs:
       # 해당 프로젝트의 node_modules가 변했는지 안 변했는지를 이용해서
       # 모듈 변화가 있을 때만 npm install을 해줄 수도 있다.
       - name: Cache node modules
-      # 그걸 제공하는 Action도 있다.
+        # 그걸 제공하는 Action도 있다.
         uses: actions/cache@v2.1.8
         # 해당 step을 대표하는 id를 설정할 수도 있다. 해당 값은 뒤의 step에서 사용한다.
         id: cache
@@ -46,7 +42,7 @@ jobs:
         # 만약 모듈에 변한 게 있다면 `npm install`을 실행하고 아니면 해당 step을 건너뛰게 된다.
         # if 키워드는 해당 스텝을 실행할지 말지를 결정할 수 있는 키워드이다.
         # 위 step에서 정했던 cache라는 id를 steps.cache로 가져올 수 있다.
-        # cache라는 id 값을 가진 step에서는 cache-hit라는 output을 내뱉는다. 
+        # cache라는 id 값을 가진 step에서는 cache-hit라는 output을 내뱉는다.
         # 그걸로 cache가 hit 됐는지 안 됐는지를 알 수 있다.
         # 그 값이 true가 아닐 때만 npm install을 한다.
         # https://fe-developers.kakaoent.com/2022/220106-github-actions/
