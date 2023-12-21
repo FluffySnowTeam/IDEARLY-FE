@@ -14,7 +14,9 @@ export const AlgorithmSolvingPage = () => {
 
   return (
     <S.AlgorithmSolvingPageContainer>
+      {/* <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} /> */}
       <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} />
+
       <AlgorithmNav onOpen={onOpen} />
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />

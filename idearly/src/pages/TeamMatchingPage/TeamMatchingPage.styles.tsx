@@ -1,15 +1,5 @@
 import styled from "@emotion/styled";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  HStack,
-  Heading,
-  Tag,
-  TagLabel,
-  Text,
-} from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, CardHeader, HStack, Heading, Tag, TagLabel, Text } from "@chakra-ui/react";
 
 export const TeamMathingWrapper = styled.div`
   width: 100%;
@@ -58,10 +48,4 @@ export const TagWrapper = styled(Tag)`
 export const MiniTitle = styled(Text)`
   font-weight: bold;
   margin-bottom: 8px;
-`;
-
-export const ShowUserTag = styled(Tag)`
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-`;
+`

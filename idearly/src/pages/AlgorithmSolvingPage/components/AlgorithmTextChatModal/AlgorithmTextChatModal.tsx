@@ -1,3 +1,4 @@
+// sockJS + STOMPJS
 import {
   Modal,
   ModalContent,
@@ -8,18 +9,20 @@ import {
 } from '@chakra-ui/react'
 import type { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
 import { useState, useEffect, useRef, FormEvent } from 'react';
-// import SockJS from 'sockjs-client';
 import * as StompJS from '@stomp/stompjs';
 import { fakeChatMsg } from '../../../../mocks/chat.mocks';
 import * as S from './AlgorithmTextChatModal.styles';
 import { TextChatBubbleMe, TextChatBubbleOthers } from './components';
+import { userInfoAtom } from '../../../../store';
+import { useAtomValue } from "jotai";
 
-// Response로 올 내용: chatMessage / senderName / sendDate
+// Response로 올 내용: chatMessage / senderName / senderEmail / sendDate / messageId
 // Request에 담겨야할 내용: chatMessage
 
 export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   const [value, setValue] = useState('');
   const [msg, setMsg] = useState<ChatRecivMessage[]>(fakeChatMsg);
+  const userInfo = useAtomValue(userInfoAtom);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = useRef<any>(null);
@@ -43,6 +46,9 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
       debug: function (str: string) {
         console.log(str);
       },
+      // connectHeaders: {
+      //   // accessToken: window.localStorage.getItem('authorization'),
+      // },
       onConnect: () => {   // 연결됐을때 실행할 함수
         console.log('success');
         subscribe(); // 연결 성공 시 구독하는 로직
@@ -52,13 +58,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
         console.log('Additional details: ' + frame.body);
       },
     });
-
-    // 만약 Websocket을 지원하지 않는 브라우저에서는 SockJS 사용
-    // if (typeof WebSocket !== 'function') {
-    //   client.current.webSocketFactory = function () {
-    //     return new SockJS('ws:/211.201.26.10:8080/ws/chat');
-    //   };
-    // }
+    
     console.log('Trying to connect...');
     client.current.activate(); // client 활성화
   }
@@ -82,7 +82,9 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
     setMsg((prev) => [
       ...prev,
       {
-        senderName: '강윤지',
+        messageId: '12',
+        senderName: userInfo.name,
+        senderEmail: userInfo.email,
         chatMessage: message,
         sendDate: '2023-12-13',
       }
@@ -132,7 +134,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
             {
               // senderName을 보고 컴포넌트 선택
               msg.map((v) => 
-                v.senderName === '강윤지' ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
+                v.senderEmail === userInfo.email ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
               )
             }
             <div ref={msgEndRef}></div>

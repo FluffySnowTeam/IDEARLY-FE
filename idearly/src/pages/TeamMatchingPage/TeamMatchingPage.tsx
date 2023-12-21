@@ -1,20 +1,13 @@
-import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton, TagLeftIcon } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton } from '@chakra-ui/react'
 import * as S from './TeamMatchingPage.styles';
-import { useState, useEffect } from 'react';
-import { AddIcon } from '@chakra-ui/icons';
-import useDebounce from '../../hooks/useDebounce';
-import { IUserType } from './TeamMatchingPage.types';
-import { useSearchMemberQuery, useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
+import { useState } from 'react';
+import { useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
 import { useNavigate } from 'react-router-dom';
+import type { IUserType } from './TeamMatchingPage.types';
+import { AddTeamMembers } from '../../components/AddTeamMembers/AddTeamMembers';
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
-  const [userMail, setUserMail] = useState<string>('');
-  const [isShowUser, setIsShowUser] = useState<boolean>(false);
-  const [userInfo, setUserInfo] = useState<IUserType>({
-    name: '',
-    email: ''
-  });
   const [addedMembers, setAddedMembers] = useState<IUserType[]>([]);
   const [isErrorName, setIsErrorName] = useState(false);
   const { mutate } = useTeamMatchingMutation();
@@ -23,29 +16,6 @@ export const TeamMatchingPage = () => {
 
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
-
-  const debouncedValue = useDebounce(userMail, 400);
-
-  const data = useSearchMemberQuery({competitionId: '123', email: debouncedValue});
-
-  useEffect(() => {
-    if (data?.exist){
-      setIsShowUser(true);
-      setUserInfo({name: data.memberName, email: data.email});
-    } else {
-      setIsShowUser(false);
-      setUserInfo({
-        name: '',
-        email: ''
-      });
-    }
-  }, [debouncedValue]);
-
-  const handleUserClick = () => {
-    setIsShowUser(false);
-    setAddedMembers((prev) => [...prev, userInfo]);
-    setUserMail('');
-  }
 
   const handleDelete = (email: string) => {
     setAddedMembers(addedMembers.filter((user) => user.email !== email));
@@ -107,22 +77,7 @@ export const TeamMatchingPage = () => {
                   </S.TagWrapper>
                 ))}
               </S.HStackWrapper>
-              <Input 
-                type='email' 
-                placeholder='검색할 맴버의 이메일 주소를 입력해주세요.' 
-                onChange={(e)=>setUserMail(e.target.value)}
-                value={userMail}
-                isDisabled={!isErrorCount}
-              />
-              {
-                isShowUser
-                  &&
-                <S.ShowUserTag colorScheme='gray' onClick={handleUserClick}>
-                  <TagLeftIcon boxSize='12px' as={AddIcon} />
-                  {userInfo.name}
-                  {userInfo.email}
-                </S.ShowUserTag>
-              }
+              <AddTeamMembers setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
             </Box>
           </Stack>
         </S.CardBodySection>
