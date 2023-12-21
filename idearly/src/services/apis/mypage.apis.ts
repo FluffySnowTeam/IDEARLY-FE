@@ -4,3 +4,8 @@ import { axiosInstance } from "./axios";
 export const withdrawalUser = async () => {
   return await axiosInstance.delete("/api/members");
 }
+
+// 회원 정보 수정 요청
+export const modifyUser = async (name: string) => {
+  return await axiosInstance.patch("/api/members", name);
+}

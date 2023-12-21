@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useSetAtom } from "jotai";
 import { LoginStateAtom } from "../store/LoginPage.atoms";
-import { withdrawalUser } from "../services/apis/mypage.apis";
+import { modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
 
 export const useWithdrawalMutation = () => {
   const setIsLoginState = useSetAtom(LoginStateAtom);
@@ -34,6 +34,38 @@ export const useWithdrawalMutation = () => {
         isClosable: true,
       });
 
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    },
+  });
+};
+
+export const useModifyUerMutation = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (name: string) => modifyUser(name),
+    onError: (error) => {
+      console.error(error);
+      toast({
+        title: "회원 정보 수정 실패",
+        description: "다시 시도해주세요.",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast({
+        title: "회원 정보 수정 성공",
+        description: "회원 정보 수정에 성공하였습니다!",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
       setTimeout(() => {
         navigate("/");
       }, 1000);
