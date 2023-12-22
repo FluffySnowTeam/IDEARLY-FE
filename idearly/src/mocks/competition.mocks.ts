@@ -1,6 +1,6 @@
 export const fakeCompetitions = [
   {
-    competitionId: 201,
+    competitionId: 1,
     title: "Global Algorithm Challenge 2024",
     startDateTime: "2023-12-19T11:11:00.000Z",
     endDateTime: "2023-12-19T11:11:30.000Z",
@@ -11,28 +11,26 @@ export const fakeCompetitions = [
     teamName: "Code Masters",
   },
   {
-    competitionId: 202,
-    title: "Data Structures Pro League 2024",
+    competitionId: 2,
+    title: "International Data Science Marathon 2025",
     startDateTime: "2024-06-15T09:00:00.000Z",
-    endDateTime: "2024-06-17T18:00:00.000Z",
-    description:
-      "이 대회는 데이터 구조에 중점을 두고, 참가자들이 트리, 그래프, 해시 테이블 등의 복잡한 데이터 구조를 사용하여 효율적인 솔루션을 개발하도록 도전합니다. 창의적인 문제 해결과 효율적인 메모리 관리가 핵심입니다.",
+    endDateTime: "2024-06-15T18:00:00.000Z",
+    description: `이 대회는 데이터 과학에 관심 있는 사람들을 대상으로 합니다. \n 참가자들은 데이터 분석, 머신 러닝, 통계적 접근 방법 등을 이용하여 주어진 문제를 해결합니다.\n\n주의사항:\n1. 모든 데이터는 대회 주최측에서 제공됩니다.\n2. 대회 기간 중에는 오프라인 모드로 진행됩니다.\n3. 대회는 개인 참가만 가능합니다.\n\n자세한 정보:\n- 대회는 하루 동안 진행되며, 실시간 데이터 분석이 요구됩니다.\n- 참가자들에게는 필요한 데이터와 분석 도구가 제공됩니다.\n- 우수한 성적을 거둔 참가자에게는 상금이 지급됩니다.`,
     login: true,
     participate: true,
-    teamId: 1022,
-    teamName: "Structure Wizards",
+    teamId: 1033,
+    teamName: "Data Wizards",
   },
   {
-    competitionId: 205,
-    title: "Global Algorithm Challenge 2024",
-    startDateTime: "2024-05-10T08:00:00.000Z",
-    endDateTime: "2024-05-12T20:00:00.000Z",
-    description:
-      "이 대회는 전 세계의 개발자들이 모여 복잡한 알고리즘 문제를 해결합니다. 참가자들은 최적화, 자료 구조, 알고리즘 설계 등 다양한 주제의 문제를 해결하며, 코딩 기술과 논리적 사고력을 겨룹니다.",
+    competitionId: 3,
+    title: "Cybersecurity Hackathon 2026",
+    startDateTime: "2025-11-20T10:00:00.000Z",
+    endDateTime: "2025-11-22T16:00:00.000Z",
+    description: `이 해커톤은 사이버 보안 역량을 갖춘 인재를 찾기 위해 마련되었습니다. \n 참가자들은 네트워크 보안, 암호화 기술, 침입 탐지 시스템 등을 다룹니다.\n\n주의사항:\n1. 해커톤 기간 중 모든 통신 기록은 감시됩니다.\n2. 팀 단위로만 참가가 가능하며, 팀당 최대 5명까지 등록할 수 있습니다.\n3. 참가자는 사전에 제공된 해커톤 규칙을 준수해야 합니다.\n\n자세한 정보:\n- 해커톤은 3일간 진행되며, 실제 시나리오를 기반으로 한 다양한 보안 문제가 주어집니다.\n- 모든 참가 팀에게는 필요한 소프트웨어와 하드웨어가 제공됩니다.\n- 우수한 성과를 낸 팀에게는 상금과 인턴십 기회가 제공됩니다.`,
     login: true,
-    participate: true,
-    teamId: 10214,
-    teamName: "Code Masters",
+    participate: false,
+    teamId: 1045,
+    teamName: "Security Sentinels",
   },
 ];
 

@@ -20,10 +20,12 @@ export const CompetitionsSection = ({
   useEffect(() => {
     if (competitionData) {
       setCompetitions(competitionData.result);
+      console.log(competitionData);
     }
   }, [competitionData]);
 
   if (status === "pending") {
+    // 이후 시간이 남으면 스켈레톤 ui로 수정하기
     <div>...Loading</div>;
   }
 

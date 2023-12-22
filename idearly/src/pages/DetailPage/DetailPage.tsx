@@ -5,15 +5,20 @@ import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
 import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/CompetitionsModal";
+import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
+
+  /**이 아래 부분 삭제 */
   const competition = fakeCompetitions.filter(
     (competition) => competition.competitionId === Number(id)
   );
   const { title, description, startDateTime, endDateTime } = competition[0];
-  // const sanitizedContent = DOMPurify.sanitize(description);
-  console.log("competition", competition);
+
+  /**수정될 부분 지금은 데이터가 안옴*/
+  const { data } = useCompetitionDetailMutation(Number(id));
+  console.log("useCompetitionDetailMutation", data);
 
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition[0]);

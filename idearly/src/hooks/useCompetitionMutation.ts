@@ -4,7 +4,7 @@ import {
   getCompetitions,
 } from "../services/apis/competition.apis";
 
-export const useCompetitionMutation = (competitionId: number) => {
+export const useCompetitionDetailMutation = (competitionId: number) => {
   return useMutation({
     mutationFn: () => getCompetitionDetail(competitionId),
     onSuccess: (data) => {
