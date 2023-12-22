@@ -11,7 +11,7 @@ export const useLoginMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const setIsLoginState = useSetAtom(LoginStateAtom);
-  const setUsrInfoState = useSetAtom(userInfoAtom);
+  const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
     mutationFn: (userInfo: IUserRequest) => loginUser(userInfo),
@@ -30,7 +30,7 @@ export const useLoginMutation = () => {
       console.log(data.data.result);
       // 로그인 상태 업데이트
       setIsLoginState(true);
-      setUsrInfoState(data.data.result);
+      setUserInfoState(data.data.result);
       toast({
         title: "로그인 성공!",
         description: "로그인에 성공하였습니다!",

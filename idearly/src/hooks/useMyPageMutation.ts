@@ -8,6 +8,8 @@ import { userInfoAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
   const setIsLoginState = useSetAtom(LoginStateAtom);
+  const setUserInfoState = useSetAtom(userInfoAtom);
+
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -27,6 +29,11 @@ export const useWithdrawalMutation = () => {
       console.log(data);
       // 로그인 상태 업데이트
       setIsLoginState(false);
+      setUserInfoState({
+        memberId: '',
+        email: '',
+        name: '',
+      });
       toast({
         title: "회원 탈퇴 성공",
         description: "탈퇴에 성공하였습니다!",

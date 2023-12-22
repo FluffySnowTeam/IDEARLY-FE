@@ -46,9 +46,6 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
       debug: function (str: string) {
         console.log(str);
       },
-      // connectHeaders: {
-      //   // accessToken: window.localStorage.getItem('authorization'),
-      // },
       onConnect: () => {   // 연결됐을때 실행할 함수
         console.log('success');
         subscribe(); // 연결 성공 시 구독하는 로직
