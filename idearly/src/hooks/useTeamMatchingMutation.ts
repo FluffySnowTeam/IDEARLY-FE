@@ -35,7 +35,7 @@ export const useTeamMatchingMutation = () => {
       });
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/mypage/currentTeam");
       }, 1000);
     },
   });
@@ -51,8 +51,6 @@ export const useSearchMemberQuery = ({competitionId, email}: IProp2) => {
     queryKey: ['searchMember', competitionId, email],
     queryFn: () => searchMember(competitionId, email)
   });
-  // 여기 log 찍으면 계속 나오는데, queryFn은 또 그게 아닌 것 같고... 아직 이해가 부족합니다. 
-  // api 요청은 디바운스 및 캐싱이 적용되는 것 같아 보입니다.
-  // 요 부분 잘 작성됐는지 확인 부탁드립니다!
+  
   return result.data?.data.data;
 };
