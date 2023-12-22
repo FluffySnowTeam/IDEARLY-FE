@@ -6,6 +6,7 @@ import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
 import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/CompetitionsModal";
 import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
+import { useEffect } from "react";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,8 +18,10 @@ export const DetailPage = () => {
   const { title, description, startDateTime, endDateTime } = competition[0];
 
   /**수정될 부분 지금은 데이터가 안옴*/
-  const { data, mutate } = useCompetitionDetailMutation(Number(id));
-  console.log("useCompetitionDetailMutation", data);
+  const { mutate } = useCompetitionDetailMutation(Number(id));
+  useEffect(() => {
+    mutate();
+  }, [id, mutate]);
 
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition[0]);
