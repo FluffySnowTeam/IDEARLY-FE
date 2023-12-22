@@ -7,6 +7,9 @@ import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
 import { IUserSignupRequest } from "../../types";
 import { useSignupMutation } from "../../hooks/useSignupMutation";
 import { useNavigate } from "react-router-dom";
+import { useAtomValue } from "jotai";
+import { EmailCheckAtom } from "../../store/LoginPage.atoms";
+import { useToast } from "@chakra-ui/react";
 
 export const SignupPage = () => {
   const {
@@ -23,31 +26,39 @@ export const SignupPage = () => {
       confirmPassword: "",
     },
   });
-
   const watchedValues = watch();
-
   // 폼이 오류 상태인지 확인
   const hasErrors = Object.keys(errors).length > 0;
-
   // 폼이 현재 비어있는 상태인지 확인
   const isCurrentlyEmpty = Object.values(watchedValues).every(
     (value) => value === ""
   );
-
   const isAllFieldsFilled = Object.values(watchedValues).every(
     (value) => value !== ""
   );
-
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
 
+  const isEmailCheck = useAtomValue(EmailCheckAtom);
+  const toast = useToast();
+
   const { mutate } = useSignupMutation();
   const handleSignup = (data: IUserSignupRequest) => {
-    mutate({
-      email: data.email,
-      name: data.name,
-      password: data.password,
-    });
+    if (!isEmailCheck) {
+      mutate({
+        email: data.email,
+        name: data.name,
+        password: data.password,
+      });
+    } else {
+      toast({
+        title: "이메일 중복체크를 해주세요",
+        description: "이메일 중복체크를 해주세요",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   const navigate = useNavigate();

@@ -15,10 +15,10 @@ export const SignupValidationInput = ({
   const isError = errors && errors.message;
   const emailValue = watch?.("email");
 
-  const { mutate: emailCheckMutate } = useEmailCheckMutation();
+  const { mutate: checkEmailMutate } = useEmailCheckMutation();
   const handleEmailCheck = () => {
     if (emailValue) {
-      emailCheckMutate({ email: emailValue });
+      checkEmailMutate(emailValue);
     }
   };
 

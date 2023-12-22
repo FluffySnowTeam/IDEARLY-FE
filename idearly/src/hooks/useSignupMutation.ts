@@ -6,6 +6,8 @@ import {
 import { IUserSignupRequest } from "../types";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+import { useSetAtom } from "jotai";
+import { EmailCheckAtom } from "../store/LoginPage.atoms";
 
 export const useSignupMutation = () => {
   const navigate = useNavigate();
@@ -32,7 +34,6 @@ export const useSignupMutation = () => {
         duration: 2000,
         isClosable: true,
       });
-
       setTimeout(() => {
         navigate("/login");
       }, 1000);
@@ -40,13 +41,29 @@ export const useSignupMutation = () => {
   });
 };
 
-//수정될 수 있음
 export const useEmailCheckMutation = () => {
+  const toast = useToast();
+  const setIsEmailCheck = useSetAtom(EmailCheckAtom);
+
   return useMutation({
-    mutationFn: (userEmail: { email: string }) =>
-      checkEmailDuplication(userEmail),
+    mutationFn: (userEmail: string) => checkEmailDuplication(userEmail),
     onError: (error) => {
       console.error(error);
+    },
+    onSuccess: (data) => {
+      const isDuplicate = data?.result?.duplicate;
+      setIsEmailCheck(isDuplicate);
+      const toastMessage = isDuplicate
+        ? "이메일이 중복되었습니다."
+        : "이메일 중복 확인 성공";
+      const toastStatus = isDuplicate ? "error" : "success";
+      toast({
+        title: toastMessage,
+        description: toastMessage,
+        status: toastStatus,
+        duration: 2000,
+        isClosable: true,
+      });
     },
   });
 };

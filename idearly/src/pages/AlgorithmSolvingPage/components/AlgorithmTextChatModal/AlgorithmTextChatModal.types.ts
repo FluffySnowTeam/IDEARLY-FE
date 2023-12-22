@@ -4,7 +4,13 @@ export interface Prop {
 }
 
 export interface ChatRecivMessage {
+  messageId: string,
   chatMessage: string,
   senderName: string,
+  senderEmail: string,
   sendDate: string
 }
+
+
+
+
