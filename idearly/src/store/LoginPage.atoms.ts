@@ -1,3 +1,6 @@
 import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const LoginStateAtom = atom<boolean>(false);
+export const LoginStateAtom = atomWithStorage("isLogin", false);
+
+export const EmailCheckAtom = atom<boolean>(false);

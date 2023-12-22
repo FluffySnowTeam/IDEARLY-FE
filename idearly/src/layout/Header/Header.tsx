@@ -10,9 +10,6 @@ import { LoginStateAtom } from "../../store/LoginPage.atoms";
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  // const [isLoginState, setIsLoginState] = useState(
-  //   !!Cookies.get("accessToken")
-  // );
   const [isLoginState, setIsLoginState] = useAtom(LoginStateAtom);
   const isAlgorithmPage = pathname.startsWith("/algorithm-solving");
 
@@ -62,7 +59,7 @@ export const Header = () => {
                 {text}
               </div>
             ))}
-        {!isLoginState ? (
+        {isLoginState ? (
           <div onClick={handleLogout}>로그아웃</div>
         ) : (
           <div onClick={() => handleMoveToPath("/login")}>로그인</div>

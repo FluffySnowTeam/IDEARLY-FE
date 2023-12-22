@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react"
 import { dateChange } from "../../../../../../utils/dateChange"
 import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
 
-export const CurrentTeamList = ({competition}: PropsWithChildren<ICompetitionProp>) => {
+export const CurrentTeamList = ({competition, onOpen}: PropsWithChildren<ICompetitionProp>) => {
   const {competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
   
   return (
@@ -13,7 +13,7 @@ export const CurrentTeamList = ({competition}: PropsWithChildren<ICompetitionPro
       <Td>{leaderName}</Td>
       <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
-        <Button>상세 보기</Button>  
+        <Button onClick={onOpen}>상세 보기</Button>  
       </Td>
     </Tr>
   )
