@@ -17,7 +17,7 @@ export const DetailPage = () => {
   const { title, description, startDateTime, endDateTime } = competition[0];
 
   /**수정될 부분 지금은 데이터가 안옴*/
-  const { data } = useCompetitionDetailMutation(Number(id));
+  const { data, mutate } = useCompetitionDetailMutation(Number(id));
   console.log("useCompetitionDetailMutation", data);
 
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
