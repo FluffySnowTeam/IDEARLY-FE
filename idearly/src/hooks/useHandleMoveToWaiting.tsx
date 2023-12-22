@@ -15,6 +15,7 @@ interface ICompetition {
 }
 
 const useHandleMoveToWaiting = (competition: ICompetition) => {
+  // 추후 실제 데이터로 변경
   const { competitionId, startDateTime, participate } = competition;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
