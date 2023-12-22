@@ -42,7 +42,13 @@ export const WaitingPage = () => {
             <S.WaitingCardSubHeading size="md">
               [ {subTitle} ]
             </S.WaitingCardSubHeading>
-            <S.WaitingCardText>{content}</S.WaitingCardText>
+            <S.WaitingCardTextWrapper>
+              {content.map((indexContent) => (
+                <S.WaitingCardText key={indexContent.num}>
+                  <p>{indexContent.num}</p> {indexContent.content}
+                </S.WaitingCardText>
+              ))}
+            </S.WaitingCardTextWrapper>
             <S.WaitingCardButton
               disabled={!timerVisible}
               variant="solid"
