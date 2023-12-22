@@ -17,6 +17,17 @@ export const AddProblemModal = ({
   isOpen,
   onClose,
 }: PropsWithChildren<IAddProblemModal>) => {
+  // 테스트 케이스 모달탕에 문제 추가 기능 추가 , 문제 제목 & 문제 설명 통째로 받고 + competitionId
+
+  // + 문제를 1개씩만 업데이트 가능
+  // + 해당 문제의 테스트 케이스 추가 가능
+  /**
+   * competitionId,
+   * {
+   *   inputValue(string), hidden 여부(boolean), answer(string)
+   * },
+   *
+   */
   const [testCaseData, setTestCaseList] = useAtom(testCaseDataAtom);
 
   const handleClose = () => {

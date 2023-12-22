@@ -37,7 +37,7 @@ const useHandleMoveToWaiting = (competition: ICompetition) => {
       // 만약 대회 날짜가 오늘이면
       navigate(`/waiting/${competitionId}`);
     } else if (participate === false) {
-      navigate("/matching");
+      navigate(`/matching/${competitionId}`);
     } else {
       // 대회 날짜가 오늘이 아니면 모달 표시
       onOpen();
