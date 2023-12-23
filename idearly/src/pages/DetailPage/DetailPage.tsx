@@ -13,7 +13,6 @@ export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [competition, setCompetition] = useAtom(competitionDataAtom);
 
-  /**수정될 부분 지금은 데이터가 안옴*/
   const { data, mutate, status } = useCompetitionDetailMutation(Number(id));
   useEffect(() => {
     mutate();

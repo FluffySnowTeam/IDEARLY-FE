@@ -7,16 +7,9 @@ export const useCompetitionTimer = (
   const [timeLeft, setTimeLeft] = useState("");
   const [timerVisible, setTimerVisible] = useState(false);
 
-  // UTC 시간을 KST 시간으로 변환하는 함수
-  const convertToKST = (utcDate) => {
-    const date = new Date(utcDate);
-    date.setHours(date.getHours() + 9); // UTC에서 KST(UTC+9)로 변환
-    return date;
-  };
-
   useEffect(() => {
-    const startLocal = convertToKST(startDateTime);
-    const endLocal = convertToKST(endDateTime);
+    const startLocal = new Date(new Date(startDateTime).getTime());
+    const endLocal = new Date(new Date(endDateTime).getTime());
 
     const updateTimer = () => {
       const now = new Date();
@@ -25,7 +18,9 @@ export const useCompetitionTimer = (
         setTimerVisible(false);
       } else if (now >= startLocal) {
         // 대회 시작 이후 경과 시간 계산
-        const elapsed = Math.floor((now - startLocal) / 1000);
+        const elapsed = Math.floor(
+          (now.getTime() - startLocal.getTime()) / 1000
+        );
         const days = Math.floor(elapsed / 86400);
         const hours = Math.floor((elapsed % 86400) / 3600);
         const minutes = Math.floor((elapsed % 3600) / 60);
@@ -34,7 +29,7 @@ export const useCompetitionTimer = (
         setTimerVisible(true);
       } else {
         // 대회 시작 전 남은 시간 계산
-        const diff = startLocal - now;
+        const diff = startLocal.getTime() - now.getTime();
         const days = Math.floor(diff / 1000 / 86400);
         const hours = Math.floor(((diff / 1000) % 86400) / 3600);
         const minutes = Math.floor(((diff / 1000) % 3600) / 60);
