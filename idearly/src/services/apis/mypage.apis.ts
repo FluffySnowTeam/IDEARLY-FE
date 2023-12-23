@@ -7,5 +7,5 @@ export const withdrawalUser = async () => {
 
 // 회원 정보 수정 요청
 export const modifyUser = async (name: string) => {
-  return await axiosInstance.patch("/api/members", name);
+  return await axiosInstance.patch("/api/members", {name});
 }
