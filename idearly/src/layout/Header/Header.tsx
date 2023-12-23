@@ -4,16 +4,16 @@ import { AlgorithmHeaderConfig, MainHeaderConfig } from "../../constants";
 import { useEffect } from "react";
 import { useLogoutMutation } from "../../hooks";
 import axios from "axios";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { LoginStateAtom } from "../../store/LoginPage.atoms";
+import { userInfoAtom } from "../../store";
 
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  // const [isLoginState, setIsLoginState] = useState(
-  //   !!Cookies.get("accessToken")
-  // );
   const [isLoginState, setIsLoginState] = useAtom(LoginStateAtom);
+  const setUserInfoState = useSetAtom(userInfoAtom);
+
   const isAlgorithmPage = pathname.startsWith("/algorithm-solving");
 
   const handleMoveToPath = (path: string) => {
@@ -32,6 +32,11 @@ export const Header = () => {
       (error) => {
         if (error.response && error.response.status === 401) {
           setIsLoginState(false);
+          setUserInfoState({
+            memberId: '',
+            email: '',
+            name: '',
+          });
         }
         return Promise.reject(error);
       }
