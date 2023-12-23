@@ -10,7 +10,6 @@ import {
 import type { ChatRecivMessage, Prop } from './AlgorithmTextChatModal.types'
 import { useState, useEffect, useRef, FormEvent } from 'react';
 import * as StompJS from '@stomp/stompjs';
-import { fakeChatMsg } from '../../../../mocks/chat.mocks';
 import * as S from './AlgorithmTextChatModal.styles';
 import { TextChatBubbleMe, TextChatBubbleOthers } from './components';
 import { userInfoAtom } from '../../../../store';
@@ -21,7 +20,7 @@ import { useAtomValue } from "jotai";
 
 export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   const [value, setValue] = useState('');
-  const [msg, setMsg] = useState<ChatRecivMessage[]>(fakeChatMsg);
+  const [msg, setMsg] = useState<ChatRecivMessage[]>([]);
   const userInfo = useAtomValue(userInfoAtom);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,7 +40,8 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      brokerURL: 'wss://idearly.site/ws/chat',
+      // brokerURL: 'wss://idearly.site/ws/chat',
+      brokerURL: 'ws://211.201.26.10:8080/ws/chat',
       // webSocketFactory: () => new SockJS("http://localhost:3000/ws/chat"),
       debug: function (str: string) {
         console.log(str);
@@ -76,16 +76,6 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   // 이렇게 매개변수 하나만 있다면 타입 파일에 따로 뺄 필요는 없겠죠?
   const publish = (message: string) => {
     console.log('Publishing message:', message);
-    setMsg((prev) => [
-      ...prev,
-      {
-        messageId: '12',
-        senderName: userInfo.name,
-        senderEmail: userInfo.email,
-        chatMessage: message,
-        sendDate: '2023-12-13',
-      }
-    ])
     setValue('');
 
     if (!client.current || !client.current.connected) return;
