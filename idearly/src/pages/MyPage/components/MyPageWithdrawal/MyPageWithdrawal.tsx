@@ -1,10 +1,16 @@
 import { MyPageWithdrawalConfig } from "../../../../constants/MyPage.constants";
+import { useWithdrawalMutation } from "../../../../hooks/useMyPageMutation";
 import * as S from "./MyPageWithdrawal.styles";
 import { useState } from "react";
 
 export const MyPageWithdrawal = () => {
+  const { mutate } = useWithdrawalMutation();
   const [isCheck, setIsCheck] = useState(false);
   const {title1, content1, title2, content2, title3, content3, title4, title5, content5} = MyPageWithdrawalConfig;
+
+  const handleClick = () => {
+    mutate();
+  }
   
   return (
     <S.WithdrawalContainer>
@@ -32,7 +38,7 @@ export const MyPageWithdrawal = () => {
         {isCheck ? "radio_button_checked" : "radio_button_unchecked"}
         <div>회원 탈퇴를 진행하며 해당 계정에 귀속된 모든 정보를 삭제하는데 동의합니다.</div>
       </S.RadioIcon>
-      <S.WithdrawalBtn isDisabled={!isCheck} colorScheme="red">회원 탈퇴하기</S.WithdrawalBtn>
+      <S.WithdrawalBtn isDisabled={!isCheck} colorScheme="red" onClick={handleClick}>회원 탈퇴하기</S.WithdrawalBtn>
     </S.WithdrawalContainer>
   )
 }
