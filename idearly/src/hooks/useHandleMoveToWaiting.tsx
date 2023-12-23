@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ICompetition {
-  competitionId: string;
+  competitionId: number;
   title: string;
   startDateTime: string;
   endDateTime: string;
@@ -15,6 +15,7 @@ interface ICompetition {
 }
 
 const useHandleMoveToWaiting = (competition: ICompetition) => {
+  // 추후 실제 데이터로 변경
   const { competitionId, startDateTime, participate } = competition;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,16 +34,16 @@ const useHandleMoveToWaiting = (competition: ICompetition) => {
     now.setHours(0, 0, 0, 0);
     startDate.setHours(0, 0, 0, 0);
 
-    if (startDate.getTime() === now.getTime()) {
-      // 만약 대회 날짜가 오늘이면
-      navigate(`/waiting/${competitionId}`);
-    } else if (participate === false) {
-      navigate("/matching");
-    } else {
-      // 대회 날짜가 오늘이 아니면 모달 표시
-      onOpen();
-      setOverlay(<OverlayOne />);
-    }
+    // if (startDate.getTime() === now.getTime()) {
+    // 만약 대회 날짜가 오늘이면
+    navigate(`/waiting/${competitionId}`);
+    // } else if (participate === false) {
+    //   navigate("/matching");
+    // } else {
+    //   // 대회 날짜가 오늘이 아니면 모달 표시
+    //   onOpen();
+    //   setOverlay(<OverlayOne />);
+    // }
 
     // 만약 대회에 소속된 팀이 없다면?
     // navigate(`/matching`);

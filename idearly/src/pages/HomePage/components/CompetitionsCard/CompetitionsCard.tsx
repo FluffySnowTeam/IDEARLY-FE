@@ -9,14 +9,13 @@ import useHandleMoveToWaiting from "../../../../hooks/useHandleMoveToWaiting";
 export const CompetitionsCard = ({
   competition,
 }: PropsWithChildren<ICompetitionCard>) => {
-  const { competitionId, title, startDateTime, endDateTime } = competition;
   const navigate = useNavigate();
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition);
 
   // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
-    navigate(`/detail/${competitionId}`);
+    navigate(`/detail/${competition.competitionId}`);
   };
 
   return (
@@ -25,7 +24,7 @@ export const CompetitionsCard = ({
         isOpen={isOpen}
         onClose={onClose}
         overlay={overlay}
-        startDateTime={startDateTime}
+        startDateTime={competition.startDateTime}
       />
       <S.CompeCardContainer
         spacing={6}
@@ -34,12 +33,14 @@ export const CompetitionsCard = ({
         <S.CompeCardBox>
           <img src="/images/trophy.jpg" />
           <S.CompeCardBody>
-            <S.CompeCardHeading size="md">{title}</S.CompeCardHeading>
+            <S.CompeCardHeading size="md">
+              {competition?.title}
+            </S.CompeCardHeading>
             <S.CompeText>
-              대회 시작: {dateChange({ date: startDateTime })}
+              대회 시작: {dateChange({ date: competition?.startDateTime })}
             </S.CompeText>
             <S.CompeText>
-              대회 종료: {dateChange({ date: endDateTime })}
+              대회 종료: {dateChange({ date: competition?.endDateTime })}
             </S.CompeText>
             <S.CardDetailButton onClick={handleMoveToDetail}>
               대회 상세보기

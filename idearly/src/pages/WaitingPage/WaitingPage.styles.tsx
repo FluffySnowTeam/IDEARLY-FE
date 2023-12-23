@@ -41,13 +41,26 @@ export const WaitingCardSubHeading = styled(Heading)`
   color: #555555;
 `;
 
+export const WaitingCardTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: start;
+  padding: 1rem 2rem 0rem 2rem;
+`;
+
 export const WaitingCardText = styled(Text)`
-  padding: 1.5rem 4rem 0rem 4rem;
   font-size: 0.95rem;
+  display: flex;
+  magin-bottom: 0.2rem;
+  p {
+    font-weight: bold;
+    margin-right: 0.4rem;
+  }
 `;
 
 export const WaitingCardButton = styled(Button)`
-  margin: 2.3rem 0rem 2.3rem 0rem;
+  margin: 1.5rem 0rem 2.3rem 0rem;
   background-color: #5a84ff;
   ${(props) =>
     props.disabled &&
