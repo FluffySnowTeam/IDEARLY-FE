@@ -26,7 +26,8 @@ export const CompetitionInfoList = ({
           {dateChange({ date: endDateTime })}
         </Td>
         <Td>
-          <Button onClick={handleModalOpen}>문제 수정</Button>
+          <Button onClick={handleModalOpen}>문제 추가</Button>
+          <Button onClick={handleModalOpen}>테스트케이스 추가</Button>
         </Td>
       </Tr>
     </Tbody>
