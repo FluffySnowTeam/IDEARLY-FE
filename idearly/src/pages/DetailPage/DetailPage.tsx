@@ -5,12 +5,13 @@ import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
 import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/CompetitionsModal";
 import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
-import { useEffect, useState } from "react";
-import type { ICompetition } from "../../types";
+import { useEffect } from "react";
+import { useAtom } from "jotai";
+import { competitionDataAtom } from "../../store";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [competition, setCompetition] = useState<ICompetition>();
+  const [competition, setCompetition] = useAtom(competitionDataAtom);
 
   /**수정될 부분 지금은 데이터가 안옴*/
   const { data, mutate, status } = useCompetitionDetailMutation(Number(id));
@@ -20,9 +21,7 @@ export const DetailPage = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("data", data);
       const newCompetition = data.result;
-      console.log("new competition", newCompetition);
       setCompetition(newCompetition);
     }
   }, [data]);
@@ -41,7 +40,7 @@ export const DetailPage = () => {
         startDateTime={competition?.startDateTime}
       />
       <S.CompetitionDetailContainer>
-        <S.CompeDetailTitle>{competition?.competitionTitle}</S.CompeDetailTitle>
+        <S.CompeDetailTitle>{competition?.title}</S.CompeDetailTitle>
         {competition && (
           <S.CompeDetailDate>
             <div>시작: {dateChange({ date: competition.startDateTime })}</div>

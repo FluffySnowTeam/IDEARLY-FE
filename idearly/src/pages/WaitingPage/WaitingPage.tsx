@@ -1,22 +1,15 @@
 import * as S from "./WaitingPage.styles";
 import { WaitingPageConfig } from "../../constants";
-import { useParams } from "react-router-dom";
-import { fakeCompetitions } from "../../mocks/competition.mocks";
 import { useCompetitionTimer } from "../../hooks";
+import { useAtomValue } from "jotai";
+import { competitionDataAtom } from "../../store";
 
 export const WaitingPage = () => {
   const { title, subTitle, content } = WaitingPageConfig;
-  const { id } = useParams<{ id: string }>();
+  const competition = useAtomValue(competitionDataAtom);
 
-  // 특정 대회 정보 상세 추후 실제 데이터로 변경
-  const selectedCompetition = fakeCompetitions.filter(
-    (competition) => competition.competitionId === Number(id)
-  );
-  const {
-    title: compeTitle,
-    startDateTime,
-    endDateTime,
-  } = selectedCompetition[0] || {};
+  const { title: compeTitle, startDateTime, endDateTime } = competition;
+
   const { timeLeft, timerVisible } = useCompetitionTimer(
     startDateTime,
     endDateTime
