@@ -18,7 +18,7 @@ import { useAtomValue } from "jotai";
 // Response로 올 내용: chatMessage / senderName / senderEmail / sendDate / messageId
 // Request에 담겨야할 내용: chatMessage
 
-export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
+export const AlgorithmTextChatModal = ({isOpen, onClose, teamId}: Prop) => {
   const [value, setValue] = useState('');
   const [msg, setMsg] = useState<ChatRecivMessage[]>([]);
   const userInfo = useAtomValue(userInfoAtom);
@@ -26,7 +26,6 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const client = useRef<any>(null);
   const msgEndRef = useRef<HTMLDivElement | null>(null);
-  const teamId = 1;
 
   useEffect(() => {
     connect();
@@ -121,7 +120,7 @@ export const AlgorithmTextChatModal = ({isOpen, onClose}: Prop) => {
             {
               // senderName을 보고 컴포넌트 선택
               msg.map((v) => 
-                v.senderEmail === userInfo.email ? <TextChatBubbleMe message={v} /> : <TextChatBubbleOthers message={v} />
+                v.senderEmail === userInfo.email ? <TextChatBubbleMe key={v.messageId} message={v} /> : <TextChatBubbleOthers key={v.messageId} message={v} />
               )
             }
             <div ref={msgEndRef}></div>

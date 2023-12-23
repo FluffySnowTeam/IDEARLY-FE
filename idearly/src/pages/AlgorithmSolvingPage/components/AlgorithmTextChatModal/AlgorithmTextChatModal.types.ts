@@ -1,6 +1,7 @@
 export interface Prop {
   isOpen: boolean;
   onClose: () => void;
+  teamId: string | null;
 }
 
 export interface ChatRecivMessage {
