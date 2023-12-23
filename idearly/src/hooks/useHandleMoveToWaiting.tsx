@@ -14,9 +14,20 @@ interface ICompetition {
   teamName: string;
 }
 
-const useHandleMoveToWaiting = (competition: ICompetition) => {
-  // 추후 실제 데이터로 변경
-  const { competitionId, startDateTime, participate } = competition;
+const useHandleMoveToWaiting = (competition?: ICompetition) => {
+  const defaultCompetition = {
+    competitionId: 0,
+    title: "",
+    startDateTime: "",
+    endDateTime: "",
+    description: "",
+    login: false,
+    participate: false,
+    teamId: 0,
+    teamName: "",
+  };
+  const { competitionId, startDateTime, participate } =
+    competition || defaultCompetition;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const OverlayOne = () => (

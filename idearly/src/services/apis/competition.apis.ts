@@ -18,7 +18,7 @@ export const getCompetitions = async () => {
 // competition 상세 데이터 받아오기
 // participate으로 참가 대회인지 여부 확인 가능
 export const getCompetitionDetail = async (competitionId: number) => {
-  const response = await axiosInstance.post(
+  const response = await axiosInstance.get(
     `/api/competitions/${competitionId}`
   );
   return response.data;

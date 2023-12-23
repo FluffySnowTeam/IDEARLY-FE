@@ -18,9 +18,11 @@ export const CompetitionsModal = ({
         </S.CompeModalHeader>
         <S.CompeModalCloseButton />
         <S.CompeModalBody>
-          <S.CompeModalText>
-            대회 시작 일자는 {dateChange({ date: startDateTime })}입니다
-          </S.CompeModalText>
+          {startDateTime && (
+            <S.CompeModalText>
+              대회 시작 일자는 {dateChange({ date: startDateTime })}입니다
+            </S.CompeModalText>
+          )}
         </S.CompeModalBody>
         <S.CompeModalFooter>
           <S.CompeModalButton onClick={onClose}>Close</S.CompeModalButton>
