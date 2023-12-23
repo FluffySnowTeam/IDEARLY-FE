@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useSetAtom } from "jotai";
 import { LoginStateAtom } from "../store/LoginPage.atoms";
-import { modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
+import { getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
 import { userInfoAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
@@ -85,4 +85,30 @@ export const useModifyUerMutation = () => {
       }, 1000);
     },
   });
+};
+
+export const useGetCurrentTeamQuery = () => {
+  const {
+    data,
+    status,
+    error,
+  } = useQuery({
+    queryKey: ["curTeam"],
+    queryFn: getCurrentTeam,
+    staleTime: 2 * 60 * 1000,
+  });
+  return { data, status, error };
+};
+
+export const useGetWaitTeamQuery = () => {
+  const {
+    data,
+    status,
+    error,
+  } = useQuery({
+    queryKey: ["waitTeam"],
+    queryFn: getCWaitTeam,
+    staleTime: 2 * 60 * 1000,
+  });
+  return { data, status, error };
 };

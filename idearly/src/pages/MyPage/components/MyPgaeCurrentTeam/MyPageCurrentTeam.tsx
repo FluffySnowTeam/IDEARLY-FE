@@ -3,7 +3,9 @@ import * as S from "./MyPageCurrentTeam.styles";
 import { curCompetition, TeamMembers } from "../../../../mocks/curCompetition.mocks";
 import { CurrentTeamList, TeamModifyModal, WaitingTeamList } from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
-import type { ITeamMember } from "./MyPageCurrentTeam.types";
+import type { ICompetition, ITeamMember } from "./MyPageCurrentTeam.types";
+import { useEffect, useState } from "react";
+import { useGetCurrentTeamQuery, useGetWaitTeamQuery } from "../../../../hooks/useMyPageMutation";
 
 export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
@@ -12,6 +14,25 @@ export const MyPageCurrentTeam = () => {
   // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
   const currentMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "accept");
   const inviteMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "invite");
+
+  const {data: curTeamData} = useGetCurrentTeamQuery();
+  const {data: waitTeamData} = useGetWaitTeamQuery();
+
+  const [curCompetition, setCurCompetition] = useState<ICompetition[]>([]);
+  const [waitCompetition, setWaitCompetition] = useState<ICompetition[]>([]);
+
+  // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
+  useEffect(() => {
+    if(curTeamData) {
+      setCurCompetition(curTeamData.data.teams);
+    }
+  }, [curTeamData])
+
+  useEffect(() => {
+    if(waitTeamData) {
+      setWaitCompetition(waitTeamData.data.teams);
+    }
+  }, [waitTeamData])
 
   return (
     <S.SearchTeamWrapper>
@@ -55,7 +76,7 @@ export const MyPageCurrentTeam = () => {
           </Thead>
           <Tbody>
             {
-              curCompetition.map((competition) => (
+              waitCompetition.map((competition) => (
                 <WaitingTeamList key={competition.competitionId} competition={competition} />
               ))
             }

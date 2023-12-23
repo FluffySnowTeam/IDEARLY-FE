@@ -9,3 +9,15 @@ export const withdrawalUser = async () => {
 export const modifyUser = async (name: string) => {
   return await axiosInstance.patch("/api/members", {name});
 }
+
+// 현재 팀 조회 - 참가 대회 소속팀 조회 요청
+export const getCurrentTeam = async () => {
+  const response = await axiosInstance.get("/api/teams?invite=true");
+  return response.data;
+}
+
+// 현재 팀 조회 - 대기중인 초대 현황 조회 요청
+export const getCWaitTeam = async () => {
+  const response = await axiosInstance.get("/api/teams?invite=false");
+  return response.data;
+}
