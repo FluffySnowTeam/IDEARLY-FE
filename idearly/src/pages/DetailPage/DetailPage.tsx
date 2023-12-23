@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { fakeCompetitions } from "../../mocks/competition.mocks";
 import { Button } from "@chakra-ui/react";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
@@ -43,7 +41,8 @@ export const DetailPage = () => {
           <div>종료: {dateChange({ date: endDateTime })}</div>
         </S.CompeDetailDate>
         <S.CompeDetailDescription>
-          <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown>
+          {description}
+          {/* <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown> */}
         </S.CompeDetailDescription>
         <Button onClick={handleMoveToWaiting}>대회 참여하기</Button>
       </S.CompetitionDetailContainer>
