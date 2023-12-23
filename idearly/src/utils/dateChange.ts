@@ -7,6 +7,9 @@ export const dateChange = ({ date }: { date: string }) => {
   // JavaScript의 Date 객체를 사용하여 날짜를 파싱합니다 (UTC 기준).
   const dateObj = new Date(date);
 
+  // 한국 시간(KST, UTC+9)으로 조정합니다.
+  dateObj.setHours(dateObj.getHours() + 9);
+
   // 연도, 월, 일을 추출합니다 (UTC 기준).
   const year = dateObj.getUTCFullYear();
   const month = (dateObj.getUTCMonth() + 1).toString().padStart(2, "0");
