@@ -4,6 +4,7 @@ import { IUserType } from "../../pages/TeamMatchingPage/TeamMatchingPage.types";
 import { useEffect, useState } from "react";
 import { AddIcon } from '@chakra-ui/icons';
 import useDebounce from "../../hooks/useDebounce";
+import { useSearchMemberQuery } from "../../hooks/useTeamMatchingMutation";
 
 export const AddTeamMembers = ({ setAddedMembers, isErrorCount}: { setAddedMembers: React.Dispatch<React.SetStateAction<IUserType[]>>, isErrorCount: boolean}) => {
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
@@ -14,11 +15,12 @@ export const AddTeamMembers = ({ setAddedMembers, isErrorCount}: { setAddedMembe
   });
 
   const debouncedValue = useDebounce(userMail, 400);
+  const data = useSearchMemberQuery({competitionId: '123', email: debouncedValue});
 
   useEffect(() => {
-    if (debouncedValue === 'user@example.com'){
+    if (data?.exist){
       setIsShowUser(true);
-      setUserInfo({name: '홍길동3', email: 'user4@example.com'}); // 임시
+      setUserInfo({name: data.memberName, email: data.email});
     } else {
       setIsShowUser(false);
       setUserInfo({

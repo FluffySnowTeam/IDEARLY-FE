@@ -1,25 +1,19 @@
 import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButton } from '@chakra-ui/react'
 import * as S from './TeamMatchingPage.styles';
 import { useState } from 'react';
+import { useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
+import { useNavigate } from 'react-router-dom';
 import type { IUserType } from './TeamMatchingPage.types';
 import { AddTeamMembers } from '../../components/AddTeamMembers/AddTeamMembers';
 
 export const TeamMatchingPage = () => {
   const [teamName, setTeamName] = useState<string>('');
-  const [addedMembers, setAddedMembers] = useState<IUserType[]>([
-    {
-      name: '홍길동',
-      email: 'user1@example.com'
-    },
-    {
-      name: '홍길동2',
-      email: 'user2@example.com'
-    },
-
-  ]);
+  const [addedMembers, setAddedMembers] = useState<IUserType[]>([]);
+  const [isErrorName, setIsErrorName] = useState(false);
+  const { mutate } = useTeamMatchingMutation();
+  const navigate = useNavigate();
   const MAX_MEMBER = 2;
 
-  const isErrorName = teamName === '';
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
 
@@ -27,6 +21,19 @@ export const TeamMatchingPage = () => {
     setAddedMembers(addedMembers.filter((user) => user.email !== email));
   }
 
+  const handleCreate = () => {
+    const payload = {
+      teamName,
+      members: addedMembers,
+    }
+    mutate({competitionId: '123', payload});
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTeamName(e.target.value);
+    setIsErrorName(e.target.value.trim() === '');
+  }
+  
   return (
     <S.TeamMathingWrapper>
       <S.CardContainer>
@@ -42,7 +49,7 @@ export const TeamMatchingPage = () => {
                 <Input
                   placeholder='팀 이름을 입력해주세요.' 
                   value={teamName} 
-                  onChange={(e) => setTeamName(e.target.value)}
+                  onChange={handleChange}
                 />
                 {!isErrorName || <FormErrorMessage>팀 이름은 필수입니다.</FormErrorMessage>}
               </FormControl>
@@ -77,10 +84,15 @@ export const TeamMatchingPage = () => {
         
         <S.CardFooterSection>
           <Stack direction='row' spacing={4} align='center'>
-            <Button colorScheme='facebook' variant='solid'>
+            <Button colorScheme='facebook' variant='solid' onClick={() => navigate('../')}>
               취소하기
             </Button>
-            <Button colorScheme='facebook' variant='outline' isDisabled={!isErrorTeamMatching} onClick={() => console.log(addedMembers)}>
+            <Button 
+              colorScheme='facebook' 
+              variant='outline' 
+              isDisabled={!isErrorTeamMatching}
+              onClick={handleCreate}
+            >
               팀 생성하기
             </Button>
           </Stack>
