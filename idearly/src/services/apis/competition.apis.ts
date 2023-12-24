@@ -2,7 +2,7 @@ import { axiosInstance } from "./axios";
 
 // competiton 데이터 받아오기
 export const getCompetitions = async () => {
-  const response = await axiosInstance.get("/api/competitions");
+  const response = await axiosInstance.get("/api/competitions?available=true");
   return response.data;
 };
 
