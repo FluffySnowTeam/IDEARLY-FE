@@ -1,10 +1,14 @@
 import * as S from "./AlgorithmProHeader.styles";
+import { LanguageProps } from "./AlgorithmProHeader.types";
 
-export const AlgorithmProHeader = () => {
+export const AlgorithmProHeader = ({ setLanguage }: LanguageProps) => {
+  const handleSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value);
+  };
   return (
     <S.AlgorithmContainer>
       <div>
-        <S.AlgorithmLanguage>
+        <S.AlgorithmLanguage onChange={handleSelectOption}>
           <option value="none">언어 선택</option>
           <option value="Python" selected>
             Python

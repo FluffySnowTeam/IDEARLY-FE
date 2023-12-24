@@ -8,9 +8,21 @@ import {
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [language, setLanguage] = useState("python");
+  const [isInit, setIsInit] = useState(false);
+
+  useEffect(() => {
+    console.log(language);
+  }, [language]);
+
+  const handleInitButton = () => {
+    setIsInit(!isInit);
+    console.log(isInit);
+  };
 
   return (
     <S.AlgorithmSolvingPageContainer>
@@ -19,12 +31,12 @@ export const AlgorithmSolvingPage = () => {
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />
         <S.AlgorithmEditorWrapper>
-          <AlgorithmProHeader />
-          <AlgorithmEditor />
+          <AlgorithmProHeader setLanguage={setLanguage} />
+          <AlgorithmEditor language={language} isinit={isInit} />
           <AlgorithmResult />
           <S.EditorButtonWrapper>
             <div>
-              <S.EditorButton>초기화</S.EditorButton>
+              <S.EditorButton onClick={handleInitButton}>초기화</S.EditorButton>
               <S.EditorButton>실행</S.EditorButton>
               <S.SubmitButton colorScheme="blue">제출</S.SubmitButton>
             </div>
