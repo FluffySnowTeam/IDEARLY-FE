@@ -1,13 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
+
 import { useAtom, useSetAtom } from "jotai";
-import { LoginStateAtom } from "../store/LoginPage.atoms";
 import { HandleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
-  const setIsLoginState = useSetAtom(LoginStateAtom);
   const setUserInfoState = useSetAtom(userInfoAtom);
 
   const navigate = useNavigate();
@@ -28,11 +27,12 @@ export const useWithdrawalMutation = () => {
     onSuccess: (data) => {
       console.log(data);
       // 로그인 상태 업데이트
-      setIsLoginState(false);
+      // setIsLoginState(false);
       setUserInfoState({
         memberId: '',
         email: '',
         name: '',
+        isLogin: false,
       });
       toast({
         title: "회원 탈퇴 성공",
@@ -70,7 +70,6 @@ export const useModifyUerMutation = () => {
       console.log('check: ', data);
       console.log('check: ', data.data.data.name);
 
-      // 이 부분도 storage에 저장해야되겠죠?
       setUserInfoState((prev) => ({ ...prev, name: data.data.data.name }));
 
       toast({

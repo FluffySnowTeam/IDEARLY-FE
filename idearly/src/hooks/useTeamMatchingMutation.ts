@@ -47,10 +47,16 @@ interface IProp2 {
 }
 
 export const useSearchMemberQuery = ({competitionId, email}: IProp2) => {
-  const result = useQuery({
-    queryKey: ['searchMember', competitionId, email],
-    queryFn: () => searchMember(competitionId, email)
-  });
+  const {
+    data,
+    status,
+    error,
+  } = useQuery({
+    queryKey: ["searchMember", competitionId, email],
+    queryFn: () => searchMember(competitionId, email),
+    staleTime: 2 * 60 * 1000,
+  })
   
-  return result.data?.data.data;
+  // return result.data?.data.data;
+  return { data, status, error };
 };
