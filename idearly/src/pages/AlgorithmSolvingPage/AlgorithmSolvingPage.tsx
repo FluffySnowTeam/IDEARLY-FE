@@ -8,14 +8,17 @@ import {
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
+import { useLocation } from 'react-router-dom';
 
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const teamId = queryParams.get('teamId');
+  
   return (
     <S.AlgorithmSolvingPageContainer>
-      {/* <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} /> */}
-      <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} />
+      <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} teamId={teamId} />
 
       <AlgorithmNav onOpen={onOpen} />
       <S.AlgorithmSolvingWrapper>

@@ -4,4 +4,5 @@ export const userInfoAtom = atomWithStorage("userInfo", {
   memberId: '',
   email: '',
   name: '',
+  isLogin: false,
 });
