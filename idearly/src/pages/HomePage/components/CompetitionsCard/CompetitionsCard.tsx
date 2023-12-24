@@ -10,6 +10,7 @@ export const CompetitionsCard = ({
   competition,
 }: PropsWithChildren<ICompetitionCard>) => {
   const navigate = useNavigate();
+
   const { isOpen, onClose, overlay, handleMoveToWaiting } =
     useHandleMoveToWaiting(competition);
 

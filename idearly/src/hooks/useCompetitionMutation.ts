@@ -11,7 +11,7 @@ export const useCompetitionDetailMutation = (competitionId: number) => {
       console.log(data);
     },
     onError: (error) => {
-      console.log("error", error);
+      console.error("error", error);
     },
   });
 };

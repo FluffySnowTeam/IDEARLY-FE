@@ -8,12 +8,8 @@ export const useCompetitionTimer = (
   const [timerVisible, setTimerVisible] = useState(false);
 
   useEffect(() => {
-    const startLocal = new Date(
-      new Date(startDateTime).getTime() + new Date().getTimezoneOffset() * 60000
-    );
-    const endLocal = new Date(
-      new Date(endDateTime).getTime() + new Date().getTimezoneOffset() * 60000
-    );
+    const startLocal = new Date(new Date(startDateTime).getTime());
+    const endLocal = new Date(new Date(endDateTime).getTime());
 
     const updateTimer = () => {
       const now = new Date();
