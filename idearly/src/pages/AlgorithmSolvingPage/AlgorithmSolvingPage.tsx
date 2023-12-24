@@ -4,7 +4,7 @@ import {
   AlgorithmProHeader,
   AlgorithmProblem,
   AlgorithmResult,
-  AlgorithmTextChatModal,
+  // AlgorithmTextChatModal,
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
@@ -15,9 +15,7 @@ export const AlgorithmSolvingPage = () => {
   const [language, setLanguage] = useState("python");
   const [isInit, setIsInit] = useState(false);
 
-  useEffect(() => {
-    console.log(language);
-  }, [language]);
+  useEffect(() => {}, [language]);
 
   const handleInitButton = () => {
     setIsInit(!isInit);
@@ -26,13 +24,13 @@ export const AlgorithmSolvingPage = () => {
 
   return (
     <S.AlgorithmSolvingPageContainer>
-      <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} />
+      {/* <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} /> */}
       <AlgorithmNav onOpen={onOpen} />
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />
         <S.AlgorithmEditorWrapper>
-          <AlgorithmProHeader setLanguage={setLanguage} />
-          <AlgorithmEditor language={language} isinit={isInit} />
+          <AlgorithmProHeader setLanguage={setLanguage} language={language} />
+          <AlgorithmEditor />
           <AlgorithmResult />
           <S.EditorButtonWrapper>
             <div>
