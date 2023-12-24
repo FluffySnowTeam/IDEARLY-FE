@@ -3,10 +3,19 @@ import { PropsWithChildren } from "react"
 import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
 import { dateChange } from "../../../../../../utils/dateChange"
 import * as S from "./WaitingTeamList.styles";
+import { useHandleInviteMutation } from "../../../../../../hooks/useMyPageMutation";
 
 export const WaitingTeamList = ({competition}: PropsWithChildren<ICompetitionProp>) => {
-  const {competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
+  const {teamId, competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
 
+  const {mutate} = useHandleInviteMutation();
+  const handleSuccess = () => {
+    mutate({teamId, isAccept: true});
+  }
+
+  const handleReject = () => {
+    mutate({teamId, isAccept: false});
+  }
   return (
     <Tr key={competitionId}>
       <Td>{competitionTitle}</Td>
@@ -15,8 +24,8 @@ export const WaitingTeamList = ({competition}: PropsWithChildren<ICompetitionPro
       <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
         <S.ButtonGroup>
-          <Button>수락</Button>  
-          <Button>거절</Button>  
+          <Button onClick={handleSuccess}>수락</Button>  
+          <Button onClick={handleReject}>거절</Button>  
         </S.ButtonGroup>
       </Td>
     </Tr>

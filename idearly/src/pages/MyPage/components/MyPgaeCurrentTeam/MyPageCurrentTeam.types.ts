@@ -1,4 +1,4 @@
-export interface ICompetition {
+export interface ITeam {
   teamId: number,
   teamName: string,
   competitionId: number,
@@ -10,7 +10,7 @@ export interface ICompetition {
 }
 
 export interface ICompetitionProp {
-  competition: ICompetition;
+  competition: ITeam;
   onOpen?: () => void;
 }
 

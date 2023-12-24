@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { LoginStateAtom } from "../store/LoginPage.atoms";
-import { getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
-import { userInfoAtom } from "../store";
+import { HandleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
+import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
   const setIsLoginState = useSetAtom(LoginStateAtom);
@@ -111,4 +111,35 @@ export const useGetWaitTeamQuery = () => {
     staleTime: 2 * 60 * 1000,
   });
   return { data, status, error };
+};
+
+interface IHandleInvite {
+  teamId: number,
+  isAccept: boolean,
+}
+export const useHandleInviteMutation = () => {
+  const [curTeam, setCurTeam] = useAtom(curTeamAtom);
+  const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
+
+  return useMutation({
+    mutationFn: ({teamId, isAccept}: IHandleInvite) => HandleInvite(teamId, isAccept),
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: (data) => {
+      // 반환값을 보고, 이게 수락인지 거절인지 확인 후, 리스트에서 처리
+      // 반환값에 해당 TeamId도 같이 건내주면 좋겠다!
+      console.log('res: ', data);
+      // 수락이라면, 대기현황에서 삭제, 현재 팀으로 이동
+      // 거절이라면, 대기 현황에서 삭제
+      if (data.data) {
+        console.log('수락');
+        // setCurTeam()
+        // setWaitTeam()
+      } else {
+        console.log('거절');
+        // setWaitTeam()
+      }
+    },
+  });
 };

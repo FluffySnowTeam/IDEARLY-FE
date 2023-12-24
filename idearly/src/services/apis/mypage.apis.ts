@@ -21,3 +21,9 @@ export const getCWaitTeam = async () => {
   const response = await axiosInstance.get("/api/teams?invite=false");
   return response.data;
 }
+
+// 팀 초대 요청 수락 / 거절
+export const HandleInvite = async (teamId:number, isAccept: boolean) => {
+  const resposne = await axiosInstance.post(`/api/teams/${teamId}`, {accept: isAccept});
+  return resposne.data;
+}
