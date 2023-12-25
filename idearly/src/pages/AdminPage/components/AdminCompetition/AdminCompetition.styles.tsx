@@ -42,7 +42,7 @@ export const AdminCompeTableContainer = styled.div`
 `;
 
 export const AdminTableContainer = styled(TableContainer)`
-  width: 80%;
+  width: 100%;
   border: 1px solid #e9e9e9;
   border-radius: 1rem;
 `;

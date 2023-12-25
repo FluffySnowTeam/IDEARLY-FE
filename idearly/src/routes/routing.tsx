@@ -43,15 +43,15 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
+        path: "/admin/:path",
+        element: <AdminPage />,
+      },
+      {
         element: <ProtectedRoute />,
         children: [
           {
             path: "/algorithm-solving/:id",
             element: <AlgorithmSolvingPage />,
-          },
-          {
-            path: "/admin/:path",
-            element: <AdminPage />,
           },
           {
             path: "/complete",
