@@ -1,11 +1,17 @@
 import axios from "axios";
+import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { userInfoAtom } from "../store";
 
 const ProtectedRoute = () => {
   const navigate = useNavigate();
+  const userInfo = useAtomValue(userInfoAtom);
 
   useEffect(() => {
+    if (!userInfo.isLogin) {
+      navigate("/login");
+    }
     // 인터셉터 설정
     const axiosInterceptor = axios.interceptors.response.use(
       (response) => response,
@@ -22,7 +28,7 @@ const ProtectedRoute = () => {
     return () => {
       axios.interceptors.response.eject(axiosInterceptor);
     };
-  }, [navigate]);
+  }, [navigate, userInfo.isLogin]);
 
   return <Outlet />;
 };
