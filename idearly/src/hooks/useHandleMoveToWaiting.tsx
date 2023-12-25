@@ -1,21 +1,22 @@
 import { ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { ICompetition } from "../types";
 
-interface ICompetition {
-  competitionId: string;
-  title: string;
-  startDateTime: string;
-  endDateTime: string;
-  description: string;
-  login: boolean;
-  participate: boolean;
-  teamId: number;
-  teamName: string;
-}
-
-const useHandleMoveToWaiting = (competition: ICompetition) => {
-  const { competitionId, startDateTime, participate } = competition;
+const useHandleMoveToWaiting = (competition?: ICompetition) => {
+  const defaultCompetition = {
+    competitionId: 0,
+    title: "",
+    startDateTime: "",
+    endDateTime: "",
+    description: "",
+    login: false,
+    participate: false,
+    teamId: 0,
+    teamName: "",
+  };
+  const { competitionId, startDateTime, participate } =
+    competition || defaultCompetition;
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const OverlayOne = () => (

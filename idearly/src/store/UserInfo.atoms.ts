@@ -1,8 +1,8 @@
-import { atom } from "jotai";
-import type { IUserInfoResponse } from "../types";
+import { atomWithStorage } from "jotai/utils";
 
-export const userInfoAtom = atom<IUserInfoResponse>({
+export const userInfoAtom = atomWithStorage("userInfo", {
   memberId: '',
   email: '',
   name: '',
+  isLogin: false,
 });

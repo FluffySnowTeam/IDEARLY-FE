@@ -1,57 +1,37 @@
 import * as S from "./WaitingPage.styles";
 import { WaitingPageConfig } from "../../constants";
+import { useCompetitionTimer } from "../../hooks";
+import { useAtom } from "jotai";
+import { competitionDataAtom } from "../../store";
 import { useParams } from "react-router-dom";
-import { fakeCompetitions } from "../../mocks/competition.mocks";
-
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
 
 export const WaitingPage = () => {
-  const { title, subTitle, content } = WaitingPageConfig;
   const { id } = useParams<{ id: string }>();
-  const [timeLeft, setTimeLeft] = useState("");
-  const [timerVisible, setTimerVisible] = useState(false);
+  const { title, subTitle, content } = WaitingPageConfig;
+  const [competition, setCompetition] = useAtom(competitionDataAtom);
 
-  // 특정 대회 정보 상세
-  const selectedCompetition = fakeCompetitions.filter(
-    (competition) => competition.competitionId === id
-  );
+  const { data, mutate, status } = useCompetitionDetailMutation(Number(id));
+  useEffect(() => {
+    mutate();
+  }, [id, mutate]);
 
   useEffect(() => {
-    if (!selectedCompetition) return;
-    const { startDateTime, endDateTime } = selectedCompetition[0];
-    const startLocal = new Date(
-      new Date(startDateTime).getTime() + new Date().getTimezoneOffset() * 60000
-    );
-    const endLocal = new Date(
-      new Date(endDateTime).getTime() + new Date().getTimezoneOffset() * 60000
-    );
+    if (data) {
+      const newCompetition = data.result;
+      setCompetition(newCompetition);
+    }
+  }, [data]);
 
-    const updateTimer = () => {
-      const now = new Date();
+  const { title: compeTitle, startDateTime, endDateTime } = competition;
 
-      if (now >= endLocal) {
-        setTimeLeft("대회가 종료되었습니다.");
-        setTimerVisible(false);
-      } else if (now >= startLocal) {
-        const elapsedSeconds = Math.floor(
-          (now.getTime() - startLocal.getTime()) / 1000
-        );
-        const elapsedMinutes = Math.floor(elapsedSeconds / 60);
-        const remainingSeconds = elapsedSeconds % 60;
-        setTimeLeft(`대회시작 ${elapsedMinutes}분 ${remainingSeconds}초 경과`);
-        setTimerVisible(true);
-      } else {
-        const diff = startLocal.getTime() - now.getTime();
-        const minutes = Math.floor(diff / 1000 / 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        setTimeLeft(`대회시작 ${minutes}분 ${seconds}초 전`);
-      }
-    };
+  const { timeLeft, timerVisible } = useCompetitionTimer(
+    startDateTime,
+    endDateTime
+  );
 
-    updateTimer();
-    const interval = setInterval(updateTimer, 1000);
-    return () => clearInterval(interval);
-  }, [selectedCompetition]);
+  if (status === "pending") return <div>...Loading</div>;
 
   return (
     <S.WaitingCardWrapper>
@@ -68,11 +48,18 @@ export const WaitingPage = () => {
         />
         <S.WaitingCardStack>
           <S.WaitingCardBody>
+            <S.WaitingCardHeading size="md">{compeTitle}</S.WaitingCardHeading>
             <S.WaitingCardHeading size="md">{title}</S.WaitingCardHeading>
             <S.WaitingCardSubHeading size="md">
               [ {subTitle} ]
             </S.WaitingCardSubHeading>
-            <S.WaitingCardText>{content}</S.WaitingCardText>
+            <S.WaitingCardTextWrapper>
+              {content.map((indexContent) => (
+                <S.WaitingCardText key={indexContent.num}>
+                  <p>{indexContent.num}</p> {indexContent.content}
+                </S.WaitingCardText>
+              ))}
+            </S.WaitingCardTextWrapper>
             <S.WaitingCardButton
               disabled={!timerVisible}
               variant="solid"

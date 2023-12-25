@@ -4,21 +4,32 @@ import { IUserType } from "../../pages/TeamMatchingPage/TeamMatchingPage.types";
 import { useEffect, useState } from "react";
 import { AddIcon } from '@chakra-ui/icons';
 import useDebounce from "../../hooks/useDebounce";
+import { useSearchMemberQuery } from "../../hooks/useTeamMatchingMutation";
+import { useNavigate } from "react-router-dom";
 
 export const AddTeamMembers = ({ setAddedMembers, isErrorCount}: { setAddedMembers: React.Dispatch<React.SetStateAction<IUserType[]>>, isErrorCount: boolean}) => {
+  const navigate = useNavigate();
   const [isShowUser, setIsShowUser] = useState<boolean>(false);
   const [userMail, setUserMail] = useState<string>('');
-  const [userInfo, setUserInfo] = useState<IUserType>({
-    name: '',
+  const [userInfo, setUserInfo] = useState<IUserType>({   // 받아온 데이터로 상태 관리
+    name: '', 
     email: ''
   });
-
   const debouncedValue = useDebounce(userMail, 400);
 
+  const {data, status, error } = useSearchMemberQuery({competitionId: '123', email: debouncedValue});
+
+  if (status === "error") {
+    navigate("/error");
+    console.log(error);
+  }
+
+  // 데이터가 변경됐을 때, 정보가 있다면 업데이트
   useEffect(() => {
-    if (debouncedValue === 'user@example.com'){
+    if(data?.data.data.exist) {
+      console.log(data.data.data.exist);
       setIsShowUser(true);
-      setUserInfo({name: '홍길동3', email: 'user4@example.com'}); // 임시
+      setUserInfo({name: data.data.data.memberName, email: data.data.data.email});
     } else {
       setIsShowUser(false);
       setUserInfo({
@@ -26,7 +37,7 @@ export const AddTeamMembers = ({ setAddedMembers, isErrorCount}: { setAddedMembe
         email: ''
       });
     }
-  }, [debouncedValue]);
+  }, [data])
   
   const handleUserClick = () => {
     setIsShowUser(false);
