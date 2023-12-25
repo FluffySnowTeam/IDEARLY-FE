@@ -26,11 +26,11 @@ export const useWithdrawalMutation = () => {
     onSuccess: (data) => {
       console.log(data);
       // 로그인 상태 업데이트
-      // setIsLoginState(false);
       setUserInfoState({
-        memberId: '',
-        email: '',
-        name: '',
+        authority: "",
+        memberId: "",
+        email: "",
+        name: "",
         isLogin: false,
       });
       toast({
@@ -66,8 +66,8 @@ export const useModifyUerMutation = () => {
       });
     },
     onSuccess: (data) => {
-      console.log('check: ', data);
-      console.log('check: ', data.data.data.name);
+      console.log("check: ", data);
+      console.log("check: ", data.data.data.name);
 
       setUserInfoState((prev) => ({ ...prev, name: data.data.data.name }));
 
