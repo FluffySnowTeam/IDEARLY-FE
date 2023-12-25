@@ -19,12 +19,12 @@ export const MyPageCurrentTeam = () => {
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
+
   // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
-  console.log(teamMembers);
+  console.log("teamMembers: ", teamMembers);
   const currentMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "accept");
   const inviteMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "invite");
 
-  // teamID도 따로 관리를 해줘야하나?
   const [teamId, setTeamId] = useState(0);
   const {data: memberData, status, error, refetch} = useTeamInfoQuery(teamId);
 
@@ -49,7 +49,7 @@ export const MyPageCurrentTeam = () => {
     if (status === "error") {
       console.log(error);
     }
-    // 모달창에 들어가는 정보도 업데이트 필요!
+    // 모달창에 들어가는 정보 업데이트
     setTeamMembers(memberData.data.teammates);
   }
   return (

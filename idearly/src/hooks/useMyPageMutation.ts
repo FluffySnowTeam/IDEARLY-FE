@@ -127,20 +127,9 @@ export const useHandleInviteMutation = () => {
       console.error(error);
     },
     onSuccess: (data) => {
-      // 반환값을 보고, 이게 수락인지 거절인지 확인 후, 리스트에서 처리
-      // 반환값에 해당 TeamId도 같이 건내주면 좋겠다!
-      console.log('res: ', data);
-      console.log('res: ', data.data);
-      console.log('res: ', data.data.accept);
-
-      // 수락이라면, 대기현황에서 삭제, 현재 팀으로 이동
-      // 거절이라면, 대기 현황에서 삭제
       if (data.data.accept) {
         console.log('수락');
-        // teamId를 필터링해서 삭제.
-        console.log('teamID', data.data.teamId);
         const accetedTeam = waitTeam.filter((team) => team.teamId == data.data.teamId)[0];
-        console.log("accetedTeam: ", accetedTeam);
         setCurTeam((prev) => [...prev, accetedTeam])
         setWaitTeam((prev) => prev.filter((team) => team.teamId == data.data.teamId));
       } else {
