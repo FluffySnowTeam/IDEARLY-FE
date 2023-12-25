@@ -15,6 +15,7 @@ import {
 } from "../pages";
 import ProtectedRoute from "./ProtectedRoute";
 import { IsLoginProtectedRoute } from "./IsLoginProtectedRoute";
+import { AdminProtectedRoute } from "./AdminProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-
       {
         path: "/",
         element: <HomePage />,
@@ -43,8 +43,13 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path: "/admin/:path",
-        element: <AdminPage />,
+        element: <AdminProtectedRoute />,
+        children: [
+          {
+            path: "/admin/:path",
+            element: <AdminPage />,
+          },
+        ],
       },
       {
         element: <ProtectedRoute />,

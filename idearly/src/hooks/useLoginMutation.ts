@@ -3,13 +3,13 @@ import { IUserRequest } from "../types";
 import { loginUser } from "../services/apis/user.apis";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { userInfoAtom } from "../store";
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  const [userInfoAtate, setUserInfoState] = useAtom(userInfoAtom);
+  const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
     mutationFn: (userInfo: IUserRequest) => loginUser(userInfo),
