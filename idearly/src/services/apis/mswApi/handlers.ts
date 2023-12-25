@@ -266,9 +266,14 @@ export const handlers = [
         }
       });
     }
- 
+  }),
 
-  }),]
+  http.patch(`https://idearly.site/api/teams/:teamId`, async ({ params }) => {
+    const { teamId } = params;
+
+    return HttpResponse.json()
+  })
+]
 
 interface REQ {
   accept: boolean,

@@ -31,6 +31,7 @@ export interface IModifyTeamlModal {
   inviteMemberList: ITeamMember[];
   setCurrentMemberList: React.Dispatch<React.SetStateAction<ITeamMember[]>>;
   setInviteMemberList: React.Dispatch<React.SetStateAction<ITeamMember[]>>;
+  teamId: number;
 }
 
 export interface IDetailTeamlModal {

@@ -5,19 +5,22 @@ import { AddTeamMembers } from "../../../../../../components/AddTeamMembers/AddT
 import { IUserType } from "../../../../../TeamMatchingPage/TeamMatchingPage.types";
 import * as S from "./TeamModifyModal.styles";
 import { CloseIcon } from "@chakra-ui/icons";
+import { useModifyTeamMembersMutation } from "../../../../../../hooks/useMyPageMutation";
+import { IReqTeamMember } from "../../../../../../types";
+import { useAtomValue } from "jotai";
+import { userInfoAtom } from "../../../../../../store";
 
-export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemberList, setCurrentMemberList, setInviteMemberList}: PropsWithChildren<IModifyTeamlModal>) => {
+export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemberList, setCurrentMemberList, setInviteMemberList, teamId}: PropsWithChildren<IModifyTeamlModal>) => {
 
   const MAX_MEMBER = 2;
   const isErrorCount = currentMemberList?.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
-
+  const { mutate } = useModifyTeamMembersMutation();
   console.log('In modify modal, cur:', currentMemberList, 'invite:', inviteMemberList);
+  const userInfo = useAtomValue(userInfoAtom);
 
   const handleDropoutMember = (email: string) => {
     // 해당 email을 가지고 있는 유저 삭제
     setInviteMemberList(inviteMemberList.filter(member => member.email !== email));
-
-    // 강퇴 api 
   }
 
   const handleDelete = (email: string) => {
@@ -26,7 +29,14 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
 
   const handleSubmit = () => {
     onClose();
-    // 맴버 추가 리스트 백엔드로 보내기
+
+    const temp: ITeamMember[] = [...inviteMemberList, ...currentMemberList]
+
+    const payload: IReqTeamMember[] = temp.map((member) => ({ name: member.name, email: member.email })).filter(member => member.email !== userInfo.email);
+
+    console.log(payload);
+    
+    mutate({teamId, payload});
   }
 
   return (

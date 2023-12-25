@@ -33,3 +33,10 @@ export const getTeamInfo = async (teamId: number) => {
   const response = await axiosInstance.get(`/api/teams/${teamId}`);
   return response.data;
 }
+
+// 팀원 수정 요청
+export const ModifyTeamMembers = async (teamId: number, payload: any) => {
+  console.log('payload 확인:', payload);
+  const response = await axiosInstance.patch(`api/teams/${teamId}`, payload);
+  return response.data;
+}

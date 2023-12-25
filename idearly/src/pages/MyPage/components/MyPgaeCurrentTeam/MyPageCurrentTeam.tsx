@@ -47,7 +47,7 @@ export const MyPageCurrentTeam = () => {
 
   const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "accept"))
   const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "invite"));
-  
+
   const onClickTeamDetail = (teamId: number) => {
     setTeamId(teamId);
     setIsClick(true);
@@ -61,7 +61,7 @@ export const MyPageCurrentTeam = () => {
     <S.SearchTeamWrapper>
       {
         memberData?.data.leaderEmail === userInfo.email
-        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} setCurrentMemberList={setCurrentMemberList} inviteMemberList={inviteMemberList} setInviteMemberList={setInviteMemberList} />
+        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} setCurrentMemberList={setCurrentMemberList} inviteMemberList={inviteMemberList} setInviteMemberList={setInviteMemberList} teamId={teamId} />
         : <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList}  />
       }
       

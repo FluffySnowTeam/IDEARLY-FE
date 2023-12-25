@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 import { useAtom, useSetAtom } from "jotai";
-import { handleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser, getTeamInfo } from "../services/apis/mypage.apis";
+import { handleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser, getTeamInfo, ModifyTeamMembers } from "../services/apis/mypage.apis";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../store";
+import { IReqTeamMember } from "../types";
 
 export const useWithdrawalMutation = () => {
   const setUserInfoState = useSetAtom(userInfoAtom);
@@ -118,7 +119,7 @@ interface IHandleInvite {
 }
 
 export const useHandleInviteMutation = () => {
-  const [curTeam, setCurTeam] = useAtom(curTeamAtom);
+  const setCurTeam = useSetAtom(curTeamAtom);
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   return useMutation({
@@ -153,3 +154,35 @@ export const useTeamInfoQuery = (isClick: boolean, teamId: number) => {
   });
   return { memberData, error, isLoading };
 }
+interface ITeamMember {
+  teamId: number;
+  payload: IReqTeamMember[]
+
+}
+export const useModifyTeamMembersMutation = () => {
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: ({teamId, payload}: ITeamMember) => ModifyTeamMembers(teamId, payload),
+    onError: (error) => {
+      console.error(error);
+      toast({
+        title: "팀원 수정 실패",
+        description: "다시 시도해주세요.",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      toast({
+        title: "팀원 수정 성공",
+        description: "팀원 정보를 수정하였습니다!",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
