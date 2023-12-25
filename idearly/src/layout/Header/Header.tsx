@@ -31,9 +31,10 @@ export const Header = () => {
         if (error.response && error.response.status === 401) {
           // setIsLoginState(false);
           setUserInfoState({
-            memberId: '',
-            email: '',
-            name: '',
+            authority: "",
+            memberId: "",
+            email: "",
+            name: "",
             isLogin: false,
           });
         }
