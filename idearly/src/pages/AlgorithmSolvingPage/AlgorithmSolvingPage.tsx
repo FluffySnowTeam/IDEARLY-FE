@@ -16,7 +16,6 @@ import { useLocation, useParams } from 'react-router-dom';
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [language, setLanguage] = useState("python");
-  const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {}, [language]);
   // const { mutate } = useExcuteTestMutation();
@@ -29,22 +28,6 @@ export const AlgorithmSolvingPage = () => {
 
   console.log('teamId:', teamId, 'problemId:', problemId, 'competitionId:', competitionId);
 
-  // code를 여기로 들고와야 한다.
-  // const [code, setCode] = useState<string>('');
-
-  // const handleInitButton = () => {
-  //   setIsInit(!isInit);
-  //   console.log(isInit);
-  // };
-
-  // const handleExcute = () => {
-  //   mutate({competitionId, problemId, code});
-  // }
-
-  // const handleSubmit = () => {
-
-  // }
-
   return (
     <S.AlgorithmSolvingPageContainer>
       <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} teamId={teamId} />
@@ -53,13 +36,8 @@ export const AlgorithmSolvingPage = () => {
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />
         <S.AlgorithmEditorWrapper>
-
           <AlgorithmProHeader setLanguage={setLanguage} language={language} />
           <AlgorithmEditor competitionId={competitionId} problemId={problemId} />
-          {/* <AlgorithmResult />
-          <S.EditorButtonWrapper>
-            <AlgorithmFooter handleInitButton={handleInitButton} handleExcute={handleExcute} handleSubmit={handleSubmit} />
-          </S.EditorButtonWrapper> */}
         </S.AlgorithmEditorWrapper>
       </S.AlgorithmSolvingWrapper>
     </S.AlgorithmSolvingPageContainer>
