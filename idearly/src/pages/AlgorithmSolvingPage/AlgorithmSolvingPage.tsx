@@ -4,13 +4,12 @@ import {
   AlgorithmNav,
   AlgorithmProHeader,
   AlgorithmProblem,
-  AlgorithmResult,
   AlgorithmTextChatModal,
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from "react-router-dom";
 // import { useExcuteTestMutation } from "../../hooks/useALgorithmMutation";
 
 export const AlgorithmSolvingPage = () => {
@@ -23,24 +22,37 @@ export const AlgorithmSolvingPage = () => {
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const teamId = queryParams.get('teamId');
-  const problemId = queryParams.get('id');
+  const teamId = queryParams.get("teamId");
+  const problemId = queryParams.get("id");
 
-  console.log('teamId:', teamId, 'problemId:', problemId, 'competitionId:', competitionId);
+  console.log(
+    "teamId:",
+    teamId,
+    "problemId:",
+    problemId,
+    "competitionId:",
+    competitionId
+  );
 
   return (
     <S.AlgorithmSolvingPageContainer>
-      <AlgorithmTextChatModal isOpen={isOpen} onClose={onClose} teamId={teamId} />
+      <AlgorithmTextChatModal
+        isOpen={isOpen}
+        onClose={onClose}
+        teamId={teamId}
+      />
 
       <AlgorithmNav onOpen={onOpen} />
       <S.AlgorithmSolvingWrapper>
         <AlgorithmProblem />
         <S.AlgorithmEditorWrapper>
           <AlgorithmProHeader setLanguage={setLanguage} language={language} />
-          <AlgorithmEditor competitionId={competitionId} problemId={problemId} />
+          <AlgorithmEditor
+            competitionId={competitionId}
+            problemId={problemId}
+          />
         </S.AlgorithmEditorWrapper>
       </S.AlgorithmSolvingWrapper>
     </S.AlgorithmSolvingPageContainer>
   );
 };
-

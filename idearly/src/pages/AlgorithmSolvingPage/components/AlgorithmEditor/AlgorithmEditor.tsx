@@ -1,5 +1,5 @@
 // algorithmEditor.tsx
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import yorkie, { OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
@@ -7,34 +7,36 @@ import { Transaction } from "@codemirror/state";
 import "./style.css";
 // import { yorkie_key } from "./yorkie_api.json";
 import { YorkieDoc } from "./types";
-import { AlgorithmFooter, AlgorithmResult } from "..";
+import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
+import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 
 interface Prop {
-  competitionId: string | undefined,
-  problemId: string | null,
+  competitionId: string | undefined;
+  problemId: string | null;
 }
 
-export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
+export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
+  const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  const doc = new yorkie.Document<YorkieDoc>('teamId');
+  const doc = new yorkie.Document<YorkieDoc>("teamId");
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
 
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
-    executeMutate({competitionId, problemId, code});
-  }
+    executeMutate({ competitionId, problemId, code });
+    setResultState("test");
+  };
 
   const handleSubmit = () => {
     const code = viewRef.current?.state.doc.toString();
-    runMutate({competitionId, problemId, code});
-  }
-  //////////////
-
+    runMutate({ competitionId, problemId, code });
+    setResultState("submit");
+  };
 
   const initYorkie = async () => {
     // 01. create client with RPCAddr(envoy) then activate it.
@@ -90,14 +92,7 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
     const updateListener = EditorView.updateListener.of((viewUpdate) => {
       if (viewUpdate.docChanged) {
         for (const tr of viewUpdate.transactions) {
-          const events = [
-            "select",
-            "input",
-            "delete",
-            "move",
-            "undo",
-            "redo",
-          ];
+          const events = ["select", "input", "delete", "move", "undo", "redo"];
           if (!events.map((event) => tr.isUserEvent(event)).some(Boolean)) {
             continue;
           }
@@ -151,34 +146,44 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
 
   // code editor 관련
   useEffect(() => {
-  
     initYorkie();
   }, []);
 
   const handleInitButton = async () => {
     doc.update((root) => {
-      root.content.edit(0, root.content.length, '');
+      root.content.edit(0, root.content.length, "");
     }, "init content");
+
     if (viewRef.current) {
       // 1. 에디터의 내용 초기화
       const doc = viewRef.current.state.doc;
       const changes = [{ from: 0, to: doc.length, insert: "" }];
-  
+
       viewRef.current.dispatch({
         changes,
         annotations: [Transaction.remote.of(true)],
       });
     }
+    setResultState("none");
   };
 
   return (
     <>
       <div ref={editorParentRef} />
-      <AlgorithmResult />
+      {resultState === "none" ? (
+        <></>
+      ) : resultState === "test" ? (
+        <AlgorithmTestResult />
+      ) : (
+        <AlgorithmSubmitResult />
+      )}
       <S.EditorButtonWrapper>
-        <AlgorithmFooter handleInitButton={handleInitButton} handleExcute={handleExcute} handleSubmit={handleSubmit} />
+        <AlgorithmFooter
+          handleInitButton={handleInitButton}
+          handleExcute={handleExcute}
+          handleSubmit={handleSubmit}
+        />
       </S.EditorButtonWrapper>
     </>
   );
 };
-
