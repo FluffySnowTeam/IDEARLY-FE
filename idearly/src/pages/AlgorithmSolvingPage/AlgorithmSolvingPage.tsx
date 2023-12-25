@@ -1,5 +1,6 @@
 import {
   AlgorithmEditor,
+  AlgorithmFooter,
   AlgorithmNav,
   AlgorithmProHeader,
   AlgorithmProblem,
@@ -23,6 +24,14 @@ export const AlgorithmSolvingPage = () => {
     console.log(isInit);
   };
 
+  const handleExcute = () => {
+
+  }
+
+  const handleSubmit = () => {
+
+  }
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const teamId = queryParams.get('teamId');
@@ -39,11 +48,7 @@ export const AlgorithmSolvingPage = () => {
           <AlgorithmEditor />
           <AlgorithmResult />
           <S.EditorButtonWrapper>
-            <div>
-              <S.EditorButton onClick={handleInitButton}>초기화</S.EditorButton>
-              <S.EditorButton>실행</S.EditorButton>
-              <S.SubmitButton colorScheme="blue">제출</S.SubmitButton>
-            </div>
+            <AlgorithmFooter handleInitButton={handleInitButton} handleExcute={handleExcute} handleSubmit={handleSubmit} />
           </S.EditorButtonWrapper>
         </S.AlgorithmEditorWrapper>
       </S.AlgorithmSolvingWrapper>

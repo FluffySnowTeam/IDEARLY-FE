@@ -23,19 +23,3 @@ export const EditorButtonWrapper = styled.div`
   justify-content: flex-end;
   margin-top: 0.45rem;
 `;
-
-export const EditorButton = styled(Button)`
-  font-size: 0.9rem;
-  padding: 0.1rem;
-  width: 3.8rem;
-  height: 2rem;
-  margin-right: 0.5rem;
-`;
-
-export const SubmitButton = styled(Button)`
-  font-size: 0.9rem;
-  padding: 0.1rem;
-  width: 3.8rem;
-  height: 2rem;
-  margin-right: 1rem;
-`;
