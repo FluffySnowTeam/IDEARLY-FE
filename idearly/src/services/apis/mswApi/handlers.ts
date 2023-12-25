@@ -130,8 +130,8 @@ export const handlers = [
               competitionTitle: "대회1",
               startDateTime: "2023-12-07T13:33:03.969Z",
               endDateTime: "2023-12-08T13:33:03.969Z",
-              leaderName: "이름1",
-              leaderEmail: "aaa@naver.com"
+              leaderName: "강윤지",
+              leaderEmail: "dbswl701@naver.com"
             },
             {
               teamId: 456,
@@ -158,8 +158,8 @@ export const handlers = [
               competitionTitle: "대회1",
               startDateTime: "2023-12-07T13:33:03.969Z",
               endDateTime: "2023-12-08T13:33:03.969Z",
-              leaderName: "이름1",
-              leaderEmail: "aaa@naver.com"
+              leaderName: "강윤지",
+              leaderEmail: "dbswl701@naver.com"
             },
             {
               teamId: 4567,
@@ -206,36 +206,67 @@ export const handlers = [
   // 특정 팀 조회
   http.get(`https://idearly.site/api/teams/:teamId`, async ({ params }) => {
     const { teamId } = params;
-    console.log('teamId: ', teamId);
-
-    return HttpResponse.json({
-      status: "success",
-      data: {
-        teamId: teamId,
-        teamName: "snow",
-        competitionId: 1,
-        competitionName: "알고리즘 대회 이름",
-        leaderName: "이름1",
-        leaderEmail: "aaa@naver.com",
-        teammates: [
-          {
-            name: "이름1",
-            email: "aaa@naver.com",
-            inviteStatus: "accept"
-          },
-          {
-            name: "이름2",
-            email: "bbb@naver.com",
-            inviteStatus: "accept"
-          },
-          {
-            name: "이름3",
-            email: "ccc@naver.com",
-            inviteStatus: "invite"
-          }
-        ]
-      }
-    });
+    console.log('teamId: ', teamId, teamId == '123');
+    if (teamId == '123') {
+      return HttpResponse.json({
+        status: "success",
+        data: {
+          teamId: teamId,
+          teamName: "snow",
+          competitionId: 1,
+          competitionName: "알고리즘 대회 이름",
+          leaderName: "강윤지",
+          leaderEmail: "dbswl701@naver.com",
+          teammates: [
+            {
+              name: "강윤지",
+              email: "dbswl701@naver.com",
+              inviteStatus: "accept"
+            },
+            {
+              name: "이름2",
+              email: "bbb@naver.com",
+              inviteStatus: "accept"
+            },
+            {
+              name: "이름3",
+              email: "ccc@naver.com",
+              inviteStatus: "invite"
+            }
+          ]
+        }
+      });
+    } else {
+      return HttpResponse.json({
+        status: "success",
+        data: {
+          teamId: teamId,
+          teamName: "snow",
+          competitionId: 1,
+          competitionName: "알고리즘 대회 이름",
+          leaderName: "이름1",
+          leaderEmail: "aaa@naver.com",
+          teammates: [
+            {
+              name: "이름12",
+              email: "aaa@naver.com",
+              inviteStatus: "accept"
+            },
+            {
+              name: "이름22",
+              email: "bbb@naver.com",
+              inviteStatus: "accept"
+            },
+            {
+              name: "이름32",
+              email: "ccc@naver.com",
+              inviteStatus: "invite"
+            }
+          ]
+        }
+      });
+    }
+ 
 
   }),]
 

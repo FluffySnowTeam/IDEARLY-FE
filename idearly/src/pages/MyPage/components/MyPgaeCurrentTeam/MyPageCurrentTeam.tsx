@@ -5,8 +5,8 @@ import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants"
 import type { ITeamMember } from "./MyPageCurrentTeam.types";
 import { useEffect, useState } from "react";
 import { useGetCurrentTeamQuery, useGetWaitTeamQuery, useTeamInfoQuery } from "../../../../hooks/useMyPageMutation";
-import { useAtom } from "jotai";
-import { curTeamAtom, waitTeamAtom } from "../../../../store";
+import { useAtom, useAtomValue } from "jotai";
+import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../../../../store";
 
 export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
@@ -19,14 +19,18 @@ export const MyPageCurrentTeam = () => {
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
-
+  
   // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
   console.log("teamMembers: ", teamMembers);
   const currentMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "accept");
   const inviteMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "invite");
 
   const [teamId, setTeamId] = useState(0);
-  const {data: memberData, status, error, refetch} = useTeamInfoQuery(teamId);
+  const [isClick, setIsClick] = useState(false);
+
+  const {data: memberData, status, error, isInitialLoading} = useTeamInfoQuery(isClick, teamId);
+  
+  const userInfo = useAtomValue(userInfoAtom);
 
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
@@ -43,19 +47,26 @@ export const MyPageCurrentTeam = () => {
 
   const onClickTeamDetail = (teamId: number) => {
     // 현재 팀 목록에서 팀 상세보기 클릭 시!
-    console.log('teamId', teamId);
+    setIsClick(true);
     setTeamId(teamId);
-    refetch();
-    if (status === "error") {
-      console.log(error);
-    }
     // 모달창에 들어가는 정보 업데이트
     setTeamMembers(memberData.data.teammates);
   }
+  if (isInitialLoading) {
+    return <div>...Loadin1</div>;
+  }
+
+  if (status === "error") {
+    console.log(error);
+  }
+
   return (
     <S.SearchTeamWrapper>
-      {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
-      <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+      {
+        memberData?.data.leaderEmail === userInfo.email
+        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+        : <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+      }
       
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>

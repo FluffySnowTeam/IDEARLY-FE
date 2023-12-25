@@ -5,7 +5,7 @@ import { ITeamlModal } from "../../MyPageCurrentTeam.types";
 
 export const TeamDetailModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<ITeamlModal>) => {
   const MAXMEMBER = 2;
-
+  
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
