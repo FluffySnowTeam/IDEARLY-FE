@@ -1,4 +1,4 @@
-export interface IAddProblemModal {
+export interface IAddTestcasemModal {
   isOpen: boolean;
   onClose: () => void;
 }

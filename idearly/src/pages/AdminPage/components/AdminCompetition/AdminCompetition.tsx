@@ -1,11 +1,11 @@
-import { Button, Table, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
+import { Table, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./AdminCompetition.styles";
 import { AdminCompePageConfig } from "../../../../constants";
 import { CompetitionInfoList } from "./components";
 import { fakeAllCompetitions } from "../../../../mocks/competition.mocks";
 import { Pagination } from "../../../../components";
 import { useState } from "react";
-import { AddProblemModal } from "..";
+import { AddProblemModal, AddTestCaseModal } from "..";
 import { AddCompetitionModal } from "../AddCompetitionModal/AddCompetitionModal";
 
 export const AdminCompetition = () => {
@@ -15,14 +15,19 @@ export const AdminCompetition = () => {
   const startIdx = currentPage * itemsPerPage;
   const endIdx = (currentPage + 1) * itemsPerPage;
   const {
-    isOpen: isProblemModalOpen,
-    onOpen: onProblemModalOpen,
-    onClose: onProblemModalClose,
+    isOpen: isTestcodeModalOpen,
+    onOpen: onTestcodeModalOpen,
+    onClose: onTestcodeModalClose,
   } = useDisclosure();
   const {
     isOpen: isCompetitionModalOpen,
     onOpen: onCompetitionModalOpen,
     onClose: onCompetitionModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isProblemModalOpen,
+    onOpen: onProblemModalOpen,
+    onClose: onProblemModalClose,
   } = useDisclosure();
 
   return (
@@ -30,6 +35,10 @@ export const AdminCompetition = () => {
       <AddProblemModal
         isOpen={isProblemModalOpen}
         onClose={onProblemModalClose}
+      />
+      <AddTestCaseModal
+        isOpen={isTestcodeModalOpen}
+        onClose={onTestcodeModalClose}
       />
       <AddCompetitionModal
         isOpen={isCompetitionModalOpen}
@@ -56,7 +65,8 @@ export const AdminCompetition = () => {
               <CompetitionInfoList
                 key={competition.competitionId}
                 competition={competition}
-                onOpen={onProblemModalOpen}
+                onTestcodeOpen={onTestcodeModalOpen}
+                onProblemlOpen={onProblemModalOpen}
               />
             ))}
           </Table>

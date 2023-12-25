@@ -1,6 +1,5 @@
 import {
   Button,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -8,15 +7,64 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  useToast,
 } from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import type { IAddCompetitionModal } from "./AddCompetitionModal.types";
 import { CompetitionInfoForm } from "./components";
+import { CompetitionRequest } from "../../../../types";
+import { useAdminCompetitionMutation } from "../../../../hooks/useAdminCompetitionMutation";
 
 export const AddCompetitionModal = ({
   onClose,
   isOpen,
 }: PropsWithChildren<IAddCompetitionModal>) => {
+  const [formData, setFormData] = useState<CompetitionRequest>({
+    title: "",
+    startDateTime: "",
+    endDateTime: "",
+    description: "",
+  });
+  const handleChange = (key: string, value: string) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [key]: value,
+    }));
+  };
+
+  const handleCloseModal = () => {
+    // formData를 초기 상태로 리셋
+    setFormData({
+      title: "",
+      startDateTime: "",
+      endDateTime: "",
+      description: "",
+    });
+    onClose();
+  };
+
+  const toast = useToast();
+  const { mutate } = useAdminCompetitionMutation();
+  console.log(formData);
+
+  // 메인에서 확인 예정
+  const handleSubmit = () => {
+    const allFieldsFilled = Object.values(formData).every(
+      (value) => value.trim() !== ""
+    );
+    if (allFieldsFilled) {
+      mutate(formData);
+    } else {
+      toast({
+        title: "전송 실패",
+        description: "모든 필드를 채워주세요",
+        status: "warning",
+        duration: 1000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Modal
       isCentered
@@ -27,15 +75,18 @@ export const AddCompetitionModal = ({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>대회 정보 추가하기</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton onClick={handleCloseModal} />
         <ModalBody>
-          <CompetitionInfoForm />
+          <CompetitionInfoForm
+            formData={formData}
+            handleChange={handleChange}
+          />
         </ModalBody>
         <ModalFooter>
-          <Button variant="ghost" mr={3} onClick={onClose}>
+          <Button variant="ghost" mr={3} onClick={handleCloseModal}>
             닫기
           </Button>
-          <Button colorScheme="blue" mr={3}>
+          <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
             저장하기
           </Button>
         </ModalFooter>

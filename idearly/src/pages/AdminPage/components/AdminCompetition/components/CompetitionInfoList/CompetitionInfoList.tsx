@@ -6,14 +6,20 @@ import { dateChange } from "../../../../../../utils/dateChange";
 
 export const CompetitionInfoList = ({
   competition,
-  onOpen,
+  onTestcodeOpen,
+  onProblemlOpen,
 }: PropsWithChildren<ICompetitionInfoList>) => {
   const { competitionId, title, startDateTime, endDateTime } = competition;
   const navigate = useNavigate();
 
-  const handleModalOpen = () => {
+  const handleTestcaseModalOpen = () => {
     navigate(`/admin/competition?id=${competitionId}`);
-    onOpen();
+    onTestcodeOpen();
+  };
+
+  const handleProblemModalOpen = () => {
+    navigate(`/admin/competition?id=${competitionId}`);
+    onProblemlOpen();
   };
 
   return (
@@ -26,8 +32,8 @@ export const CompetitionInfoList = ({
           {dateChange({ date: endDateTime })}
         </Td>
         <Td>
-          <Button onClick={handleModalOpen}>문제 추가</Button>
-          <Button onClick={handleModalOpen}>테스트케이스 추가</Button>
+          <Button onClick={handleProblemModalOpen}>문제 추가</Button>
+          <Button onClick={handleTestcaseModalOpen}>테스트케이스 추가</Button>
         </Td>
       </Tr>
     </Tbody>

@@ -1,3 +1,5 @@
+import { CompetitionRequest } from "../types";
+
 export const AdminNavConfig = {
   user: "회원 정보 관리",
   competition: "대회 정보 관리 ",
@@ -18,9 +20,13 @@ export const AdminCompePageConfig = {
   edit: "문제 수정",
 };
 
-export const CompetitionInfoFormConfig = [
-  "대회 이름",
-  "대회 시작일시",
-  "대회 종료일시",
-  "대회 내용",
+export const CompetitionInfoFormConfig: Array<{
+  name: keyof CompetitionRequest;
+  label: string;
+  type: string;
+}> = [
+  { name: "title", label: "대회 이름", type: "input" },
+  { name: "startDateTime", label: "대회 시작일시", type: "input" },
+  { name: "endDateTime", label: "대회 종료일시", type: "input" },
+  { name: "description", label: "대회 내용", type: "textarea" },
 ];

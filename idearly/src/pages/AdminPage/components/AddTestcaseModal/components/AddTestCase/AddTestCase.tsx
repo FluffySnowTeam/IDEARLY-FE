@@ -1,5 +1,5 @@
 import { CloseIcon } from "@chakra-ui/icons";
-import { ModalBody, Textarea } from "@chakra-ui/react";
+import { Input, ModalBody, Select, Textarea } from "@chakra-ui/react";
 import { ChangeEvent, useState } from "react";
 import * as S from "./AddTestCase.styles";
 import { useAtom } from "jotai";
@@ -47,8 +47,15 @@ export const AddTestCase = () => {
           ></S.TestCaseDeleteButton>
         </S.TestCaseList>
       ))}
-
+      <div>입력값</div>
       <Textarea value={inputValue} onChange={handleChange} />
+      <div>히든여부</div>
+      <Select>
+        <option>true</option>
+        <option>false</option>
+      </Select>
+      <div>정답</div>
+      <Input />
       <S.TestCaseAddButton onClick={handleAddTestCase}>
         추가
       </S.TestCaseAddButton>
