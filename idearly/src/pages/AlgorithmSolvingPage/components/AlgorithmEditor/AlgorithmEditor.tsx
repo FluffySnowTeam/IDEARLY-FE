@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+// algorithmEditor.tsx
+import { useEffect, useRef, useState } from "react";
 import yorkie, { OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
@@ -6,12 +7,38 @@ import { Transaction } from "@codemirror/state";
 import "./style.css";
 // import { yorkie_key } from "./yorkie_api.json";
 import { YorkieDoc } from "./types";
+import { AlgorithmFooter, AlgorithmResult } from "..";
+import * as S from "./AlgorithmEditor.styles";
+import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 
-export const AlgorithmEditor = () => {
+interface Prop {
+  competitionId: string | undefined,
+  problemId: string | null,
+}
+
+export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
 
-  console.log('환경변수: ', import.meta.env.VITE_REACT_APP_YORKIE_API_KEY);
+  const { mutate: executeMutate } = useExcuteTestMutation();
+  const { mutate: runMutate } = useRunMutation();
+  // const [code, setCode] = useState<string>('');
+  const handleInitButton = () => {
+    // setIsInit(!isInit);
+    // console.log(isInit);
+  };
+
+  const handleExcute = () => {
+    const code = viewRef.current?.state.doc.toString();
+    executeMutate({competitionId, problemId, code});
+  }
+
+  const handleSubmit = () => {
+    const code = viewRef.current?.state.doc.toString();
+    runMutate({competitionId, problemId, code});
+  }
+
+  // code editor 관련
   useEffect(() => {
     const initYorkie = async () => {
       // 01. create client with RPCAddr(envoy) then activate it.
@@ -23,9 +50,8 @@ export const AlgorithmEditor = () => {
 
       // 02-1. create a document then attach it into the client.
 
-      // 문제마다 다른 에디터 띄우는 건 이 부분에서 구현하면 될 것 같습니다!! 이 부분이 에디터 만드는 부분입니다.
       // teamId로 구성! -> teamId는 어떻게 넘어오지?
-      const doc = new yorkie.Document<YorkieDoc>('editor');
+      const doc = new yorkie.Document<YorkieDoc>('teamId');
       await client.attach(doc);
 
       doc.update((root) => {
@@ -130,15 +156,9 @@ export const AlgorithmEditor = () => {
     };
 
     initYorkie();
-    return () => {
-      // ...
 
-      // 예제: cleanup 함수에서 에디터에 입력된 값을 얻기
-      // 03-4. 에디터에 입력된 값을 얻기
-
-    };
   }, []);
-  
+
   const getEditorValue = () => {
     const editorValue = viewRef.current?.state.doc.toString();
     console.log('에디터에 입력된 값:', editorValue);
@@ -148,7 +168,11 @@ export const AlgorithmEditor = () => {
   return (
     <>
       <div ref={editorParentRef} />
-      <button onClick={getEditorValue}>버튼</button>
+      <AlgorithmResult />
+      <S.EditorButtonWrapper>
+        <AlgorithmFooter handleInitButton={handleInitButton} handleExcute={handleExcute} handleSubmit={handleSubmit} />
+      </S.EditorButtonWrapper>
     </>
   );
 };
+

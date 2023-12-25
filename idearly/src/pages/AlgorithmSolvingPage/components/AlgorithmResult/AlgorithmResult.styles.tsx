@@ -5,4 +5,28 @@ export const AlgorithmResultContainer = styled.div`
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   height: 18vh;
+  overflow: auto;
+`;
+
+export const TestCase = styled.div`
+
+`;
+
+export const InfoText = styled.div`
+// margin-left: 2rem;
+  width: 8rem;
+  text-align: right;
+`;
+
+export const ValueText = styled.div`
+  margin-left: 1rem;
+`;
+
+export const ResultContainer = styled.div`
+  display: flex;
+  fiex-direction: row;
+`;
+
+export const TestCaseContainer = styled.div`
+  margin: 0.5rem;
 `;

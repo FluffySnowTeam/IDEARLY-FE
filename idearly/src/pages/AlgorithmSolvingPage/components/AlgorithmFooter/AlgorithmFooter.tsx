@@ -8,7 +8,7 @@ export const AlgorithmFooter = ({handleInitButton, handleExcute, handleSubmit}: 
       <div>
         <S.EditorButton onClick={handleInitButton}>초기화</S.EditorButton>
         <S.EditorButton onClick={handleExcute}>실행</S.EditorButton>
-        <S.SubmitButton onCLick={handleSubmit} colorScheme="blue">제출</S.SubmitButton>
+        <S.SubmitButton onClick={handleSubmit} colorScheme="blue">제출</S.SubmitButton>
       </div>
     </>
   )
