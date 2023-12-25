@@ -1,6 +1,6 @@
 export interface ICompetitionCard {
   competition: {
-    competitionId: string;
+    competitionId: number;
     title: string;
     startDateTime: string;
     endDateTime: string;

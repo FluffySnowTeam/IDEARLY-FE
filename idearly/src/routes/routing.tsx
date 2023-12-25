@@ -5,6 +5,7 @@ import {
   AlgorithmSolvingPage,
   CompletePage,
   DetailPage,
+  ErrorPage,
   HomePage,
   LoginPage,
   MyPage,
@@ -12,59 +13,75 @@ import {
   TeamMatchingPage,
   WaitingPage,
 } from "../pages";
-// import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
+import { IsLoginProtectedRoute } from "./IsLoginProtectedRoute";
+import { AdminProtectedRoute } from "./AdminProtectedRoute";
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/signup",
-        element: <SignupPage />,
+        element: <IsLoginProtectedRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/signup",
+            element: <SignupPage />,
+          },
+        ],
       },
       {
         path: "/",
         element: <HomePage />,
       },
-      // {
-      //   element: <ProtectedRoute />,
-      //   children: [
-      {
-        path: "/algorithm-solving/:id",
-        element: <AlgorithmSolvingPage />,
-      },
-      {
-        path: "/admin/:path",
-        element: <AdminPage />,
-      },
-      {
-        path: "/complete",
-        element: <CompletePage />,
-      },
       {
         path: "/detail/:id",
         element: <DetailPage />,
       },
+      {
+        element: <AdminProtectedRoute />,
+        children: [
+          {
+            path: "/admin/:path",
+            element: <AdminPage />,
+          },
+        ],
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/algorithm-solving/:id",
+            element: <AlgorithmSolvingPage />,
+          },
 
-      {
-        path: "/mypage/:path",
-        element: <MyPage />,
-      },
-      {
-        path: "/matching",
-        element: <TeamMatchingPage />,
-      },
-      {
-        path: "/waiting/:id",
-        element: <WaitingPage />,
+          {
+            path: "/complete",
+            element: <CompletePage />,
+          },
+          {
+            path: "/mypage/:path",
+            element: <MyPage />,
+          },
+          {
+            path: "/matching",
+            element: <TeamMatchingPage />,
+          },
+          {
+            path: "/waiting/:id",
+            element: <WaitingPage />,
+          },
+          {
+            path: "/error",
+            element: <ErrorPage />,
+          },
+        ],
       },
     ],
-    //   },
-    // ],
   },
 ]);
 

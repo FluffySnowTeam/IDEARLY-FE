@@ -3,12 +3,13 @@ import { logoutUser } from "../services/apis/user.apis";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useSetAtom } from "jotai";
-import { LoginStateAtom } from "../store/LoginPage.atoms";
+import { userInfoAtom } from "../store";
 
 export const useLogoutMutation = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  const setIsLoginState = useSetAtom(LoginStateAtom);
+  const setUserInfoState = useSetAtom(userInfoAtom);
+
   return useMutation({
     mutationFn: () => logoutUser(),
     onError: (error) => {
@@ -16,7 +17,14 @@ export const useLogoutMutation = () => {
     },
     onSuccess: (data) => {
       console.log(data);
-      setIsLoginState(false);
+      // setIsLoginState(false);
+      setUserInfoState({
+        authority: "",
+        memberId: "",
+        email: "",
+        name: "",
+        isLogin: false,
+      });
       toast({
         title: "로그아웃 완료",
         description: "로그아웃 완료되었습니다.",
