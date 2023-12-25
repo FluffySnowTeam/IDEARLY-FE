@@ -142,15 +142,14 @@ export const useHandleInviteMutation = () => {
 
 export const useTeamInfoQuery = (isClick: boolean, teamId: number) => {
   const {
-    data,
-    status,
-    isInitialLoading,
+    data: memberData,
     error,
+    isLoading,
   } = useQuery({
     queryKey: ["teamInfo", teamId],
     queryFn:() => getTeamInfo(teamId),
     enabled: isClick,
-    staleTime: 2 * 1000,
+    // staleTime: 2 * 1000,
   });
-  return { data, status, error, isInitialLoading };
+  return { memberData, error, isLoading };
 }

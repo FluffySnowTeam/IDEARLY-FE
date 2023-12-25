@@ -12,25 +12,17 @@ export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const {data: curTeamData} = useGetCurrentTeamQuery();
-  const {data: waitTeamData} = useGetWaitTeamQuery();
-
+  const userInfo = useAtomValue(userInfoAtom);
   const [curTeam, setCurTeam] = useAtom(curTeamAtom);
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
-  const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
-  
-  // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
-  console.log("teamMembers: ", teamMembers);
-  const currentMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "accept");
-  const inviteMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "invite");
-
   const [teamId, setTeamId] = useState(0);
   const [isClick, setIsClick] = useState(false);
+  const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
 
-  const {data: memberData, status, error, isInitialLoading} = useTeamInfoQuery(isClick, teamId);
-  
-  const userInfo = useAtomValue(userInfoAtom);
+  const {data: curTeamData} = useGetCurrentTeamQuery();
+  const {data: waitTeamData} = useGetWaitTeamQuery();
+  const { memberData, error, isLoading } = useTeamInfoQuery(isClick, teamId);
 
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
@@ -45,20 +37,24 @@ export const MyPageCurrentTeam = () => {
     }
   }, [waitTeamData])
 
+  useEffect(() => {
+    if(memberData) {
+      setTeamMembers(memberData.data.teammates);
+    }
+  }, [memberData])
+
   const onClickTeamDetail = (teamId: number) => {
-    // 현재 팀 목록에서 팀 상세보기 클릭 시!
-    setIsClick(true);
     setTeamId(teamId);
-    // 모달창에 들어가는 정보 업데이트
-    setTeamMembers(memberData.data.teammates);
-  }
-  if (isInitialLoading) {
-    return <div>...Loadin1</div>;
+    setIsClick(true);
+    onOpen();
   }
 
-  if (status === "error") {
-    console.log(error);
-  }
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  
+  // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
+  const currentMemberList: ITeamMember[] = teamMembers.filter((member:any) => member.inviteStatus === "accept");
+  const inviteMemberList: ITeamMember[] = teamMembers.filter((member:any) => member.inviteStatus === "invite");
 
   return (
     <S.SearchTeamWrapper>

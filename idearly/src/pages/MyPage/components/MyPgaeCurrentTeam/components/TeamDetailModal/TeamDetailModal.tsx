@@ -5,7 +5,7 @@ import { ITeamlModal } from "../../MyPageCurrentTeam.types";
 
 export const TeamDetailModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<ITeamlModal>) => {
   const MAXMEMBER = 2;
-  
+  console.log('In detail modal, currentMemberList: ', currentMemberList, 'inviteMemberList:', inviteMemberList);
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -13,16 +13,16 @@ export const TeamDetailModal = ({ isOpen, onClose, currentMemberList, inviteMemb
           <ModalHeader>팀 상세 정보</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <S.ModalSubTitle>초대 수락한 맴버({currentMemberList.length}/{MAXMEMBER+1})</S.ModalSubTitle>
+            <S.ModalSubTitle>초대 수락한 맴버({currentMemberList?.length}/{MAXMEMBER+1})</S.ModalSubTitle>
 
             {
-              currentMemberList.map(member => (
+              currentMemberList?.map(member => (
                 <S.ModalContent key={member.email}>{member.name}({member.email})</S.ModalContent>
               ))
             }
-            <S.ModalSubTitle>수락 대기중인 맴버({inviteMemberList.length}/{MAXMEMBER+1})</S.ModalSubTitle>
+            <S.ModalSubTitle>수락 대기중인 맴버({inviteMemberList?.length}/{MAXMEMBER+1})</S.ModalSubTitle>
             {
-              inviteMemberList.map(member => (
+              inviteMemberList?.map(member => (
                 <S.ModalContent key={member.email}>{member.name}({member.email})</S.ModalContent>
               ))
             }

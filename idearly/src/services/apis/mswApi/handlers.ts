@@ -206,7 +206,7 @@ export const handlers = [
   // 특정 팀 조회
   http.get(`https://idearly.site/api/teams/:teamId`, async ({ params }) => {
     const { teamId } = params;
-    console.log('teamId: ', teamId, teamId == '123');
+
     if (teamId == '123') {
       return HttpResponse.json({
         status: "success",

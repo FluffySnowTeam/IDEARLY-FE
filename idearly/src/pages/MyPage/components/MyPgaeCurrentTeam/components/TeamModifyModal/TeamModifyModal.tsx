@@ -9,10 +9,11 @@ import { CloseIcon } from "@chakra-ui/icons";
 export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<ITeamlModal>) => {
   const [addedMembers, setAddedMembers] = useState<ITeamMember[]>(currentMemberList);
   const MAX_MEMBER = 2;
-  const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
+  const isErrorCount = addedMembers?.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
 
   const [addedInviteMembers, setAddedInviteMembers] = useState(inviteMemberList);
   
+  console.log('In modify modal, cur:', currentMemberList, 'invite:', inviteMemberList);
   const handleDropoutMember = (email: string) => {
     // 해당 email을 가지고 있는 유저 삭제
     setAddedInviteMembers(addedInviteMembers.filter(member => member.email !== email));
@@ -36,12 +37,12 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
           <ModalHeader>팀 상세 정보</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <S.ModalSubTitle>총 맴버 수({addedMembers.length+inviteMemberList.length + 1}/{MAX_MEMBER+1})</S.ModalSubTitle>
+            <S.ModalSubTitle>총 맴버 수({addedMembers?.length+inviteMemberList?.length + 1}/{MAX_MEMBER+1})</S.ModalSubTitle>
             <AddTeamMembers setAddedMembers={setAddedMembers} isErrorCount={isErrorCount} />
             <S.ModalSubTitle>수락 대기중인 맴버</S.ModalSubTitle>
 
             <S.MemberListWrapper>
-              {addedMembers.map((user: IUserType) => (
+              {addedMembers?.map((user: IUserType) => (
                 <S.MemberWrapper key={user.email}>
                   <S.ModalContent key={user.email}>{user.name}({user.email})</S.ModalContent>
                   <S.IconWrapper as={CloseIcon} onClick={() => handleDelete(user.email)} />
@@ -56,7 +57,7 @@ export const TeamModifyModal = ({ isOpen, onClose, currentMemberList, inviteMemb
               </S.ModalContent>
             <S.MemberListWrapper>
             {
-              addedInviteMembers.map(member => (
+              addedInviteMembers?.map(member => (
                 <S.MemberWrapper key={member.email}>
                   <S.ModalContent key={member.email}>{member.name}({member.email})</S.ModalContent>
                   <S.Dropout onClick={() => handleDropoutMember(member.email)}>강퇴</S.Dropout>

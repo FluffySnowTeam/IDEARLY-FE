@@ -8,7 +8,6 @@ export const CurrentTeamList = ({competition, onOpen, onClickTeamDetail}: PropsW
   
   const handleClick = () => {
     onClickTeamDetail!(teamId);
-    onOpen!();
   }
   return (
     <Tr key={competitionId}>
