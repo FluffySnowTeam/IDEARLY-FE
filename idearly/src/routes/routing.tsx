@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-        path: "/matching",
+        path: "/matching/:competitionId",
         element: <TeamMatchingPage />,
       },
       {
