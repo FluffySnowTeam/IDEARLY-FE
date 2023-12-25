@@ -16,3 +16,8 @@ export type CompetitionRequest = {
   endDateTime: string;
   description: string;
 };
+
+export type ICompetitionProblem = {
+  name: string;
+  description: string;
+};

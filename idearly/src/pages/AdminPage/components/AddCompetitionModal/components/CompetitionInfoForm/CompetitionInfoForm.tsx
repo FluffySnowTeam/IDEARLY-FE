@@ -1,12 +1,7 @@
 import { Input, Textarea } from "@chakra-ui/react";
 import { CompetitionInfoFormConfig } from "../../../../../../constants";
 import { PropsWithChildren } from "react";
-import type { CompetitionRequest } from "../../../../../../types";
-
-interface ICompetitionInfoForm {
-  formData: CompetitionRequest;
-  handleChange: (key: string, value: string) => void;
-}
+import type { ICompetitionInfoForm } from "./CompetitionInfoForm.types";
 
 export const CompetitionInfoForm = ({
   formData,

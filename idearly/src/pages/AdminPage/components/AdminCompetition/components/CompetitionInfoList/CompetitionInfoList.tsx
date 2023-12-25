@@ -13,12 +13,12 @@ export const CompetitionInfoList = ({
   const navigate = useNavigate();
 
   const handleTestcaseModalOpen = () => {
-    navigate(`/admin/competition?id=${competitionId}`);
+    navigate(`/admin/competition?competitionId=${competitionId}`);
     onTestcodeOpen();
   };
 
   const handleProblemModalOpen = () => {
-    navigate(`/admin/competition?id=${competitionId}`);
+    navigate(`/admin/competition?competitionId=${competitionId}`);
     onProblemlOpen();
   };
 

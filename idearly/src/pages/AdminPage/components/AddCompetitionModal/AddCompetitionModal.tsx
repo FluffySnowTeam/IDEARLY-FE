@@ -45,7 +45,6 @@ export const AddCompetitionModal = ({
 
   const toast = useToast();
   const { mutate } = useAdminCompetitionMutation();
-  console.log(formData);
 
   // 메인에서 확인 예정
   const handleSubmit = () => {
