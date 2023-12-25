@@ -24,11 +24,10 @@ export const useLoginMutation = () => {
       });
     },
     onSuccess: (data) => {
-      console.log(data);
-      console.log(data.data.result);
       // 로그인 상태 업데이트
-      // setIsLoginState(true);
-      setUserInfoState({...data.data.result, isLogin: true});
+      const isUser = data.data.result.authority === "USER";
+      console.log(isUser);
+      setUserInfoState({ ...data.data.result, isLogin: true });
       toast({
         title: "로그인 성공!",
         description: "로그인에 성공하였습니다!",
@@ -38,7 +37,12 @@ export const useLoginMutation = () => {
       });
 
       setTimeout(() => {
-        navigate("/");
+        //authority "ADMIN", "USER"
+        if (isUser) {
+          navigate("/");
+        } else {
+          navigate("/admin/user");
+        }
       }, 1000);
     },
   });
