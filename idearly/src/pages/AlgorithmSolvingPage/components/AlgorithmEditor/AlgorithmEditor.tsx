@@ -4,29 +4,26 @@ import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
 import "./style.css";
-import { yorkie_key } from "./yorkie_api.json";
+// import { yorkie_key } from "./yorkie_api.json";
 import { YorkieDoc } from "./types";
 
 export const AlgorithmEditor = () => {
   const editorParentRef = useRef<HTMLDivElement>(null);
-
+  console.log('환경변수: ', import.meta.env.VITE_REACT_APP_YORKIE_API_KEY);
   useEffect(() => {
     const initYorkie = async () => {
       // 01. create client with RPCAddr(envoy) then activate it.
       const client = new yorkie.Client("https://api.yorkie.dev", {
-        apiKey: yorkie_key,
+        // apiKey: yorkie_key,
+        apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
       });
       await client.activate();
 
       // 02-1. create a document then attach it into the client.
 
       // 문제마다 다른 에디터 띄우는 건 이 부분에서 구현하면 될 것 같습니다!! 이 부분이 에디터 만드는 부분입니다.
-      const doc = new yorkie.Document<YorkieDoc>(
-        `codemirror6-${new Date()
-          .toISOString()
-          .substring(0, 10)
-          .replace(/-/g, "")}`
-      );
+      // teamId로 구성! -> teamId는 어떻게 넘어오지?
+      const doc = new yorkie.Document<YorkieDoc>('editor');
       await client.attach(doc);
 
       doc.update((root) => {
@@ -95,7 +92,7 @@ export const AlgorithmEditor = () => {
       const view = new EditorView({
         doc: "",
         extensions: [basicSetup, python(), updateListener],
-        parent: editorParentRef.current,
+        parent: editorParentRef.current || undefined,
       });
 
       // 03-3. define event handler that apply remote changes to local
