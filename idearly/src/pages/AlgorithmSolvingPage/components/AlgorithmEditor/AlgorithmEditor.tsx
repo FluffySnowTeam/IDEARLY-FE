@@ -19,16 +19,10 @@ interface Prop {
 export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  // const docRef = useRef<typeof yorkie.Document | undefined>();
   const doc = new yorkie.Document<YorkieDoc>('teamId');
-
-  // const docRef = useRef<Document_2 | null>(null)
-
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
-  // const [code, setCode] = useState<string>('');
-
 
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
@@ -53,7 +47,6 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
     // 02-1. create a document then attach it into the client.
 
     // teamId로 구성! -> teamId는 어떻게 넘어오지?
-    // const doc = new yorkie.Document<YorkieDoc>('teamId');
     await client.attach(doc);
 
     doc.update((root) => {
@@ -128,8 +121,6 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
     });
 
     viewRef.current = view;
-    // docRef.current = doc;
-
 
     // 03-3. define event handler that apply remote changes to local
     function handleOperations(operations: Array<OperationInfo>) {
@@ -160,10 +151,8 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
 
   // code editor 관련
   useEffect(() => {
-    
-
+  
     initYorkie();
-
   }, []);
 
   const handleInitButton = async () => {
@@ -180,13 +169,6 @@ export const AlgorithmEditor = ({competitionId, problemId}: Prop) => {
         annotations: [Transaction.remote.of(true)],
       });
     }
-
-  };
-
-  const getEditorValue = () => {
-    const editorValue = viewRef.current?.state.doc.toString();
-    console.log('에디터에 입력된 값:', editorValue);
-    // 여기서 editorValue를 활용하여 필요한 작업을 수행할 수 있습니다.
   };
 
   return (
