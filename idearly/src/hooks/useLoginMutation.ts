@@ -26,7 +26,6 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       // 로그인 상태 업데이트
       const isUser = data.data.result.authority === "USER";
-      console.log(isUser);
       setUserInfoState({ ...data.data.result, isLogin: true });
       toast({
         title: "로그인 성공!",
