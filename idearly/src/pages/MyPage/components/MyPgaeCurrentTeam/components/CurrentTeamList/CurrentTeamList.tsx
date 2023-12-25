@@ -3,11 +3,11 @@ import { PropsWithChildren } from "react"
 import { dateChange } from "../../../../../../utils/dateChange"
 import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
 
-export const CurrentTeamList = ({competition, onOpen, onClickTeamDetail}: PropsWithChildren<ICompetitionProp>) => {
+export const CurrentTeamList = ({competition, onClickTeamDetail}: PropsWithChildren<ICompetitionProp>) => {
   const {teamId, competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
   
   const handleClick = () => {
-    onClickTeamDetail!(teamId);
+    onClickTeamDetail(teamId);
   }
   return (
     <Tr key={competitionId}>

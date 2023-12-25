@@ -1,9 +1,9 @@
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
 import * as S from "./TeamDetailModal.styles";
 import { PropsWithChildren } from "react";
-import { ITeamlModal } from "../../MyPageCurrentTeam.types";
+import { IDetailTeamlModal } from "../../MyPageCurrentTeam.types";
 
-export const TeamDetailModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<ITeamlModal>) => {
+export const TeamDetailModal = ({ isOpen, onClose, currentMemberList, inviteMemberList}: PropsWithChildren<IDetailTeamlModal>) => {
   const MAXMEMBER = 2;
   console.log('In detail modal, currentMemberList: ', currentMemberList, 'inviteMemberList:', inviteMemberList);
   return (

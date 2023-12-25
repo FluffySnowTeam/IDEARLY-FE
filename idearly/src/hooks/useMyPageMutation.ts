@@ -149,7 +149,7 @@ export const useTeamInfoQuery = (isClick: boolean, teamId: number) => {
     queryKey: ["teamInfo", teamId],
     queryFn:() => getTeamInfo(teamId),
     enabled: isClick,
-    // staleTime: 2 * 1000,
+    staleTime: 2 * 60 * 1000,
   });
   return { memberData, error, isLoading };
 }

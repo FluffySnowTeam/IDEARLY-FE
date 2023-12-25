@@ -1,11 +1,11 @@
 import { Button, Td, Tr } from "@chakra-ui/react"
 import { PropsWithChildren } from "react"
-import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
+import { IWaitingCompetitionProp } from "../../MyPageCurrentTeam.types"
 import { dateChange } from "../../../../../../utils/dateChange"
 import * as S from "./WaitingTeamList.styles";
 import { useHandleInviteMutation } from "../../../../../../hooks/useMyPageMutation";
 
-export const WaitingTeamList = ({competition}: PropsWithChildren<ICompetitionProp>) => {
+export const WaitingTeamList = ({competition}: PropsWithChildren<IWaitingCompetitionProp>) => {
   const {teamId, competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
 
   const {mutate} = useHandleInviteMutation();

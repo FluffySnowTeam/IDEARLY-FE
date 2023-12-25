@@ -40,9 +40,14 @@ export const MyPageCurrentTeam = () => {
   useEffect(() => {
     if(memberData) {
       setTeamMembers(memberData.data.teammates);
+      setCurrentMemberList(memberData.data.teammates.filter((member:any) => member.inviteStatus === "accept"));
+      setInviteMemberList(memberData.data.teammates.filter((member: any) => member.inviteStatus === "invite"));
     }
   }, [memberData])
 
+  const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "accept"))
+  const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "invite"));
+  
   const onClickTeamDetail = (teamId: number) => {
     setTeamId(teamId);
     setIsClick(true);
@@ -51,17 +56,13 @@ export const MyPageCurrentTeam = () => {
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  
-  // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
-  const currentMemberList: ITeamMember[] = teamMembers.filter((member:any) => member.inviteStatus === "accept");
-  const inviteMemberList: ITeamMember[] = teamMembers.filter((member:any) => member.inviteStatus === "invite");
 
   return (
     <S.SearchTeamWrapper>
       {
         memberData?.data.leaderEmail === userInfo.email
-        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
-        : <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
+        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} setCurrentMemberList={setCurrentMemberList} inviteMemberList={inviteMemberList} setInviteMemberList={setInviteMemberList} />
+        : <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList}  />
       }
       
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
@@ -80,7 +81,7 @@ export const MyPageCurrentTeam = () => {
           <Tbody>
             {
               curTeam.map((competition) => (
-                <CurrentTeamList key={competition.competitionId} competition={competition} onOpen={onOpen} onClickTeamDetail={onClickTeamDetail} />
+                <CurrentTeamList key={competition.competitionId} competition={competition} onClickTeamDetail={onClickTeamDetail} />
               ))
             }
           </Tbody>
