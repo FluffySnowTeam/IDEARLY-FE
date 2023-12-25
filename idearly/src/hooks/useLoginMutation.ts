@@ -3,13 +3,13 @@ import { IUserRequest } from "../types";
 import { loginUser } from "../services/apis/user.apis";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { userInfoAtom } from "../store";
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  const setUserInfoState = useSetAtom(userInfoAtom);
+  const [userInfoAtate, setUserInfoState] = useAtom(userInfoAtom);
 
   return useMutation({
     mutationFn: (userInfo: IUserRequest) => loginUser(userInfo),
@@ -25,6 +25,8 @@ export const useLoginMutation = () => {
     },
     onSuccess: (data) => {
       // 로그인 상태 업데이트
+      const isUser = data.data.result.authority === "USER";
+      console.log(isUser);
       setUserInfoState({ ...data.data.result, isLogin: true });
       toast({
         title: "로그인 성공!",
@@ -35,7 +37,12 @@ export const useLoginMutation = () => {
       });
 
       setTimeout(() => {
-        navigate("/");
+        //authority "ADMIN", "USER"
+        if (isUser) {
+          navigate("/");
+        } else {
+          navigate("/admin/user");
+        }
       }, 1000);
     },
   });
