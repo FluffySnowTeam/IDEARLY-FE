@@ -12,6 +12,7 @@ export interface ITeam {
 export interface ICompetitionProp {
   competition: ITeam;
   onOpen?: () => void;
+  onClickTeamDetail?: (teamId: number) => void;
 }
 
 export interface ITeamMember {

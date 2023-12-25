@@ -1,11 +1,10 @@
 import { Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
-import { TeamMembers } from "../../../../mocks/curCompetition.mocks";
-import { CurrentTeamList, TeamModifyModal, WaitingTeamList } from "./components";
+import { CurrentTeamList, TeamDetailModal, TeamModifyModal, WaitingTeamList } from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
 import type { ITeamMember } from "./MyPageCurrentTeam.types";
-import { useEffect } from "react";
-import { useGetCurrentTeamQuery, useGetWaitTeamQuery } from "../../../../hooks/useMyPageMutation";
+import { useEffect, useState } from "react";
+import { useGetCurrentTeamQuery, useGetWaitTeamQuery, useTeamInfoQuery } from "../../../../hooks/useMyPageMutation";
 import { useAtom } from "jotai";
 import { curTeamAtom, waitTeamAtom } from "../../../../store";
 
@@ -17,14 +16,17 @@ export const MyPageCurrentTeam = () => {
   const {data: waitTeamData} = useGetWaitTeamQuery();
 
   const [curTeam, setCurTeam] = useAtom(curTeamAtom);
-
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
+  const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
   // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
-  const currentMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "accept");
-  const inviteMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "invite");
+  console.log(teamMembers);
+  const currentMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "accept");
+  const inviteMemberList: ITeamMember[] = teamMembers.filter(member => member.inviteStatus === "invite");
 
-
+  // teamID도 따로 관리를 해줘야하나?
+  const [teamId, setTeamId] = useState(0);
+  const {data: memberData, status, error, refetch} = useTeamInfoQuery(teamId);
 
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
@@ -39,6 +41,17 @@ export const MyPageCurrentTeam = () => {
     }
   }, [waitTeamData])
 
+  const onClickTeamDetail = (teamId: number) => {
+    // 현재 팀 목록에서 팀 상세보기 클릭 시!
+    console.log('teamId', teamId);
+    setTeamId(teamId);
+    refetch();
+    if (status === "error") {
+      console.log(error);
+    }
+    // 모달창에 들어가는 정보도 업데이트 필요!
+    setTeamMembers(memberData.data.teammates);
+  }
   return (
     <S.SearchTeamWrapper>
       {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
@@ -60,7 +73,7 @@ export const MyPageCurrentTeam = () => {
           <Tbody>
             {
               curTeam.map((competition) => (
-                <CurrentTeamList key={competition.competitionId} competition={competition} onOpen={onOpen} />
+                <CurrentTeamList key={competition.competitionId} competition={competition} onOpen={onOpen} onClickTeamDetail={onClickTeamDetail} />
               ))
             }
           </Tbody>

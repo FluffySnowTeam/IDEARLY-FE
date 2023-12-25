@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 import { useAtom, useSetAtom } from "jotai";
-import { HandleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser } from "../services/apis/mypage.apis";
+import { handleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser, getTeamInfo } from "../services/apis/mypage.apis";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../store";
 
 export const useWithdrawalMutation = () => {
@@ -116,12 +116,13 @@ interface IHandleInvite {
   teamId: number,
   isAccept: boolean,
 }
+
 export const useHandleInviteMutation = () => {
   const [curTeam, setCurTeam] = useAtom(curTeamAtom);
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   return useMutation({
-    mutationFn: ({teamId, isAccept}: IHandleInvite) => HandleInvite(teamId, isAccept),
+    mutationFn: ({teamId, isAccept}: IHandleInvite) => handleInvite(teamId, isAccept),
     onError: (error) => {
       console.error(error);
     },
@@ -142,3 +143,17 @@ export const useHandleInviteMutation = () => {
     },
   });
 };
+
+export const useTeamInfoQuery = (teamId: number) => {
+  const {
+    data,
+    status,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["teamInfo", teamId],
+    queryFn:() => getTeamInfo(teamId),
+    staleTime: 2 * 1000,
+  });
+  return { data, status, error, refetch };
+}

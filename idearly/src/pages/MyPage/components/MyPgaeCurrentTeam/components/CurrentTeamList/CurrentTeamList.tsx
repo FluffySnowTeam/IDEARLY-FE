@@ -3,9 +3,13 @@ import { PropsWithChildren } from "react"
 import { dateChange } from "../../../../../../utils/dateChange"
 import { ICompetitionProp } from "../../MyPageCurrentTeam.types"
 
-export const CurrentTeamList = ({competition, onOpen}: PropsWithChildren<ICompetitionProp>) => {
-  const {competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
+export const CurrentTeamList = ({competition, onOpen, onClickTeamDetail}: PropsWithChildren<ICompetitionProp>) => {
+  const {teamId, competitionId, competitionTitle, teamName, leaderName, startDateTime} = competition;
   
+  const handleClick = () => {
+    onClickTeamDetail!(teamId);
+    onOpen!();
+  }
   return (
     <Tr key={competitionId}>
       <Td>{competitionTitle}</Td>
@@ -13,7 +17,7 @@ export const CurrentTeamList = ({competition, onOpen}: PropsWithChildren<ICompet
       <Td>{leaderName}</Td>
       <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
-        <Button onClick={onOpen}>상세 보기</Button>  
+        <Button onClick={handleClick}>상세 보기</Button>  
       </Td>
     </Tr>
   )
