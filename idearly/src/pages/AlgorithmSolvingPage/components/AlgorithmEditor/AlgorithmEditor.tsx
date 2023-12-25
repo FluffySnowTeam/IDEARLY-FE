@@ -9,6 +9,8 @@ import { YorkieDoc } from "./types";
 
 export const AlgorithmEditor = () => {
   const editorParentRef = useRef<HTMLDivElement>(null);
+  const viewRef = useRef<EditorView | undefined>();
+
   console.log('환경변수: ', import.meta.env.VITE_REACT_APP_YORKIE_API_KEY);
   useEffect(() => {
     const initYorkie = async () => {
@@ -35,14 +37,16 @@ export const AlgorithmEditor = () => {
       // 02-2. subscribe document event.
       const syncText = () => {
         const text = doc.getRoot().content;
-        view.dispatch({
-          changes: {
-            from: 0,
-            to: view.state.doc.length,
-            insert: text.toString(),
-          },
-          annotations: [Transaction.remote.of(true)],
-        });
+        if (viewRef.current) {
+          viewRef.current.dispatch({
+            changes: {
+              from: 0,
+              to: viewRef.current.state.doc.length,
+              insert: text.toString(),
+            },
+            annotations: [Transaction.remote.of(true)],
+          });
+        }
       };
 
       doc.subscribe((event) => {
@@ -95,6 +99,9 @@ export const AlgorithmEditor = () => {
         parent: editorParentRef.current || undefined,
       });
 
+      viewRef.current = view;
+
+
       // 03-3. define event handler that apply remote changes to local
       function handleOperations(operations: Array<OperationInfo>) {
         operations.forEach((op) => {
@@ -112,22 +119,36 @@ export const AlgorithmEditor = () => {
             insert: op.value.content,
           },
         ];
-
-        view.dispatch({
-          changes,
-          annotations: [Transaction.remote.of(true)],
-        });
+        if (viewRef.current) {
+          viewRef.current.dispatch({
+            changes,
+            annotations: [Transaction.remote.of(true)],
+          });
+        }
       }
-
       syncText();
     };
 
     initYorkie();
+    return () => {
+      // ...
+
+      // 예제: cleanup 함수에서 에디터에 입력된 값을 얻기
+      // 03-4. 에디터에 입력된 값을 얻기
+
+    };
   }, []);
+  
+  const getEditorValue = () => {
+    const editorValue = viewRef.current?.state.doc.toString();
+    console.log('에디터에 입력된 값:', editorValue);
+    // 여기서 editorValue를 활용하여 필요한 작업을 수행할 수 있습니다.
+  };
 
   return (
     <>
       <div ref={editorParentRef} />
+      <button onClick={getEditorValue}>버튼</button>
     </>
   );
 };
