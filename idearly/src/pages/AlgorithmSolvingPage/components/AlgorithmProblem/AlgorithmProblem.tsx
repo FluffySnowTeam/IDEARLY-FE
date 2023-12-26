@@ -1,16 +1,17 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import * as S from "./AlgorithmProblem.styles";
 import { useAlgorithmProblem } from "../../../../hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { IProblemsData } from "./AlgorithmProblem.types";
+import { useAtom } from "jotai";
+import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 
 export const AlgorithmProblem = () => {
   const { id: competitionId } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const problemId = searchParams.get("problemId");
-  const [problemsData, setProblemsData] = useState<IProblemsData>();
+  const [problemsData, setProblemsData] = useAtom(algorithmProblemsAtom);
 
   const { data, status, mutate } = useAlgorithmProblem();
 

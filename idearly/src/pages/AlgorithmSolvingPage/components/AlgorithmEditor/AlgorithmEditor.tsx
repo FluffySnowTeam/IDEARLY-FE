@@ -10,6 +10,8 @@ import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
+import { useAtomValue } from "jotai";
+import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 
 interface Prop {
   competitionId: string | undefined;
@@ -18,32 +20,12 @@ interface Prop {
 }
 
 export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
-  /////////////////////////////////////////////////////////////////////////////////////////////
-  /**
-   * 확인용 콘솔 삭제 예정
-   */
-  console.log(
-    "In algorithmEditor, teamId: ",
-    teamId,
-    ", problemId:",
-    problemId
-  );
-  console.log(
-    "환경변수 VITE_APP_YORKIE_API_KEY:",
-    import.meta.env.VITE_APP_YORKIE_API_KEY
-  );
-  console.log("환경변수 VITE_APP_KAKAO_ID:", import.meta.env.VITE_APP_KAKAO_ID);
-  console.log(
-    "환경변수 VITE_APP_KAKAO_SECRET_KEY:",
-    import.meta.env.VITE_APP_KAKAO_SECRET_KEY
-  );
-  /////////////////////////////////////////////////////////////////////////////////////////////
-
   let client: Client | null;
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
   const docRef = useRef<typeof yorkie.Document | undefined>();
+  const problemData = useAtomValue(algorithmProblemsAtom);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
@@ -91,6 +73,10 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     doc.update((root: any) => {
       if (!root.content) {
         root.content = new yorkie.Text();
+      }
+
+      if (problemData) {
+        root.content.edit(0, root.content.length, problemData);
       }
     }, "create content if not exists");
 
