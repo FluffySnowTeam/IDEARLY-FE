@@ -4,7 +4,7 @@ import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect, useState } from "react";
 
 interface IProblemsData {
-  problem_title: string;
+  name: string;
   description: string;
   code: string;
 }
@@ -14,15 +14,11 @@ export const AlgorithmProblem = () => {
   const [searchParams] = useSearchParams();
   const problemId = searchParams.get("problemId");
   const [problemsData, setProblemsData] = useState<IProblemsData>();
-  console.log("competitionId", competitionId);
-  console.log("problemId", problemId);
 
   const { data, status, mutate } = useAlgorithmProblem();
 
   useEffect(() => {
     if (problemId && competitionId) {
-      console.log("competitionId", competitionId);
-      console.log("problemId", problemId);
       mutate({
         competitionId: competitionId,
         problemId: problemId,
@@ -32,8 +28,8 @@ export const AlgorithmProblem = () => {
 
   useEffect(() => {
     if (data) {
-      const problems = data.data;
-      console.log("data", data.data);
+      const problems = data.data.result;
+      console.log("data", data.data.result);
       setProblemsData(problems);
     }
   }, [data]);
@@ -46,7 +42,7 @@ export const AlgorithmProblem = () => {
 
   return (
     <S.AlgorithmContainer>
-      <div>{problemsData?.problem_title}</div>
+      <div>{problemsData?.name}</div>
       <div>{problemsData?.description}</div>
       {/**
        * 여기 마크다운으로 problem 내용 보여주기
