@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { IUserRequest } from "../types";
 import { loginUser } from "../services/apis/user.apis";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useSetAtom } from "jotai";
 import { userInfoAtom } from "../store";
@@ -9,6 +9,7 @@ import { userInfoAtom } from "../store";
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
+  const { state } = useLocation();
   const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
@@ -38,7 +39,7 @@ export const useLoginMutation = () => {
       setTimeout(() => {
         //authority "ADMIN", "USER"
         if (isUser) {
-          navigate("/");
+          navigate(state);
         } else {
           navigate("/admin/user");
         }

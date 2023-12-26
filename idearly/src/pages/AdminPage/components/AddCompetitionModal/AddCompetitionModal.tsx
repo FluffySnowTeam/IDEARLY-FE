@@ -54,7 +54,12 @@ export const AddCompetitionModal = ({
       (value) => value.trim() !== ""
     );
     if (allFieldsFilled) {
-      mutate(formData);
+      mutate({
+        title: formData.title,
+        startDateTime: formData.startDateTime,
+        endDateTime: formData.endDateTime,
+        description: formData.description,
+      });
     } else {
       toast({
         title: "전송 실패",
