@@ -1,6 +1,6 @@
 // algorithmEditor.tsx
 import { useEffect, useRef, useState } from "react";
-import yorkie, { OperationInfo } from "yorkie-js-sdk";
+import yorkie, { Client, OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
@@ -50,11 +50,24 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const docRef = useRef<typeof yorkie.Document | undefined>();
   const [docKey, setDocKey] = useState(problemId);
 
+  let client: Client | null;
   useEffect(() => {
+    const disactivateClient = async () => {
+      if (client) {
+        await client.deactivate();
+      }
+    };
     let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+    // setDocData(doc)
     console.log("[doc]: ", doc);
     setDocKey(problemId);
     console.log("docKey", docKey);
+    // const client = new yorkie.Client("https://api.yorkie.dev", {
+    //   // apiKey: yorkie_key,
+    //   // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
+    //   apiKey: key1 + key2 + key3,
+    // });
+    disactivateClient();
     initYorkie(doc); // 여기에 docKey 값 전달
   }, [problemId]);
 
@@ -79,8 +92,8 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const initYorkie = async (doc: any) => {
     console.log("initYorkie doc", doc);
     // 01. create client with RPCAddr(envoy) then activate it.
-    const client = new yorkie.Client("https://api.yorkie.dev", {
-      // apiKey: yorkie_key,
+
+    client = new yorkie.Client("https://api.yorkie.dev", {
       // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
       apiKey: key1 + key2 + key3,
     });
@@ -149,7 +162,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
             ) => {
               doc.update((root: any) => {
                 root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
-              }, `update content byA ${client.getID()}`);
+              }, `update content byA ${client!.getID()}`);
             }
           );
         }
