@@ -2,9 +2,9 @@ import * as S from "./WaitingPage.styles";
 import { WaitingPageConfig } from "../../constants";
 import { useCompetitionTimer } from "../../hooks";
 import { useAtom } from "jotai";
-import { competitionDataAtom } from "../../store";
+import { competitionDataAtom, problemListAtom } from "../../store";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   useCompetitionDetailMutation,
   useCompetitionProblemIdsMutation,
@@ -15,7 +15,7 @@ export const WaitingPage = () => {
   const { id: competitionId } = useParams<{ id: string }>();
   const { title, subTitle, content } = WaitingPageConfig;
   const [competition, setCompetition] = useAtom(competitionDataAtom);
-  const [problemList, setProblemList] = useState<number[]>([]);
+  const [problemList, setProblemList] = useAtom(problemListAtom);
 
   const { data, mutate, status } = useCompetitionDetailMutation(
     Number(competitionId)
