@@ -4,12 +4,7 @@ import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-interface IProblemsData {
-  name: string;
-  description: string;
-  code: string;
-}
+import { IProblemsData } from "./AlgorithmProblem.types";
 
 export const AlgorithmProblem = () => {
   const { id: competitionId } = useParams<{ id: string }>();
@@ -35,8 +30,6 @@ export const AlgorithmProblem = () => {
       setProblemsData(problems);
     }
   }, [data]);
-
-  console.log("problemsData", problemsData);
 
   if (status === "pending") {
     return <span>Loading...</span>;
