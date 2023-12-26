@@ -135,14 +135,14 @@ export const useHandleInviteMutation = () => {
           (team) => team.teamId == data.result.teamId
         )[0];
         setCurTeam((prev) => [...prev, accetedTeam]);
-        setWaitTeam((prev) =>
-          prev.filter((team) => team.teamId == data.result.teamId)
-        );
+        // setWaitTeam((prev) =>
+        //   prev.filter((team) => team.teamId == data.result.teamId)
+        // );
       } else {
         console.log("거절");
-        setWaitTeam((prev) =>
-          prev.filter((team) => team.teamId == data.result.teamId)
-        );
+        // setWaitTeam((prev) =>
+        //   prev.filter((team) => team.teamId == data.result.teamId)
+        // );
       }
     },
   });
