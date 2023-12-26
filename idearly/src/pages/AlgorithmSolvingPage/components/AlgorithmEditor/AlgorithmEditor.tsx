@@ -10,7 +10,6 @@ import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
-import { useNavigate } from "react-router-dom";
 
 interface Prop {
   competitionId: string | undefined;
