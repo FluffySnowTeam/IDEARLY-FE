@@ -5,6 +5,7 @@
 // const allPosts = new Map<number, IPost>();
 
 // export interface IPost {
+
 //   id: number,
 //   content: string,
 // }
