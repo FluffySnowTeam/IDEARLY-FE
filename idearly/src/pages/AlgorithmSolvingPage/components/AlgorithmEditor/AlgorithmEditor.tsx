@@ -10,6 +10,7 @@ import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
+import { useNavigate } from "react-router-dom";
 
 interface Prop {
   competitionId: string | undefined;
@@ -54,7 +55,10 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   useEffect(() => {
     const disactivateClient = async () => {
       if (client) {
+        console.log("이전에 client 존재했음. 지워보겠다");
         await client.deactivate();
+      } else {
+        console.log("client 처음 생성");
       }
     };
     let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
@@ -62,13 +66,16 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     console.log("[doc]: ", doc);
     setDocKey(problemId);
     console.log("docKey", docKey);
-    // const client = new yorkie.Client("https://api.yorkie.dev", {
-    //   // apiKey: yorkie_key,
-    //   // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
-    //   apiKey: key1 + key2 + key3,
-    // });
     disactivateClient();
+
+    if (viewRef.current) {
+      // EditorView를 소멸시킴
+      viewRef.current.destroy();
+      // 사용 중인 리소스를 해제
+      viewRef.current = undefined;
+    }
     initYorkie(doc); // 여기에 docKey 값 전달
+    // view도 새로 삭제하고 생성
   }, [problemId]);
 
   console.log("doc key: ", docKey);
@@ -97,12 +104,15 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
       // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
       apiKey: key1 + key2 + key3,
     });
+    console.log("Client 출력11111: ", client);
     await client.activate();
+    console.log("Client 출력22222: ", client);
 
     // 02-1. create a document then attach it into the client.
 
     // teamId로 구성! -> teamId는 어떻게 넘어오지?
     await client.attach(doc);
+    console.log("Client 출력33333: ", client);
 
     doc.update((root: any) => {
       if (!root.content) {
@@ -133,13 +143,16 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     });
 
     doc.subscribe("$.content", (event: any) => {
+      console.log("event: ", event);
       if (event.type === "remote-change") {
         const { operations } = event.value;
         handleOperations(operations);
       }
     });
+    console.log("doc 출력: ", doc);
 
     await client.sync();
+    console.log("Client 출력44444: ", client);
 
     // 03-1. define function that bind the document with the codemirror(broadcast local changes to peers)
     const updateListener = EditorView.updateListener.of((viewUpdate: any) => {
@@ -232,9 +245,15 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     setResultState("none");
   };
 
+  const navigate = useNavigate();
   return (
     <>
       <S.CodeMirrorContainer ref={editorParentRef} />
+      <button
+        onClick={() => navigate("../algorithm-solving/13?teamId=3&problemId=2")}
+      >
+        버튼
+      </button>
       {resultState === "none" ? (
         <S.AlgorithmResultContainer></S.AlgorithmResultContainer>
       ) : resultState === "test" ? (
