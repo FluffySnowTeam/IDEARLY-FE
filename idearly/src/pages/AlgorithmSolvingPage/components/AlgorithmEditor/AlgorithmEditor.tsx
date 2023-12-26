@@ -18,6 +18,27 @@ interface Prop {
 }
 
 export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * 확인용 콘솔 삭제 예정
+   */
+  console.log(
+    "In algorithmEditor, teamId: ",
+    teamId,
+    ", problemId:",
+    problemId
+  );
+  console.log(
+    "환경변수 VITE_APP_YORKIE_API_KEY:",
+    import.meta.env.VITE_APP_YORKIE_API_KEY
+  );
+  console.log("환경변수 VITE_APP_KAKAO_ID:", import.meta.env.VITE_APP_KAKAO_ID);
+  console.log(
+    "환경변수 VITE_APP_KAKAO_SECRET_KEY:",
+    import.meta.env.VITE_APP_KAKAO_SECRET_KEY
+  );
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
