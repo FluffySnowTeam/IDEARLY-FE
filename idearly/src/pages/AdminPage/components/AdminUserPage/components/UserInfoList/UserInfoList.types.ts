@@ -1,11 +1,5 @@
-export interface IUserInfo {
-  id: string;
-  name: string;
-  email: string;
-  competition: string[];
-  team: string[];
-}
+import type { IUserListResponse } from "../../../../../../types/admin.types";
 
 export interface IUserInfoList {
-  userInfo: IUserInfo;
+  userInfo: IUserListResponse;
 }
