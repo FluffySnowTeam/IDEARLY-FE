@@ -1,19 +1,21 @@
 import * as S from "./AlgorithmNav.styles";
 import { fakeProblem } from "../../../../mocks/problem.mocks";
 import type { Prop } from "./AlgorithmNav.types";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
 import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
+import { useAtomValue } from "jotai";
+import { problemListAtom } from "../../../../store";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
-  const navigate = useNavigate();
-  const path = useLocation();
+  const problemIds = useAtomValue(problemListAtom);
+  console.log(problemIds);
   const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
 
-  const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
-    fakeProblem[0].id
+  const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
+    problemIds[0]
   );
   const selectedStyle = {
     backgroundColor: "#01228a",
@@ -24,27 +26,28 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     color: "#01228a",
   };
 
-  window.onload = () => {
-    navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
-  };
+  const handleProblems = (id: number) => {
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
-  const handleProblems = (id: string) => {
-    navigate(`${path.pathname}?id=${id}`);
+    const newUrl = `${location.pathname}?${searchParams.toString()}`;
+    console.log(id);
+    console.log(newUrl);
+    navigate(newUrl);
     setSelectedProblemId(id);
   };
   return (
     <S.AlgorithmNavContainer>
       <AlgorithmExitModal isOpen={isOpen} onClose={onClose} />
       <div>
-        {fakeProblem.map((problem, index) => (
+        {problemIds.map((id, index) => (
           <S.ProblemNumber
-            key={problem.id}
+            key={id}
             onClick={() => {
-              handleProblems(problem.id);
+              handleProblems(id);
             }}
-            style={
-              problem.id === selectedProblemId ? selectedStyle : defaultStyle
-            }
+            style={id === selectedProblemId ? selectedStyle : defaultStyle}
           >
             <div>{index + 1}</div>
             {/* 만약 해당 문제가 제출되었다면 체크 표시 */}

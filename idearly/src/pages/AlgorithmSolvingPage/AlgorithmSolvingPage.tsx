@@ -10,15 +10,11 @@ import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useAtomValue } from "jotai";
-import { problemListAtom } from "../../store";
 // import { useExcuteTestMutation } from "../../hooks/useALgorithmMutation";
 
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [language, setLanguage] = useState("python");
-  const problemIds = useAtomValue(problemListAtom);
-  console.log(problemIds);
 
   useEffect(() => {}, [language]);
   // const { mutate } = useExcuteTestMutation();
