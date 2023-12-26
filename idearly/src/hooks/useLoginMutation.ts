@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { IUserRequest } from "../types";
 import { loginUser } from "../services/apis/user.apis";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import { useSetAtom } from "jotai";
 import { userInfoAtom } from "../store";
