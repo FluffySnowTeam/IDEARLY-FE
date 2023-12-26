@@ -9,7 +9,7 @@ export const useLogoutMutation = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const setUserInfoState = useSetAtom(userInfoAtom);
-  
+
   return useMutation({
     mutationFn: () => logoutUser(),
     onError: (error) => {
@@ -17,11 +17,11 @@ export const useLogoutMutation = () => {
     },
     onSuccess: (data) => {
       console.log(data);
-      // setIsLoginState(false);
       setUserInfoState({
-        memberId: '',
-        email: '',
-        name: '',
+        authority: "",
+        memberId: "",
+        email: "",
+        name: "",
         isLogin: false,
       });
       toast({
