@@ -56,6 +56,7 @@ export const chatDate = ({ date }: { date: string }) => {
     return "유효하지 않은 날짜";
   }
   const dateObj = new Date(date);
+  dateObj.setHours(dateObj.getHours() + 9);
   return `${getHour(dateObj)}:${getMinutes(dateObj)}`;
 };
 

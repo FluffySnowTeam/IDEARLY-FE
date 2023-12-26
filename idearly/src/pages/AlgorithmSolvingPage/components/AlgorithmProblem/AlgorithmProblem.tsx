@@ -25,10 +25,12 @@ export const AlgorithmProblem = () => {
   useEffect(() => {
     if (data) {
       const problems = data.data.result;
-      console.log(problems);
+      console.log("data", data);
       setProblemsData(problems);
     }
   }, [data]);
+
+  console.log(problemsData);
 
   if (status === "pending") {
     return <span>Loading...</span>;

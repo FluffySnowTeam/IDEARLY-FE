@@ -18,7 +18,7 @@ export const executeTest = async (
     `/api/competitions/${competitionId}/problems/${problemId}/test`,
     {
       code,
-      language: "python",
+      language: "PYTHON",
     }
   );
   return response.data;
@@ -33,7 +33,7 @@ export const submitCode = async (
     `/api/competitions/${competitionId}/problems/${problemId}`,
     {
       code,
-      language: "python",
+      language: "PYTHON",
     }
   );
   return response.data;
