@@ -1,18 +1,20 @@
 import { useSearchParams } from "react-router-dom";
-import { AlgorithmPageConfig } from "../../../../constants";
+// import { AlgorithmPageConfig } from "../../../../constants";
 import * as S from "./AlgorithmProblem.styles";
-import { fakeProblem } from "../../../../mocks/problem.mocks";
-import { AlgorithmSection } from "./components";
+// import { fakeProblem } from "../../../../mocks/problem.mocks";
+// import { AlgorithmSection } from "./components";
 
 export const AlgorithmProblem = () => {
-  const { problem, limitations, inputOutput } = AlgorithmPageConfig;
+  // const { problem, limitations, inputOutput } = AlgorithmPageConfig;
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
-  const selectedProblem = fakeProblem.find((pro) => pro.id === id);
+  const problemId = searchParams.get("problemId");
+  console.log(problemId);
+  // const selectedProblem = fakeProblem.find((pro) => pro.id === id);
 
   return (
     <S.AlgorithmContainer>
-      <AlgorithmSection
+      <div>{problemId}</div>
+      {/* <AlgorithmSection
         title={problem}
         content={selectedProblem?.problem || "문제 내용이 없습니다."}
       />
@@ -23,7 +25,7 @@ export const AlgorithmProblem = () => {
       <AlgorithmSection
         title={inputOutput}
         content={selectedProblem?.inputOutput || "입출력 정보가 없습니다."}
-      />
+      /> */}
     </S.AlgorithmContainer>
   );
 };
