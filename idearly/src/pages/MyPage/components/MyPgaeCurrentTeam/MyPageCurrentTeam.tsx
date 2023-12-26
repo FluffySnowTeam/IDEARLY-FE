@@ -1,15 +1,25 @@
 import { Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
-import { CurrentTeamList, TeamDetailModal, TeamModifyModal, WaitingTeamList } from "./components";
+import {
+  CurrentTeamList,
+  TeamDetailModal,
+  TeamModifyModal,
+  WaitingTeamList,
+} from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
 import type { ITeamMember } from "./MyPageCurrentTeam.types";
 import { useEffect, useState } from "react";
-import { useGetCurrentTeamQuery, useGetWaitTeamQuery, useTeamInfoQuery } from "../../../../hooks/useMyPageMutation";
+import {
+  useGetCurrentTeamQuery,
+  useGetWaitTeamQuery,
+  useTeamInfoQuery,
+} from "../../../../hooks/useMyPageMutation";
 import { useAtom, useAtomValue } from "jotai";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../../../../store";
 
 export const MyPageCurrentTeam = () => {
-  const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
+  const { competitionName, teamName, leaderName, date, manage, choose } =
+    MyPageCurrentTeamConfig;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const userInfo = useAtomValue(userInfoAtom);
@@ -20,55 +30,93 @@ export const MyPageCurrentTeam = () => {
   const [isClick, setIsClick] = useState(false);
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
 
-  const {data: curTeamData} = useGetCurrentTeamQuery();
-  const {data: waitTeamData} = useGetWaitTeamQuery();
-  const { memberData, error, isLoading } = useTeamInfoQuery(isClick, teamId);
+  const {
+    data: curTeamData,
+    status: curTeamStatus,
+    error: curTeamError,
+  } = useGetCurrentTeamQuery();
+  const {
+    data: waitTeamData,
+    status: waitTeamStatus,
+    error: waitTeamError,
+  } = useGetWaitTeamQuery();
+  const {
+    data: teamInfoData,
+    error: teamInfoError,
+    isLoading,
+  } = useTeamInfoQuery(isClick, teamId);
 
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
-    if(curTeamData) {
+    if (curTeamStatus === "success" && curTeamData) {
       setCurTeam(curTeamData.data.teams);
     }
-  }, [curTeamData])
+  }, [curTeamData, curTeamStatus]);
 
   useEffect(() => {
-    if(waitTeamData) {
+    if (waitTeamStatus === "success" && waitTeamData) {
       setWaitTeam(waitTeamData.data.teams);
     }
-  }, [waitTeamData])
+  }, [waitTeamData, waitTeamStatus]);
 
   useEffect(() => {
-    if(memberData) {
-      setTeamMembers(memberData.data.teammates);
-      setCurrentMemberList(memberData.data.teammates.filter((member:any) => member.inviteStatus === "accept"));
-      setInviteMemberList(memberData.data.teammates.filter((member: any) => member.inviteStatus === "invite"));
+    if (teamInfoData) {
+      setTeamMembers(teamInfoData.data.teammates);
+      setCurrentMemberList(
+        teamInfoData.data.teammates.filter(
+          (member: any) => member.inviteStatus === "accept"
+        )
+      );
+      setInviteMemberList(
+        teamInfoData.data.teammates.filter(
+          (member: any) => member.inviteStatus === "invite"
+        )
+      );
     }
-  }, [memberData])
+  }, [teamInfoData]);
 
-  const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "accept"))
-  const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(teamMembers.filter((member:any) => member.inviteStatus === "invite"));
+  const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(
+    teamMembers.filter((member: any) => member.inviteStatus === "accept")
+  );
+  const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(
+    teamMembers.filter((member: any) => member.inviteStatus === "invite")
+  );
 
   const onClickTeamDetail = (teamId: number) => {
     setTeamId(teamId);
     setIsClick(true);
     onOpen();
-  }
+  };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (curTeamStatus === "pending" || waitTeamStatus === "pending" || isLoading)
+    return <p>Loading...</p>;
+  if (curTeamError || waitTeamError || teamInfoError) return <p>Error</p>;
 
   return (
     <S.SearchTeamWrapper>
-      {
-        memberData?.data.leaderEmail === userInfo.email
-        ? <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} setCurrentMemberList={setCurrentMemberList} inviteMemberList={inviteMemberList} setInviteMemberList={setInviteMemberList} teamId={teamId} />
-        : <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList}  />
-      }
-      
+      {teamInfoData?.data.leaderEmail === userInfo.email ? (
+        <TeamModifyModal
+          isOpen={isOpen}
+          onClose={onClose}
+          currentMemberList={currentMemberList}
+          setCurrentMemberList={setCurrentMemberList}
+          inviteMemberList={inviteMemberList}
+          setInviteMemberList={setInviteMemberList}
+          teamId={teamId}
+        />
+      ) : (
+        <TeamDetailModal
+          isOpen={isOpen}
+          onClose={onClose}
+          currentMemberList={currentMemberList}
+          inviteMemberList={inviteMemberList}
+        />
+      )}
+
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <Thead>
             <Tr>
               <Th>{competitionName}</Th>
@@ -79,21 +127,23 @@ export const MyPageCurrentTeam = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              curTeam.map((competition) => (
-                <CurrentTeamList key={competition.competitionId} competition={competition} onClickTeamDetail={onClickTeamDetail} />
-              ))
-            }
+            {curTeam.map((competition) => (
+              <CurrentTeamList
+                key={competition.competitionId}
+                competition={competition}
+                onClickTeamDetail={onClickTeamDetail}
+              />
+            ))}
           </Tbody>
         </Table>
       </S.SearchTeamTableContainer>
 
       <S.SearchTeamSubTitle>대기 중인 초대 현황</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <Thead>
             <Tr>
-            <Th>{competitionName}</Th>
+              <Th>{competitionName}</Th>
               <Th>{teamName}</Th>
               <Th>{leaderName}</Th>
               <Th>{date}</Th>
@@ -101,15 +151,15 @@ export const MyPageCurrentTeam = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              waitTeam.map((competition) => (
-                <WaitingTeamList key={competition.competitionId} competition={competition} />
-              ))
-            }
+            {waitTeam.map((competition) => (
+              <WaitingTeamList
+                key={competition.competitionId}
+                competition={competition}
+              />
+            ))}
           </Tbody>
         </Table>
       </S.SearchTeamTableContainer>
-
     </S.SearchTeamWrapper>
-  )
-}
+  );
+};

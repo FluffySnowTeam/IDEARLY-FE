@@ -3,7 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
 import { useAtom, useSetAtom } from "jotai";
-import { handleInvite, getCWaitTeam, getCurrentTeam, modifyUser, withdrawalUser, getTeamInfo, ModifyTeamMembers } from "../services/apis/mypage.apis";
+import {
+  handleInvite,
+  getCWaitTeam,
+  getCurrentTeam,
+  modifyUser,
+  withdrawalUser,
+  getTeamInfo,
+  ModifyTeamMembers,
+} from "../services/apis/mypage.apis";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../store";
 import { IReqTeamMember } from "../types";
 
@@ -88,34 +96,26 @@ export const useModifyUerMutation = () => {
 };
 
 export const useGetCurrentTeamQuery = () => {
-  const {
-    data,
-    status,
-    error,
-  } = useQuery({
+  const { data, status, error } = useQuery({
     queryKey: ["curTeam"],
     queryFn: getCurrentTeam,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 1000,
   });
   return { data, status, error };
 };
 
 export const useGetWaitTeamQuery = () => {
-  const {
-    data,
-    status,
-    error,
-  } = useQuery({
+  const { data, status, error } = useQuery({
     queryKey: ["waitTeam"],
     queryFn: getCWaitTeam,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 5 * 1000,
   });
   return { data, status, error };
 };
 
 interface IHandleInvite {
-  teamId: number,
-  isAccept: boolean,
+  teamId: number;
+  isAccept: boolean;
 }
 
 export const useHandleInviteMutation = () => {
@@ -123,47 +123,50 @@ export const useHandleInviteMutation = () => {
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   return useMutation({
-    mutationFn: ({teamId, isAccept}: IHandleInvite) => handleInvite(teamId, isAccept),
+    mutationFn: ({ teamId, isAccept }: IHandleInvite) =>
+      handleInvite(teamId, isAccept),
     onError: (error) => {
       console.error(error);
     },
     onSuccess: (data) => {
       if (data.data.accept) {
-        console.log('수락');
-        const accetedTeam = waitTeam.filter((team) => team.teamId == data.data.teamId)[0];
-        setCurTeam((prev) => [...prev, accetedTeam])
-        setWaitTeam((prev) => prev.filter((team) => team.teamId == data.data.teamId));
+        console.log("수락");
+        const accetedTeam = waitTeam.filter(
+          (team) => team.teamId == data.data.teamId
+        )[0];
+        setCurTeam((prev) => [...prev, accetedTeam]);
+        setWaitTeam((prev) =>
+          prev.filter((team) => team.teamId == data.data.teamId)
+        );
       } else {
-        console.log('거절');
-        setWaitTeam((prev) => prev.filter((team) => team.teamId == data.data.teamId));
+        console.log("거절");
+        setWaitTeam((prev) =>
+          prev.filter((team) => team.teamId == data.data.teamId)
+        );
       }
     },
   });
 };
 
 export const useTeamInfoQuery = (isClick: boolean, teamId: number) => {
-  const {
-    data: memberData,
-    error,
-    isLoading,
-  } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ["teamInfo", teamId],
-    queryFn:() => getTeamInfo(teamId),
+    queryFn: () => getTeamInfo(teamId),
     enabled: isClick,
     staleTime: 2 * 60 * 1000,
   });
-  return { memberData, error, isLoading };
-}
+  return { data, error, isLoading };
+};
 interface ITeamMember {
   teamId: number;
-  payload: IReqTeamMember[]
-
+  payload: IReqTeamMember[];
 }
 export const useModifyTeamMembersMutation = () => {
   const toast = useToast();
 
   return useMutation({
-    mutationFn: ({teamId, payload}: ITeamMember) => ModifyTeamMembers(teamId, payload),
+    mutationFn: ({ teamId, payload }: ITeamMember) =>
+      ModifyTeamMembers(teamId, payload),
     onError: (error) => {
       console.error(error);
       toast({
