@@ -104,7 +104,7 @@ export const AddTestCaseModal = ({
                 isSelected={problem.id === Number(problemId)}
               >
                 <div>
-                  {problem.name}: {problem.description}
+                  {problem.id}. {problem.name}
                 </div>
               </S.ProblemItem>
             ))}
