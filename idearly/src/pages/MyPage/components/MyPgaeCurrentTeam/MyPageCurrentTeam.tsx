@@ -65,22 +65,22 @@ export const MyPageCurrentTeam = () => {
       console.log("teamMembers: ", teamMembers);
       setCurrentMemberList(
         teamInfoData.result.teammates.filter(
-          (member: any) => member.inviteStatus === "invite"
+          (member: any) => member.inviteStatus === "accept"
         )
       );
       setInviteMemberList(
         teamInfoData.result.teammates.filter(
-          (member: any) => member.inviteStatus === "accept"
+          (member: any) => member.inviteStatus === "invite"
         )
       );
     }
   }, [teamInfoData]);
 
   const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(
-    teamMembers.filter((member: any) => member.inviteStatus === "invite")
+    teamMembers.filter((member: any) => member.inviteStatus === "accept")
   );
   const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(
-    teamMembers.filter((member: any) => member.inviteStatus === "accept")
+    teamMembers.filter((member: any) => member.inviteStatus === "invite")
   );
 
   console.log(

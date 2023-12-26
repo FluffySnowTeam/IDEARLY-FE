@@ -14,13 +14,14 @@ import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 interface Prop {
   competitionId: string | undefined;
   problemId: string | null;
+  teamId: number;
 }
 
-export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
+export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  const doc = new yorkie.Document<YorkieDoc>("teamId");
+  const doc = new yorkie.Document<YorkieDoc>(`${teamId}_${problemId}`);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
