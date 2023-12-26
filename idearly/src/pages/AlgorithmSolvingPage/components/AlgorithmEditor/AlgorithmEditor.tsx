@@ -23,11 +23,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   /**
    * 확인용 콘솔 삭제 예정
    */
-  // clskuqbj2k70uv115dv0
-  const key1 = "clskuqb";
-  const key2 = "j2k70uv";
-  const key3 = "115dv0";
-  console.log("yorkie key: ", key1 + key2 + key3);
   console.log(
     "In algorithmEditor, teamId: ",
     teamId,
@@ -45,74 +40,54 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   );
   /////////////////////////////////////////////////////////////////////////////////////////////
 
+  let client: Client | null;
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
   const docRef = useRef<typeof yorkie.Document | undefined>();
-  const [docKey, setDocKey] = useState(problemId);
 
-  let client: Client | null;
-  useEffect(() => {
-    const disactivateClient = async () => {
-      if (client) {
-        console.log("이전에 client 존재했음. 지워보겠다");
-        await client.deactivate();
-      } else {
-        console.log("client 처음 생성");
-      }
-    };
-    let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
-    // setDocData(doc)
-    console.log("[doc]: ", doc);
-    setDocKey(problemId);
-    console.log("docKey", docKey);
-    disactivateClient();
-
-    if (viewRef.current) {
-      // EditorView를 소멸시킴
-      viewRef.current.destroy();
-      // 사용 중인 리소스를 해제
-      viewRef.current = undefined;
-    }
-    initYorkie(doc); // 여기에 docKey 값 전달
-    // view도 새로 삭제하고 생성
-  }, [problemId]);
-
-  console.log("doc key: ", docKey);
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
 
-  //2
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
     executeMutate({ competitionId, problemId, code });
     setResultState("test");
   };
 
-  //3
   const handleSubmit = () => {
     const code = viewRef.current?.state.doc.toString();
     runMutate({ competitionId, problemId, code });
     setResultState("submit");
   };
 
-  const initYorkie = async (doc: any) => {
-    console.log("initYorkie doc", doc);
-    // 01. create client with RPCAddr(envoy) then activate it.
+  useEffect(() => {
+    const disactivateClient = async () => {
+      if (client) {
+        await client.deactivate();
+      }
+    };
 
+    if (viewRef.current) {
+      viewRef.current.destroy();
+      viewRef.current = undefined;
+    }
+
+    let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+
+    disactivateClient();
+    initYorkie(doc);
+  }, [problemId]);
+
+  const initYorkie = async (doc: any) => {
+    // 01. create client with RPCAddr(envoy) then activate it.
     client = new yorkie.Client("https://api.yorkie.dev", {
-      // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
-      apiKey: key1 + key2 + key3,
+      apiKey: import.meta.env.VITE_APP_YORKIE_API_KEY,
     });
-    console.log("Client 출력11111: ", client);
     await client.activate();
-    console.log("Client 출력22222: ", client);
 
     // 02-1. create a document then attach it into the client.
-
-    // teamId로 구성! -> teamId는 어떻게 넘어오지?
     await client.attach(doc);
-    console.log("Client 출력33333: ", client);
 
     doc.update((root: any) => {
       if (!root.content) {
@@ -143,16 +118,12 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     });
 
     doc.subscribe("$.content", (event: any) => {
-      console.log("event: ", event);
       if (event.type === "remote-change") {
         const { operations } = event.value;
         handleOperations(operations);
       }
     });
-    console.log("doc 출력: ", doc);
-
     await client.sync();
-    console.log("Client 출력44444: ", client);
 
     // 03-1. define function that bind the document with the codemirror(broadcast local changes to peers)
     const updateListener = EditorView.updateListener.of((viewUpdate: any) => {
@@ -219,13 +190,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     syncText();
   };
 
-  // // code editor 관련
-  // useEffect(() => {
-  //   // @ts-ignore
-  //   initYorkie(doc);
-  // }, []);
-
-  //1
   const handleInitButton = async () => {
     // @ts-ignore
     doc.update((root: any) => {
@@ -249,11 +213,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   return (
     <>
       <S.CodeMirrorContainer ref={editorParentRef} />
-      <button
-        onClick={() => navigate("../algorithm-solving/13?teamId=3&problemId=2")}
-      >
-        버튼
-      </button>
       {resultState === "none" ? (
         <S.AlgorithmResultContainer></S.AlgorithmResultContainer>
       ) : resultState === "test" ? (
