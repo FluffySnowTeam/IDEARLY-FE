@@ -24,8 +24,8 @@ export const AlgorithmProblem = () => {
 
   useEffect(() => {
     if (data) {
-      const problems = data.data.result;
-      console.log("data", data);
+      const problems = data.data;
+      console.log("data", data.data);
       setProblemsData(problems);
     }
   }, [data]);

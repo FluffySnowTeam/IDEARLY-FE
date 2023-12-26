@@ -22,6 +22,11 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   /**
    * 확인용 콘솔 삭제 예정
    */
+  // clskuqbj2k70uv115dv0
+  const key1 = "clskuqb";
+  const key2 = "j2k70uv";
+  const key3 = "115dv0";
+  console.log("yorkie key: ", key1 + key2 + key3);
   console.log(
     "In algorithmEditor, teamId: ",
     teamId,
@@ -63,7 +68,8 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     // 01. create client with RPCAddr(envoy) then activate it.
     const client = new yorkie.Client("https://api.yorkie.dev", {
       // apiKey: yorkie_key,
-      apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
+      // apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
+      apiKey: key1 + key2 + key3,
     });
     await client.activate();
 
