@@ -1,4 +1,4 @@
-import { TableContainer } from "@chakra-ui/react";
+import { Button, TableContainer } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const AdminCompeContainer = styled.div`
@@ -12,6 +12,18 @@ export const AdminCompeTitleBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 1.2rem 0;
+`;
+
+export const AdminCompeAddButton = styled(Button)`
+  margin-right: 4rem;
+  width: 8rem;
+  height: 3.5rem;
+  background-color: #01228a;
+  color: white;
+  :hover {
+    background-color: #01228a;
+    opacity: 0.5;
+  }
 `;
 
 export const AdminCompeTitle = styled.div`
@@ -30,7 +42,7 @@ export const AdminCompeTableContainer = styled.div`
 `;
 
 export const AdminTableContainer = styled(TableContainer)`
-  width: 80%;
+  width: 95%;
   border: 1px solid #e9e9e9;
   border-radius: 1rem;
 `;
