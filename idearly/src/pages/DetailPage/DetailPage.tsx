@@ -3,7 +3,6 @@ import { Button } from "@chakra-ui/react";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
-import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/CompetitionsModal";
 import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
@@ -27,19 +26,12 @@ export const DetailPage = () => {
     }
   }, [data]);
 
-  const { isOpen, onClose, overlay, handleMoveToWaiting } =
-    useHandleMoveToWaiting(competition);
+  const { handleMoveToWaiting } = useHandleMoveToWaiting(competition);
 
   if (status === "pending") return <div>...Loading</div>;
 
   return (
     <>
-      <CompetitionsModal
-        isOpen={isOpen}
-        onClose={onClose}
-        overlay={overlay}
-        startDateTime={competition?.startDateTime}
-      />
       <S.CompetitionDetailContainer>
         <S.CompeDetailTitle>{competition?.title}</S.CompeDetailTitle>
         {competition && (
@@ -53,7 +45,7 @@ export const DetailPage = () => {
             {competition.description}
           </ReactMarkdown>
         </S.CompeDetailDescription>
-        <Button onClick={handleMoveToWaiting}>대회 참여하기</Button>
+        <Button onClick={handleMoveToWaiting}>대회 참가하기</Button>
       </S.CompetitionDetailContainer>
     </>
   );

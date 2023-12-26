@@ -1,5 +1,5 @@
+import { IPayload } from "../../hooks/useAdminCompetitionMutation";
 import type { CompetitionRequest, ICompetitionProblem } from "../../types";
-import type { ITestCaseRequest } from "../../types/admin.types";
 import { axiosInstance } from "./axios";
 
 export const addCompetition = async (payload: CompetitionRequest) => {
@@ -21,10 +21,7 @@ export const addProblem = async (
   return response.data;
 };
 
-export const addTestCase = async (
-  problemId: number,
-  testcase: ITestCaseRequest[]
-) => {
+export const addTestCase = async (problemId: number, testcase: IPayload) => {
   const response = await axiosInstance.post(
     `/api/admin/create-testcase/${problemId}`,
     testcase

@@ -42,8 +42,8 @@ export const AddTeamMembers = ({
       console.log(data.result.exist);
       setIsShowUser(true);
       setUserInfo({
-        name: data.data.data.memberName,
-        email: data.data.data.email,
+        name: data.result.memberName,
+        email: data.result.email,
       });
     } else {
       setIsShowUser(false);

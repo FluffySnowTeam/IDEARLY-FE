@@ -78,17 +78,21 @@ export const useAdminProblemMutation = () => {
   });
 };
 
-interface IuseAdminTestCaseMutation {
+export interface IuseAdminTestCaseMutation {
   problemId: number;
-  testcase: ITestCaseRequest[];
+  payload: IPayload;
 }
+
+export type IPayload = {
+  testcase: ITestCaseRequest[];
+};
 
 export const useAdminTestCaseMutation = () => {
   const toast = useToast();
 
   return useMutation({
-    mutationFn: ({ problemId, testcase }: IuseAdminTestCaseMutation) =>
-      addTestCase(problemId, testcase),
+    mutationFn: ({ problemId, payload }: IuseAdminTestCaseMutation) =>
+      addTestCase(problemId, payload),
     onSuccess: (data) => {
       console.log(data);
       toast({

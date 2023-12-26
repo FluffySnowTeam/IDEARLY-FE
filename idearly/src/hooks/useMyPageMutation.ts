@@ -5,7 +5,7 @@ import { useToast } from "@chakra-ui/react";
 import { useAtom, useSetAtom } from "jotai";
 import {
   handleInvite,
-  getCWaitTeam,
+  getWaitTeam,
   getCurrentTeam,
   modifyUser,
   withdrawalUser,
@@ -76,10 +76,10 @@ export const useModifyUerMutation = () => {
       });
     },
     onSuccess: (data) => {
-      console.log("check: ", data);
-      console.log("check: ", data.data.data.name);
+      console.log("check: ", data.result);
+      console.log("check: ", data.result.name);
 
-      setUserInfoState((prev) => ({ ...prev, name: data.data.data.name }));
+      setUserInfoState((prev) => ({ ...prev, name: data.result.name }));
 
       toast({
         title: "회원 정보 수정 성공",
@@ -107,7 +107,7 @@ export const useGetCurrentTeamQuery = () => {
 export const useGetWaitTeamQuery = () => {
   const { data, status, error } = useQuery({
     queryKey: ["waitTeam"],
-    queryFn: getCWaitTeam,
+    queryFn: getWaitTeam,
     staleTime: 5 * 1000,
   });
   return { data, status, error };
@@ -129,19 +129,19 @@ export const useHandleInviteMutation = () => {
       console.error(error);
     },
     onSuccess: (data) => {
-      if (data.data.accept) {
+      if (data.result.accept) {
         console.log("수락");
         const accetedTeam = waitTeam.filter(
-          (team) => team.teamId == data.data.teamId
+          (team) => team.teamId == data.result.teamId
         )[0];
         setCurTeam((prev) => [...prev, accetedTeam]);
         setWaitTeam((prev) =>
-          prev.filter((team) => team.teamId == data.data.teamId)
+          prev.filter((team) => team.teamId == data.result.teamId)
         );
       } else {
         console.log("거절");
         setWaitTeam((prev) =>
-          prev.filter((team) => team.teamId == data.data.teamId)
+          prev.filter((team) => team.teamId == data.result.teamId)
         );
       }
     },
