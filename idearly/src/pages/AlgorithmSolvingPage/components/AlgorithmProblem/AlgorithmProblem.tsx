@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import * as S from "./AlgorithmProblem.styles";
 import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ interface IProblemsData {
 }
 
 export const AlgorithmProblem = () => {
+  const { id: competitionId } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const problemId = searchParams.get("problemId");
   const [problemsData, setProblemsData] = useState<IProblemsData>();
@@ -18,7 +19,10 @@ export const AlgorithmProblem = () => {
 
   useEffect(() => {
     if (problemId) {
-      mutate(Number(problemId));
+      mutate({
+        competitionId: Number(competitionId),
+        problemId: Number(problemId),
+      });
     }
   }, [problemId]);
 
@@ -30,7 +34,7 @@ export const AlgorithmProblem = () => {
     }
   }, [data]);
 
-  console.log(problemsData);
+  console.log("problemsData", problemsData);
 
   if (status === "pending") {
     return <span>Loading...</span>;

@@ -45,8 +45,14 @@ export const useRunMutation = () => {
   });
 };
 
+interface IuseAlgorithmProblem {
+  competitionId: number;
+  problemId: number;
+}
+
 export const useAlgorithmProblem = () => {
   return useMutation({
-    mutationFn: (problemId: number) => getAlgorithmProblem(problemId),
+    mutationFn: ({ competitionId, problemId }: IuseAlgorithmProblem) =>
+      getAlgorithmProblem(competitionId, problemId),
   });
 };
