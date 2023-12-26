@@ -1,5 +1,4 @@
 import * as S from "./AlgorithmNav.styles";
-import { fakeProblem } from "../../../../mocks/problem.mocks";
 import type { Prop } from "./AlgorithmNav.types";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
