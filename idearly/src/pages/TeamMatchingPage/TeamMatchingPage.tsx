@@ -89,6 +89,7 @@ export const TeamMatchingPage = () => {
               <AddTeamMembers
                 setAddedMembers={setAddedMembers}
                 isErrorCount={isErrorCount}
+                competitionId={competitionId}
               />
             </Box>
           </Stack>
