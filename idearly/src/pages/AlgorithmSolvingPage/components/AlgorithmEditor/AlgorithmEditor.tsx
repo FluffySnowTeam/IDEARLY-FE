@@ -21,7 +21,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  const doc = new yorkie.Document<YorkieDoc>(`${teamId}_${problemId}`);
+  const doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
