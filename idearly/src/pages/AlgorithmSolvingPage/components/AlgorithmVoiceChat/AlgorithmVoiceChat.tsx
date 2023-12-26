@@ -6,9 +6,6 @@ import { useSearchParams } from "react-router-dom";
 export const AlgorithmVoiceChat = () => {
   const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
   const [room, setRoom] = useState<IRoom | null>(null);
-  const [statusText, setStatusText] = useState<string>("Disconnected");
-  const [logs, setLogs] = useState<string[]>(["Ready to connect"]);
-  // const roomId = "icl-voice-call";
   const k1 = "ZY2JWWA";
   const k2 = "3GQTR";
   const s1 = "ZY2JWWA3G";
@@ -17,21 +14,16 @@ export const AlgorithmVoiceChat = () => {
   const [searchParams] = useSearchParams();
   const teamId = searchParams.get("teamId");
 
-  const addLog = (text: string) => {
-    setLogs((prevLogs) => [...prevLogs, text]);
-  };
-
   const connectConference = async () => {
     try {
-      setLogs(["Connecting..."]);
-      setStatusText("Connecting...");
+      console.log("Connecting...");
 
       // Provisioning
       await ConnectLive.signIn({
         serviceId: k1 + k2,
         serviceSecret: s1 + s2 + s3,
       });
-      addLog("User Signed In");
+      console.log("User Signed In");
 
       // Create Local Media
       const newLocalMedia = await ConnectLive.createLocalMedia({
@@ -42,12 +34,12 @@ export const AlgorithmVoiceChat = () => {
         },
       });
       setLocalMedia(newLocalMedia);
-      addLog("Local Media Created");
+      console.log("Local Media Created");
 
       // Create Conference
       const newRoom = ConnectLive.createRoom();
       setRoom(newRoom);
-      addLog("Conference Created");
+      console.log("Conference Created");
 
       // teamId
       if (teamId) {
@@ -58,12 +50,12 @@ export const AlgorithmVoiceChat = () => {
         // 또는 기본값을 사용하거나 다른 처리를 할 수 있습니다.
       }
       await newRoom.publish([newLocalMedia]);
-      addLog("Voice Connected");
+      console.log("Voice Connected");
 
-      setStatusText("Connected");
+      console.log("Connected");
     } catch (error) {
       console.error(error);
-      setStatusText("Failed to Connect");
+      console.log("Failed to Connect");
       alert("Failed to Start Service");
     }
   };
@@ -71,31 +63,31 @@ export const AlgorithmVoiceChat = () => {
   const disconnectConference = async () => {
     if (!room || !localMedia) {
       console.error("No Conference to Stop");
-      setStatusText("No active conference to disconnect");
+      console.log("No active conference to disconnect");
       return;
     }
 
     try {
-      setStatusText("Disconnecting...");
-      addLog("Active Speaker Check Stopped");
+      console.log("Disconnecting...");
+      console.log("Active Speaker Check Stopped");
 
       room.disconnect();
-      addLog("Conference Disconnected");
+      console.log("Conference Disconnected");
 
       localMedia.stop();
       setLocalMedia(null);
-      addLog("Voice Disconnected");
+      console.log("Voice Disconnected");
 
-      addLog("Participants Cleared");
+      console.log("Participants Cleared");
 
       ConnectLive.signOut();
-      addLog("User Signed Out");
+      console.log("User Signed Out");
 
       setRoom(null); // Clear the room state
-      setStatusText("Disconnected");
+      console.log("Disconnected");
     } catch (error) {
       console.error(error);
-      setStatusText("Failed to Disconnect");
+      console.log("Failed to Disconnect");
     }
   };
 
