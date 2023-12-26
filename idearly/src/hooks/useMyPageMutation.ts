@@ -5,7 +5,7 @@ import { useToast } from "@chakra-ui/react";
 import { useAtom, useSetAtom } from "jotai";
 import {
   handleInvite,
-  getCWaitTeam,
+  getWaitTeam,
   getCurrentTeam,
   modifyUser,
   withdrawalUser,
@@ -107,7 +107,7 @@ export const useGetCurrentTeamQuery = () => {
 export const useGetWaitTeamQuery = () => {
   const { data, status, error } = useQuery({
     queryKey: ["waitTeam"],
-    queryFn: getCWaitTeam,
+    queryFn: getWaitTeam,
     staleTime: 5 * 1000,
   });
   return { data, status, error };
