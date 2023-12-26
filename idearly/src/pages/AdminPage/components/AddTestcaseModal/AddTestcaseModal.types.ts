@@ -9,3 +9,9 @@ export type ITestcaseData = {
   answer: string;
   hidden: boolean;
 };
+
+export type IproblemList = {
+  description: string;
+  id: number;
+  name: string;
+};

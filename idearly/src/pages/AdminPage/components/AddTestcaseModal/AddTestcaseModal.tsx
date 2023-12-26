@@ -5,8 +5,8 @@ import { AddTestCase } from "./components";
 import type {
   IAddTestcasemModal,
   ITestcaseData,
+  IproblemList,
 } from "./AddTestcaseModal.types";
-import { testProblemMock } from "../../../../mocks/testcase.mocks";
 import { useSearchParams } from "react-router-dom";
 import {
   useAdminCompetitionProblems,
@@ -22,6 +22,7 @@ export const AddTestCaseModal = ({
   const [testcaseData, setTestcaseData] = useState<ITestcaseData[]>([]);
   const problemId = searchParams.get("problemId");
   const competitionId = searchParams.get("competitionId");
+  const [problemList, setProblemList] = useState<IproblemList[]>();
 
   const handleClose = () => {
     setTestcaseData([]);
@@ -39,10 +40,16 @@ export const AddTestCaseModal = ({
 
   useEffect(() => {
     if (competitionId) {
-      console.log(data);
       problemsMutate(Number(competitionId));
     }
   }, [competitionId]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data?.data.result);
+      setProblemList(data?.data.result);
+    }
+  }, [data]);
 
   const handleSubmit = () => {
     if (testcaseData.length === 0) {
@@ -86,21 +93,21 @@ export const AddTestCaseModal = ({
         <S.TestcaseModalHeader>문제 리스트</S.TestcaseModalHeader>
         <S.TestcaseModalCloseButton onClick={handleClose} />
 
-        {/**
-         * 현재 목데이터 문제리스트 실제 api로 수정해야함
-         */}
         <S.ProblemListBox>
-          {testProblemMock.map((testcase) => (
-            <S.ProblemItem
-              key={testcase.id}
-              onClick={() => {
-                handleProblemId(testcase.id);
-              }}
-              isSelected={testcase.id === Number(problemId)}
-            >
-              <div>{testcase.content}</div>
-            </S.ProblemItem>
-          ))}
+          {problemList &&
+            problemList.map((problem) => (
+              <S.ProblemItem
+                key={problem.id}
+                onClick={() => {
+                  handleProblemId(problem.id);
+                }}
+                isSelected={problem.id === Number(problemId)}
+              >
+                <div>
+                  {problem.name}: {problem.description}
+                </div>
+              </S.ProblemItem>
+            ))}
         </S.ProblemListBox>
         <S.TestcaseModalHeader>테스트 케이스 추가</S.TestcaseModalHeader>
         <AddTestCase
