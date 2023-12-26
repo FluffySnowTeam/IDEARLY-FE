@@ -14,7 +14,6 @@ export const AdminUserPage = () => {
   const startIdx = currentPage * itemsPerPage;
   const endIdx = (currentPage + 1) * itemsPerPage;
 
-  //
   const [userList, setUserList] = useState();
   const { data, status, error } = useAdminUserList();
 
