@@ -2,12 +2,12 @@ import { useState } from "react";
 import ConnectLive from "@connectlive/connectlive-web-sdk";
 import type { IRoom, ILocalMedia } from "@connectlive/connectlive-web-sdk";
 
-const k1 = "DX63";
-const k2 = "6IQUIWZK";
+const k1 = "ZY2JWWA";
+const k2 = "3GQTR";
 
-const s1 = "DX636IQ";
-const s2 = "UIWZK5TIA:ezmzIaUc81b7qrt5";
-const s3 = "mzIaUc81b7qrt5";
+const s1 = "ZY2JWWA3G";
+const s2 = "QTR8S1X:oJBg";
+const s3 = "COsX0G77EGNh";
 
 export const AlgorithmVoiceChat = () => {
   const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
