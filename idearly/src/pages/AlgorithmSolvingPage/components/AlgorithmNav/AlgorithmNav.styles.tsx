@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const AlgorithmNavContainer = styled(Box)`
@@ -28,6 +28,11 @@ export const ProblemNumber = styled.div`
     background-color: #01228a !important;
     color: white !important;
   }
+`;
+
+export const ExitBtn = styled(Button)`
+  font-size: 0.9rem;
+  width: 35px;
 `;
 
 export const NavIcons = styled.div`

@@ -4,10 +4,14 @@ import { fakeProblem } from "../../../../mocks/problem.mocks";
 import type { Prop } from "./AlgorithmNav.types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDisclosure } from "@chakra-ui/react";
+import { AlgorithmExitModal } from "..";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const navigate = useNavigate();
   const path = useLocation();
+  const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
+
   const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
     fakeProblem[0].id
   );
@@ -35,6 +39,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
   };
   return (
     <S.AlgorithmNavContainer>
+      <AlgorithmExitModal isOpen={isOpen} onClose={onClose} />
       <div>
         {fakeProblem.map((problem, index) => (
           <S.ProblemNumber
@@ -55,6 +60,9 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>
+        <S.ExitBtn colorScheme="red" onClick={onOpenExit}>
+          종료
+        </S.ExitBtn>
       </S.NavIcons>
     </S.AlgorithmNavContainer>
   );
