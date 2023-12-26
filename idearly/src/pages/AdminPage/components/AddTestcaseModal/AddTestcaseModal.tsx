@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import * as S from "./AddTestcaseModal.styles";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { AddTestCase } from "./components";
 import type {
   IAddTestcasemModal,
@@ -8,7 +8,10 @@ import type {
 } from "./AddTestcaseModal.types";
 import { testProblemMock } from "../../../../mocks/testcase.mocks";
 import { useSearchParams } from "react-router-dom";
-import { useAdminTestCaseMutation } from "../../../../hooks/useAdminCompetitionMutation";
+import {
+  useAdminCompetitionProblems,
+  useAdminTestCaseMutation,
+} from "../../../../hooks/useAdminCompetitionMutation";
 
 export const AddTestCaseModal = ({
   isOpen,
@@ -18,6 +21,7 @@ export const AddTestCaseModal = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const [testcaseData, setTestcaseData] = useState<ITestcaseData[]>([]);
   const problemId = searchParams.get("problemId");
+  const competitionId = searchParams.get("competitionId");
 
   const handleClose = () => {
     setTestcaseData([]);
@@ -27,6 +31,18 @@ export const AddTestCaseModal = ({
   };
 
   const { mutate } = useAdminTestCaseMutation();
+  const {
+    data,
+    mutate: problemsMutate,
+    status,
+  } = useAdminCompetitionProblems();
+
+  useEffect(() => {
+    if (competitionId) {
+      console.log(data);
+      problemsMutate(Number(competitionId));
+    }
+  }, [competitionId]);
 
   const handleSubmit = () => {
     if (testcaseData.length === 0) {
@@ -60,6 +76,8 @@ export const AddTestCaseModal = ({
     searchParams.set("problemId", String(id));
     setSearchParams(searchParams);
   };
+
+  if (status === "pending") return <div>...Loading</div>;
 
   return (
     <S.TestcaseModalContainer isOpen={isOpen} onClose={onClose}>

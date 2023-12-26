@@ -4,6 +4,7 @@ import {
   addProblem,
   addTestCase,
   getCompetitionData,
+  getCompetitionProblems,
   getUserList,
 } from "../services/apis/admin.apis";
 import type { CompetitionRequest, ICompetitionProblem } from "../types";
@@ -125,4 +126,17 @@ export const useAdminCompetitionList = () => {
     queryFn: getCompetitionData,
   });
   return { data, status, error };
+};
+
+export const useAdminCompetitionProblems = () => {
+  return useMutation({
+    mutationFn: (competitionId: number) =>
+      getCompetitionProblems(competitionId),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.error("error", error);
+    },
+  });
 };
