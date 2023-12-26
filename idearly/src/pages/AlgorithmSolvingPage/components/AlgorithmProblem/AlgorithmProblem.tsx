@@ -28,8 +28,8 @@ export const AlgorithmProblem = () => {
 
   useEffect(() => {
     if (data) {
-      const problems = data.data.result;
-      console.log("data", data.data.result);
+      const problems = data.data.result.result;
+      console.log("data", data.data.result.result);
       setProblemsData(problems);
     }
   }, [data]);
