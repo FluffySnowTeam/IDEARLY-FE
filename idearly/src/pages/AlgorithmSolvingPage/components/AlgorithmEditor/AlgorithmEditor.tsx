@@ -76,7 +76,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
       }
 
       if (problemData) {
-        root.content.edit(0, root.content.length, problemData);
+        root.content.edit(0, root.content.length, problemData.code);
       }
     }, "create content if not exists");
 
