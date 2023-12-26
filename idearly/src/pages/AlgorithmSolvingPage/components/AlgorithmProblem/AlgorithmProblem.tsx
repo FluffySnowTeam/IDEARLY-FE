@@ -14,6 +14,9 @@ export const AlgorithmProblem = () => {
   return (
     <S.AlgorithmContainer>
       <div>{problemId}</div>
+      {/**
+       * 여기 마크다운으로 problem 내용 보여주기
+       */}
       {/* <AlgorithmSection
         title={problem}
         content={selectedProblem?.problem || "문제 내용이 없습니다."}

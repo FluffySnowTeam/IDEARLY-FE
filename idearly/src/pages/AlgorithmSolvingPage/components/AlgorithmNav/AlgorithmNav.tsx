@@ -12,6 +12,9 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
   const problemIds = useAtomValue(problemListAtom);
   console.log(problemIds);
   const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
     problemIds[0]
@@ -26,10 +29,6 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
   };
 
   const handleProblems = (id: number) => {
-    const location = useLocation();
-    const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-
     const newUrl = `${location.pathname}?${searchParams.toString()}`;
     console.log(id);
     console.log(newUrl);
