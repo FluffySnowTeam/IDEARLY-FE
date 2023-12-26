@@ -4,15 +4,16 @@ import { useToast } from "@chakra-ui/react";
 import { searchMember, teamCreate } from "../services/apis/teamMatching.apis";
 
 interface IProp {
-  competitionId: string, 
-  payload: any
+  competitionId: string;
+  payload: any;
 }
 export const useTeamMatchingMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
   return useMutation({
-    mutationFn: ({competitionId, payload}: IProp) => teamCreate(competitionId, payload),
+    mutationFn: ({ competitionId, payload }: IProp) =>
+      teamCreate(competitionId, payload),
 
     onError: (error) => {
       console.error(error);
@@ -42,21 +43,18 @@ export const useTeamMatchingMutation = () => {
 };
 
 interface IProp2 {
-  competitionId: string, 
-  email: string,
+  competitionId: string;
+  email: string;
 }
 
-export const useSearchMemberQuery = ({competitionId, email}: IProp2) => {
-  const {
-    data,
-    status,
-    error,
-  } = useQuery({
+export const useSearchMemberQuery = ({ competitionId, email }: IProp2) => {
+  const { data, status, error } = useQuery({
     queryKey: ["searchMember", competitionId, email],
     queryFn: () => searchMember(competitionId, email),
+    // enabled: false,
     staleTime: 2 * 60 * 1000,
-  })
-  
+  });
+
   // return result.data?.data.data;
   return { data, status, error };
 };
