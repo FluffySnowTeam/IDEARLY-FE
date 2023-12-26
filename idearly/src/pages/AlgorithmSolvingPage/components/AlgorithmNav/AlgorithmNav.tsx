@@ -1,6 +1,6 @@
 import * as S from "./AlgorithmNav.styles";
 import type { Prop } from "./AlgorithmNav.types";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
@@ -10,10 +10,10 @@ import { problemListAtom } from "../../../../store";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const problemIds = useAtomValue(problemListAtom);
-  console.log(problemIds);
-  const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
-  const location = useLocation();
   const [searchParams] = useSearchParams();
+  const teamId = searchParams.get("teamId");
+  const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
+  const { id: competitionId } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
@@ -29,11 +29,12 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
   };
 
   const handleProblems = (id: number) => {
-    const newUrl = `${location.pathname}?${searchParams.toString()}`;
-    console.log(id);
-    console.log(newUrl);
-    navigate(newUrl);
-    setSelectedProblemId(id);
+    if (problemIds) {
+      navigate(
+        `/algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${id}`
+      );
+      setSelectedProblemId(id);
+    }
   };
   return (
     <S.AlgorithmNavContainer>
