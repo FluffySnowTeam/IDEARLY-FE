@@ -64,16 +64,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     setResultState("submit");
   };
 
-  useEffect(() => {
-    doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
-    console.log(
-      "problemId 변경: ",
-      problemId,
-      "key: ",
-      `${teamId}___${problemId}`
-    );
-  }, [problemId]);
-
   const initYorkie = async () => {
     // 01. create client with RPCAddr(envoy) then activate it.
     const client = new yorkie.Client("https://api.yorkie.dev", {

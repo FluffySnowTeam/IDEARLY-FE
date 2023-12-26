@@ -55,6 +55,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         `/algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${id}`
       );
       setSelectedProblemId(id);
+      window.location.reload();
     }
   };
 
