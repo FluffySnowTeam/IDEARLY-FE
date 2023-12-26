@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 
-import { useAtom, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   handleInvite,
   getWaitTeam,
@@ -120,8 +120,7 @@ interface IHandleInvite {
 
 export const useHandleInviteMutation = () => {
   const setCurTeam = useSetAtom(curTeamAtom);
-  const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
-
+  const waitTeam = useAtomValue(waitTeamAtom);
   return useMutation({
     mutationFn: ({ teamId, isAccept }: IHandleInvite) =>
       handleInvite(teamId, isAccept),
@@ -135,14 +134,8 @@ export const useHandleInviteMutation = () => {
           (team) => team.teamId == data.result.teamId
         )[0];
         setCurTeam((prev) => [...prev, accetedTeam]);
-        // setWaitTeam((prev) =>
-        //   prev.filter((team) => team.teamId == data.result.teamId)
-        // );
       } else {
         console.log("거절");
-        // setWaitTeam((prev) =>
-        //   prev.filter((team) => team.teamId == data.result.teamId)
-        // );
       }
     },
   });
