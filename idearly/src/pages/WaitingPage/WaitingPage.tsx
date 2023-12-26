@@ -43,7 +43,8 @@ export const WaitingPage = () => {
 
   useEffect(() => {
     if (problemIds) {
-      setProblemList(problemIds);
+      setProblemList(problemIds.result.problemIdList);
+      console.log(problemIds.result.problemIdList);
     }
   }, [problemIds]);
 
