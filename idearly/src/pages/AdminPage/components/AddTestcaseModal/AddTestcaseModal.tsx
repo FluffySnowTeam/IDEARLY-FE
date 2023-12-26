@@ -75,7 +75,7 @@ export const AddTestCaseModal = ({
     const formattedTestcases = testcaseData.map(({ id, ...rest }) => rest);
     mutate({
       problemId: Number(problemId),
-      testcase: formattedTestcases,
+      payload: { testcase: formattedTestcases },
     });
   };
 
