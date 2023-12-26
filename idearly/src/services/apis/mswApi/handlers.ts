@@ -1,4 +1,4 @@
-// src/mocks/handlers.ts
+// [msw] src/mocks/handlers.ts
 import { http, HttpResponse } from "msw";
 import { IUserType } from "../../../pages/TeamMatchingPage/TeamMatchingPage.types";
 
@@ -18,20 +18,46 @@ interface IModifyUser {
   name: string;
 }
 export const handlers = [
-  // http.get('/posts', async ({ request }) => {
+  http.get(
+    `https://idearly.site/api/competitions/:competitionId/members`,
+    async ({ params, request }) => {
+      const { competitionId } = params;
+      console.log("competitionId: ", competitionId);
+      const url = new URL(request.url);
+      const email = url.searchParams.get("email");
 
-  //   const newPost: IPost = await request.json() as IPost;
-  //   allPosts.set(newPost.id, newPost);
-  //   console.log('Captured a "GET /posts" request')
-  //   return HttpResponse.json(Array.from(allPosts.values()))
-
-  // }),
-  http.post("https://idearly.site/api/posts", async ({ request }) => {
-    const temp = await request.json();
-    console.log('Captured a "GET /posts" request', temp);
-    return HttpResponse.json(Array.from(allPosts.values()));
-  }),
-
+      console.log('Updating get "%s" with:', email);
+      if (email === "aaa@naver.com") {
+        return HttpResponse.json({
+          status: "success",
+          data: {
+            exist: true,
+            memberName: "이영민",
+            email: "aaa@naver.com",
+            invitable: true,
+          },
+        });
+      }
+      if (email === "bbb@naver.com") {
+        return HttpResponse.json({
+          status: "success",
+          data: {
+            exist: true,
+            memberName: "강윤지",
+            email: "bbb@naver.com",
+            invitable: true,
+          },
+        });
+      }
+      // else
+      return HttpResponse.json({
+        status: "success",
+        data: {
+          exist: false,
+        },
+      });
+    }
+  ),
   // 팀 생성
   http.post(
     `https://idearly.site/api/competitions/:competitionId`,
@@ -54,7 +80,6 @@ export const handlers = [
     async ({ params, request }) => {
       const { competitionId } = params;
       console.log("competitionId: ", competitionId);
-
       const url = new URL(request.url);
       const email = url.searchParams.get("email");
 
