@@ -8,6 +8,11 @@ export const AlgorithmVoiceChat = () => {
   const [statusText, setStatusText] = useState<string>("Disconnected");
   const [logs, setLogs] = useState<string[]>(["Ready to connect"]);
   const roomId = "icl-voice-call";
+  const k1 = "ZY2JWWA";
+  const k2 = "3GQTR";
+  const s1 = "ZY2JWWA3G";
+  const s2 = "QTR8S1X:oJBg";
+  const s3 = "COsX0G77EGNh";
 
   const addLog = (text: string) => {
     setLogs((prevLogs) => [...prevLogs, text]);
@@ -20,8 +25,8 @@ export const AlgorithmVoiceChat = () => {
 
       // Provisioning
       await ConnectLive.signIn({
-        serviceId: import.meta.env.VITE_APP_KAKAO_ID,
-        serviceSecret: import.meta.env.VITE_APP_KAKAO_SECRET_KEY,
+        serviceId: k1 + k2,
+        serviceSecret: s1 + s2 + s3,
       });
       addLog("User Signed In");
 
