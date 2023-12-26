@@ -1,7 +1,7 @@
-import type { ICompetition } from "../../../../../../types";
+import type { ICompetitionResponse } from "../../../../../../types/admin.types";
 
 export interface ICompetitionInfoList {
-  competition: ICompetition;
+  competition: ICompetitionResponse;
   onTestcodeOpen: () => void;
   onProblemlOpen: () => void;
 }

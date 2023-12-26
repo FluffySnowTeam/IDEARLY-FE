@@ -1,13 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   addCompetition,
   addProblem,
   addTestCase,
+  getCompetitionData,
+  getUserList,
 } from "../services/apis/admin.apis";
 import type { CompetitionRequest, ICompetitionProblem } from "../types";
 import { useToast } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
-import { ITestCaseRequest } from "../types/admin.types";
+import type { ITestCaseRequest } from "../types/admin.types";
 
 export const useAdminCompetitionMutation = () => {
   const toast = useToast();
@@ -107,4 +109,20 @@ export const useAdminTestCaseMutation = () => {
       });
     },
   });
+};
+
+export const useAdminUserList = () => {
+  const { data, status, error } = useQuery({
+    queryKey: ["userlist"],
+    queryFn: getUserList,
+  });
+  return { data, status, error };
+};
+
+export const useAdminCompetitionList = () => {
+  const { data, status, error } = useQuery({
+    queryKey: ["competitionList"],
+    queryFn: getCompetitionData,
+  });
+  return { data, status, error };
 };

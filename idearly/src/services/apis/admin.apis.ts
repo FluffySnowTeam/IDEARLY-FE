@@ -31,3 +31,14 @@ export const addTestCase = async (
   );
   return response.data;
 };
+
+// 아직 데이터 형식 전달 x
+export const getUserList = async () => {
+  const response = await axiosInstance.get("/api/admin/members");
+  return response;
+};
+
+export const getCompetitionData = async () => {
+  const response = await axiosInstance.get("/api/competitions");
+  return response;
+};
