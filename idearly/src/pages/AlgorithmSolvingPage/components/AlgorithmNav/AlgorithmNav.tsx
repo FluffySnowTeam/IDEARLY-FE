@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const navigate = useNavigate();

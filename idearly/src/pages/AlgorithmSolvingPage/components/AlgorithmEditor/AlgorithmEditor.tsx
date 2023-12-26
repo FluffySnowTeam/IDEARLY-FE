@@ -4,9 +4,8 @@ import yorkie, { OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
-import "./style.css";
 // import { yorkie_key } from "./yorkie_api.json";
-import { YorkieDoc } from "./types";
+import { YorkieDoc } from "./AlgorithmEditor.types";
 import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
@@ -51,7 +50,7 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
     // teamId로 구성! -> teamId는 어떻게 넘어오지?
     await client.attach(doc);
 
-    doc.update((root) => {
+    doc.update((root: any) => {
       if (!root.content) {
         root.content = new yorkie.Text();
       }
@@ -72,14 +71,14 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
       }
     };
 
-    doc.subscribe((event) => {
+    doc.subscribe((event: any) => {
       if (event.type === "snapshot") {
         // The text is replaced to snapshot and must be re-synced.
         syncText();
       }
     });
 
-    doc.subscribe("$.content", (event) => {
+    doc.subscribe("$.content", (event: any) => {
       if (event.type === "remote-change") {
         const { operations } = event.value;
         handleOperations(operations);
@@ -89,7 +88,7 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
     await client.sync();
 
     // 03-1. define function that bind the document with the codemirror(broadcast local changes to peers)
-    const updateListener = EditorView.updateListener.of((viewUpdate) => {
+    const updateListener = EditorView.updateListener.of((viewUpdate: any) => {
       if (viewUpdate.docChanged) {
         for (const tr of viewUpdate.transactions) {
           const events = ["select", "input", "delete", "move", "undo", "redo"];
@@ -99,11 +98,19 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
           if (tr.annotation(Transaction.remote)) {
             continue;
           }
-          tr.changes.iterChanges((fromA, toA, _, __, inserted) => {
-            doc.update((root) => {
-              root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
-            }, `update content byA ${client.getID()}`);
-          });
+          tr.changes.iterChanges(
+            (
+              fromA: any,
+              toA: any,
+              _: any,
+              __: any,
+              inserted: { toJSON: () => any[] }
+            ) => {
+              doc.update((root: any) => {
+                root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
+              }, `update content byA ${client.getID()}`);
+            }
+          );
         }
       }
     });
@@ -150,7 +157,7 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
   }, []);
 
   const handleInitButton = async () => {
-    doc.update((root) => {
+    doc.update((root: any) => {
       root.content.edit(0, root.content.length, "");
     }, "init content");
 
@@ -169,7 +176,7 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
 
   return (
     <>
-      <div ref={editorParentRef} />
+      <S.CodeMirrorContainer ref={editorParentRef} />
       {resultState === "none" ? (
         <S.AlgorithmResultContainer></S.AlgorithmResultContainer>
       ) : resultState === "test" ? (

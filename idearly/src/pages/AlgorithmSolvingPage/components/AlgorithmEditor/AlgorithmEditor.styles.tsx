@@ -20,3 +20,9 @@ export const AlgorithmResultContainer = styled.div`
   height: 18vh;
   overflow: auto;
 `;
+
+export const CodeMirrorContainer = styled.div`
+  .cm-editor {
+    height: 64.9vh;
+  }
+`;
