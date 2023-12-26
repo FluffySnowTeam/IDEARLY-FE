@@ -77,11 +77,9 @@ export const useModifyUerMutation = () => {
     },
     onSuccess: (data) => {
       console.log("check: ", data);
-      // { status : 'success', result: {...}}
-      console.log("check: ", data.result);
-      console.log("check: ", data.result.name);
+      console.log("check: ", data.data.data.name);
 
-      setUserInfoState((prev) => ({ ...prev, name: data.result.name }));
+      setUserInfoState((prev) => ({ ...prev, name: data.data.data.name }));
 
       toast({
         title: "회원 정보 수정 성공",
