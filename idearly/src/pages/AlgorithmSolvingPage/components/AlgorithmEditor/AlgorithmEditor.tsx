@@ -48,7 +48,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
   const docRef = useRef<typeof yorkie.Document | undefined>();
-
   const [docKey, setDocKey] = useState(problemId);
 
   useEffect(() => {
@@ -194,11 +193,11 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     syncText();
   };
 
-  // code editor 관련
-  useEffect(() => {
-    // @ts-ignore
-    initYorkie(doc);
-  }, []);
+  // // code editor 관련
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   initYorkie(doc);
+  // }, []);
 
   //1
   const handleInitButton = async () => {
