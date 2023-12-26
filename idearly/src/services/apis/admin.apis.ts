@@ -42,7 +42,7 @@ export const getCompetitionData = async () => {
 
 export const getCompetitionProblems = async (competitionId: number) => {
   const response = await axiosInstance.get(
-    `api/admin/competitions/${competitionId}/problems`
+    `/api/admin/competitions/${competitionId}/problems`
   );
   return response;
 };

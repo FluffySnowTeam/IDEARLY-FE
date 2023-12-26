@@ -38,3 +38,13 @@ export const submitCode = async (
   );
   return response.data;
 };
+
+export const getAlgorithmProblem = async (
+  problemId: number,
+  language: string
+) => {
+  const response = await axiosInstance.get(
+    `/api/competitions/{competitionId}/problems/${problemId}?language=${language}`
+  );
+  return response;
+};
