@@ -209,7 +209,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     setResultState("none");
   };
 
-  const navigate = useNavigate();
   return (
     <>
       <S.CodeMirrorContainer ref={editorParentRef} />
