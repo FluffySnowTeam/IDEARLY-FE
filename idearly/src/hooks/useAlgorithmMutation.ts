@@ -46,8 +46,8 @@ export const useRunMutation = () => {
 };
 
 interface IuseAlgorithmProblem {
-  competitionId: number;
-  problemId: number;
+  competitionId: string;
+  problemId: string;
 }
 
 export const useAlgorithmProblem = () => {

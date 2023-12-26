@@ -20,15 +20,15 @@ export const AlgorithmProblem = () => {
   const { data, status, mutate } = useAlgorithmProblem();
 
   useEffect(() => {
-    if (problemId) {
+    if (problemId && competitionId) {
       console.log("competitionId", competitionId);
       console.log("problemId", problemId);
       mutate({
-        competitionId: Number(competitionId),
-        problemId: Number(problemId),
+        competitionId: competitionId,
+        problemId: problemId,
       });
     }
-  }, [problemId]);
+  }, [problemId, competitionId]);
 
   useEffect(() => {
     if (data) {
