@@ -4,14 +4,18 @@ import { useCompetitionTimer } from "../../hooks";
 import { useAtom } from "jotai";
 import { competitionDataAtom } from "../../store";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
+import { useEffect, useState } from "react";
+import {
+  useCompetitionDetailMutation,
+  useCompetitionProblemIdsMutation,
+} from "../../hooks/useCompetitionMutation";
 
 export const WaitingPage = () => {
   const navigate = useNavigate();
   const { id: competitionId } = useParams<{ id: string }>();
   const { title, subTitle, content } = WaitingPageConfig;
   const [competition, setCompetition] = useAtom(competitionDataAtom);
+  const [problemList, setProblemList] = useState<number[]>([]);
 
   const { data, mutate, status } = useCompetitionDetailMutation(
     Number(competitionId)
@@ -27,6 +31,22 @@ export const WaitingPage = () => {
     }
   }, [data]);
 
+  const {
+    data: problemIds,
+    mutate: problemsMutate,
+    status: problemStatus,
+  } = useCompetitionProblemIdsMutation();
+
+  useEffect(() => {
+    problemsMutate(Number(competitionId));
+  }, [competitionId, problemsMutate]);
+
+  useEffect(() => {
+    if (problemIds) {
+      setProblemList(problemIds);
+    }
+  }, [problemIds]);
+
   const { title: compeTitle, startDateTime, endDateTime, teamId } = competition;
   console.log("competition", competition);
 
@@ -35,14 +55,17 @@ export const WaitingPage = () => {
     endDateTime
   );
 
-  //algorithm-solving/${competitionId}?teamId=123&problemId=123
+  // algorithm-solving/${competitionId}?teamId=123&problemId=123
   const handleMoveToAlgorithmSolving = () => {
-    navigate(
-      `algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${problemId}`
-    );
+    if (problemIds) {
+      navigate(
+        `algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${problemList[0]}`
+      );
+    }
   };
 
-  if (status === "pending") return <div>...Loading</div>;
+  if (status === "pending" && problemStatus === "pending")
+    return <div>...Loading</div>;
 
   return (
     <S.WaitingCardWrapper>
@@ -75,6 +98,7 @@ export const WaitingPage = () => {
               disabled={!timerVisible}
               variant="solid"
               colorScheme="blue"
+              onClick={handleMoveToAlgorithmSolving}
             >
               {timeLeft}
             </S.WaitingCardButton>

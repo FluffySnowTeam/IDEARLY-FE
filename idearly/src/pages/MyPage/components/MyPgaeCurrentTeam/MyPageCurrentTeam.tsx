@@ -62,28 +62,25 @@ export const MyPageCurrentTeam = () => {
   useEffect(() => {
     if (teamInfoData) {
       setTeamMembers(teamInfoData.result.teammates);
-      console.log(
-        "[teamMembers]teamInfoData.result.teammates:",
-        teamInfoData.result.teammates
-      );
+      console.log("teamMembers: ", teamMembers);
       setCurrentMemberList(
         teamInfoData.result.teammates.filter(
-          (member: any) => member.inviteStatus === "ACCEPT"
+          (member: any) => member.inviteStatus === "accept"
         )
       );
       setInviteMemberList(
         teamInfoData.result.teammates.filter(
-          (member: any) => member.inviteStatus === "INVITE"
+          (member: any) => member.inviteStatus === "invite"
         )
       );
     }
   }, [teamInfoData]);
 
   const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(
-    teamMembers.filter((member: any) => member.inviteStatus === "ACCEPT")
+    teamMembers.filter((member: any) => member.inviteStatus === "accept")
   );
   const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(
-    teamMembers.filter((member: any) => member.inviteStatus === "INVITE")
+    teamMembers.filter((member: any) => member.inviteStatus === "invite")
   );
 
   console.log(

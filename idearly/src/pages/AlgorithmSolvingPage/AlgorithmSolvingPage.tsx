@@ -23,7 +23,7 @@ export const AlgorithmSolvingPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const teamId = queryParams.get("teamId");
-  const problemId = queryParams.get("problemId");
+  const problemId = queryParams.get("id");
 
   console.log(
     "teamId:",
