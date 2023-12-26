@@ -17,6 +17,8 @@ export const AdminUserPage = () => {
   const [userList, setUserList] = useState();
   const { data, status, error } = useAdminUserList();
 
+  console.log("userList", userList);
+
   useEffect(() => {
     if (data) {
       setUserList(data.data);
