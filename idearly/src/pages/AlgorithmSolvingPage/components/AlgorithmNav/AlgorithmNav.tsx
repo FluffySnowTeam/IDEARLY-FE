@@ -29,11 +29,6 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
   };
 
-  // window.addEventListener("DOMContentLoaded", () => {
-  //   navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
-  //   console.log("22");
-  // });
-
   const handleProblems = (id: string) => {
     navigate(`${path.pathname}?id=${id}`);
     setSelectedProblemId(id);

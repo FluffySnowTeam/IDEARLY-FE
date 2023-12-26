@@ -1,26 +1,7 @@
+import { testResult } from "../../../../../../mocks/algorithmResult.mock";
 import * as S from "./AlgorithmTestResult.styles";
 
 export const AlgorithmTestResult = () => {
-  const testResult = {
-    status: "success",
-    data: [
-      {
-        testCaseId: 1,
-        input: "[1, 1, 3, 3, 0, 1, 1]",
-        expectedOutput: "[1, 3, 0, 1]",
-        userOutput: "[1, 3, 0, 1]",
-        status: "pass",
-      },
-      {
-        testCaseId: 2,
-        input: "[4, 4, 4, 3, 3]",
-        expectedOutput: "[4, 3]",
-        userOutput: "[4, 2]",
-        status: "failed",
-      },
-    ],
-  };
-
   console.log(testResult);
 
   // 실행인지 제출인지 여부에 따라 렌더링 결정
