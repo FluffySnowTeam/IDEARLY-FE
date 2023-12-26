@@ -2,6 +2,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import * as S from "./AlgorithmProblem.styles";
 import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface IProblemsData {
   name: string;
@@ -42,11 +44,12 @@ export const AlgorithmProblem = () => {
 
   return (
     <S.AlgorithmContainer>
-      <div>{problemsData?.name}</div>
-      <div>{problemsData?.description}</div>
-      {/**
-       * 여기 마크다운으로 problem 내용 보여주기
-       */}
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {problemsData?.name}
+      </ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {problemsData?.description}
+      </ReactMarkdown>
     </S.AlgorithmContainer>
   );
 };
