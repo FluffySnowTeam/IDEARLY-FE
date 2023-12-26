@@ -191,7 +191,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
   const handleInitButton = async () => {
     // @ts-ignore
-    doc.update((root: any) => {
+    docRef.current.update((root: any) => {
       root.content.edit(0, root.content.length, "");
     }, "init content");
 
