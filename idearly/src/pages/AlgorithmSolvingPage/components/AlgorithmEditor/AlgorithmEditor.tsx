@@ -47,7 +47,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  const doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+  let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
@@ -63,6 +63,10 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     runMutate({ competitionId, problemId, code });
     setResultState("submit");
   };
+
+  useEffect(() => {
+    doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+  }, [problemId]);
 
   const initYorkie = async () => {
     // 01. create client with RPCAddr(envoy) then activate it.
