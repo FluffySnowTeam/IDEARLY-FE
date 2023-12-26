@@ -2,7 +2,7 @@ import { Box, Button, FormControl, FormErrorMessage, Input, Stack, TagCloseButto
 import * as S from './TeamMatchingPage.styles';
 import { useState } from 'react';
 import { useTeamMatchingMutation } from '../../hooks/useTeamMatchingMutation';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { IUserType } from './TeamMatchingPage.types';
 import { AddTeamMembers } from '../../components/AddTeamMembers/AddTeamMembers';
 
@@ -13,6 +13,7 @@ export const TeamMatchingPage = () => {
   const { mutate } = useTeamMatchingMutation();
   const navigate = useNavigate();
   const MAX_MEMBER = 2;
+  const { competitionId = '' } = useParams();
 
   const isErrorCount = addedMembers.length !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
   const isErrorTeamMatching = !isErrorName && !isErrorCount; // 팀 이름이 ''이 아니어야 하고, 맴버가 3명이어야 한다.
@@ -26,7 +27,7 @@ export const TeamMatchingPage = () => {
       teamName,
       members: addedMembers,
     }
-    mutate({competitionId: '123', payload});
+    mutate({competitionId: competitionId, payload});
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
