@@ -50,6 +50,7 @@ export const AlgorithmSolvingPage = () => {
           <AlgorithmEditor
             competitionId={competitionId}
             problemId={problemId}
+            teamId={teamId}
           />
         </S.AlgorithmEditorWrapper>
       </S.AlgorithmSolvingWrapper>

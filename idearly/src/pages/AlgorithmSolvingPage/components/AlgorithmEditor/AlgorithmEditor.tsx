@@ -14,7 +14,7 @@ import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 interface Prop {
   competitionId: string | undefined;
   problemId: string | null;
-  teamId: number;
+  teamId: string | null;
 }
 
 export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
