@@ -1,11 +1,6 @@
 import { Input, ModalBody, Textarea } from "@chakra-ui/react";
-import type { IFormData } from "../../AddProblemModal.types";
 import { PropsWithChildren } from "react";
-
-interface IAddProblem {
-  formData: IFormData;
-  setFormData: React.Dispatch<React.SetStateAction<IFormData>>;
-}
+import type { IAddProblem } from "./AddProblem.types";
 
 export const AddProblem = ({
   formData,
