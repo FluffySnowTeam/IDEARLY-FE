@@ -1,42 +1,61 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Input, ModalBody, Select, Textarea } from "@chakra-ui/react";
-import { ChangeEvent, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import * as S from "./AddTestCase.styles";
-import { useAtom } from "jotai";
-import { testCaseDataAtom } from "../../../../../../store";
+import type { IAddTestCase } from "./AddTesxtCase.types";
 
-export const AddTestCase = () => {
-  const [testCaseList, setTestCaseList] = useAtom(testCaseDataAtom);
-  const [inputValue, setInputValue] = useState("");
+export const AddTestCase = ({
+  testcaseData,
+  setTestcaseData,
+}: PropsWithChildren<IAddTestCase>) => {
+  const [testCaseValue, setTestCaseValue] = useState({
+    input: "",
+    answer: "",
+    hidden: false,
+  });
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
-  };
+  console.log(testCaseValue, testcaseData);
 
   const handleAddTestCase = () => {
-    if (inputValue.trim() === "") return setInputValue("");
+    if (
+      testCaseValue.input.trim() === "" ||
+      testCaseValue.answer.trim() === ""
+    ) {
+      console.log("모든 필드를 채워주세요.");
+      return;
+    }
     const randomId =
       "id" + Date.now() + Math.random().toString(36).substr(2, 9);
 
-    setTestCaseList((prev) => [
+    setTestcaseData((prev) => [
       ...prev,
       {
         id: randomId,
-        case: inputValue,
+        input: testCaseValue.input,
+        answer: testCaseValue.answer,
+        hidden: testCaseValue.hidden,
       },
     ]);
-    setInputValue("");
+    setTestCaseValue({
+      input: "",
+      answer: "",
+      hidden: false,
+    });
   };
 
   const handleDeleteTestCase = (id: string) => {
-    setTestCaseList((prev) => prev.filter((testCase) => testCase.id !== id));
+    setTestcaseData((prev) => prev.filter((testCase) => testCase.id !== id));
   };
 
   return (
     <ModalBody>
-      {testCaseList.map((testCase) => (
+      {testcaseData.map((testCase) => (
         <S.TestCaseList key={testCase.id}>
-          <div>{testCase.case}</div>
+          <S.TestCaseListBox>
+            <div>input: {testCase.input}</div>
+            <div>answer: {testCase.answer}</div>
+            <div>hidden: {testCase.hidden ? "True" : "False"}</div>
+          </S.TestCaseListBox>
           <S.TestCaseDeleteButton
             size={"xs"}
             aria-label="delete testCase"
@@ -48,14 +67,32 @@ export const AddTestCase = () => {
         </S.TestCaseList>
       ))}
       <div>입력값</div>
-      <Textarea value={inputValue} onChange={handleChange} />
+      <Textarea
+        value={testCaseValue.input}
+        onChange={(e) => {
+          setTestCaseValue({ ...testCaseValue, input: e.target.value });
+        }}
+      />
       <div>히든여부</div>
-      <Select>
-        <option>true</option>
+      <Select
+        value={testCaseValue.hidden.toString()}
+        onChange={(e) => {
+          setTestCaseValue({
+            ...testCaseValue,
+            hidden: e.target.value === "true",
+          });
+        }}
+      >
         <option>false</option>
+        <option>true</option>
       </Select>
       <div>정답</div>
-      <Input />
+      <Input
+        value={testCaseValue.answer}
+        onChange={(e) => {
+          setTestCaseValue({ ...testCaseValue, answer: e.target.value });
+        }}
+      />
       <S.TestCaseAddButton onClick={handleAddTestCase}>
         추가
       </S.TestCaseAddButton>

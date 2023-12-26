@@ -1,8 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { addCompetition, addProblem } from "../services/apis/admin.apis";
+import {
+  addCompetition,
+  addProblem,
+  addTestCase,
+} from "../services/apis/admin.apis";
 import type { CompetitionRequest, ICompetitionProblem } from "../types";
 import { useToast } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
+import { ITestCaseRequest } from "../types/admin.types";
 
 export const useAdminCompetitionMutation = () => {
   const toast = useToast();
@@ -61,6 +66,40 @@ export const useAdminProblemMutation = () => {
       console.error("error", error);
       toast({
         title: "문제 추가 실패.. 저런",
+        description: "다시 시도해보세요!",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+  });
+};
+
+interface IuseAdminTestCaseMutation {
+  problemId: number;
+  testcase: ITestCaseRequest[];
+}
+
+export const useAdminTestCaseMutation = () => {
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: ({ problemId, testcase }: IuseAdminTestCaseMutation) =>
+      addTestCase(problemId, testcase),
+    onSuccess: (data) => {
+      console.log(data);
+      toast({
+        title: "테스트케이스 추가 성공!",
+        description: "테스트케이스 정보가 성공적으로 추가되었습니다!",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    },
+    onError: (error) => {
+      console.error("error", error);
+      toast({
+        title: "테스트케이스 추가 실패.. 저런",
         description: "다시 시도해보세요!",
         status: "error",
         duration: 2000,
