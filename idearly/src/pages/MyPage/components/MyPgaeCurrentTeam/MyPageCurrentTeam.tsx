@@ -1,27 +1,122 @@
 import { Table, Tbody, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./MyPageCurrentTeam.styles";
-import { curCompetition, TeamMembers } from "../../../../mocks/curCompetition.mocks";
-import { CurrentTeamList, TeamModifyModal, WaitingTeamList } from "./components";
+import {
+  CurrentTeamList,
+  TeamDetailModal,
+  TeamModifyModal,
+  WaitingTeamList,
+} from "./components";
 import { MyPageCurrentTeamConfig } from "../../../../constants/MyPage.constants";
 import type { ITeamMember } from "./MyPageCurrentTeam.types";
+import { useEffect, useState } from "react";
+import {
+  useGetCurrentTeamQuery,
+  useGetWaitTeamQuery,
+  useTeamInfoQuery,
+} from "../../../../hooks/useMyPageMutation";
+import { useAtom, useAtomValue } from "jotai";
+import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../../../../store";
 
 export const MyPageCurrentTeam = () => {
-  const { competitionName, teamName, leaderName, date, manage, choose} = MyPageCurrentTeamConfig;
+  const { competitionName, teamName, leaderName, date, manage, choose } =
+    MyPageCurrentTeamConfig;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // curretMembers를 쪼개서 현재 맴버 / 수락 대기 중인 맴버 변수 만들기
-  const currentMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "accept");
-  const inviteMemberList: ITeamMember[] = TeamMembers.teammates.filter(member => member.inviteStatus === "invite");
+  const userInfo = useAtomValue(userInfoAtom);
+  const [curTeam, setCurTeam] = useAtom(curTeamAtom);
+  const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
+
+  const [teamId, setTeamId] = useState(0);
+  const [isClick, setIsClick] = useState(false);
+  const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
+
+  const {
+    data: curTeamData,
+    status: curTeamStatus,
+    error: curTeamError,
+  } = useGetCurrentTeamQuery();
+  const {
+    data: waitTeamData,
+    status: waitTeamStatus,
+    error: waitTeamError,
+  } = useGetWaitTeamQuery();
+  const {
+    data: teamInfoData,
+    error: teamInfoError,
+    isLoading,
+  } = useTeamInfoQuery(isClick, teamId);
+
+  // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
+  useEffect(() => {
+    if (curTeamStatus === "success" && curTeamData) {
+      setCurTeam(curTeamData.data.teams);
+    }
+  }, [curTeamData, curTeamStatus]);
+
+  useEffect(() => {
+    if (waitTeamStatus === "success" && waitTeamData) {
+      setWaitTeam(waitTeamData.data.teams);
+    }
+  }, [waitTeamData, waitTeamStatus]);
+
+  useEffect(() => {
+    if (teamInfoData) {
+      setTeamMembers(teamInfoData.data.teammates);
+      setCurrentMemberList(
+        teamInfoData.data.teammates.filter(
+          (member: any) => member.inviteStatus === "accept"
+        )
+      );
+      setInviteMemberList(
+        teamInfoData.data.teammates.filter(
+          (member: any) => member.inviteStatus === "invite"
+        )
+      );
+    }
+  }, [teamInfoData]);
+
+  const [currentMemberList, setCurrentMemberList] = useState<ITeamMember[]>(
+    teamMembers.filter((member: any) => member.inviteStatus === "accept")
+  );
+  const [inviteMemberList, setInviteMemberList] = useState<ITeamMember[]>(
+    teamMembers.filter((member: any) => member.inviteStatus === "invite")
+  );
+
+  const onClickTeamDetail = (teamId: number) => {
+    setTeamId(teamId);
+    setIsClick(true);
+    onOpen();
+  };
+
+  if (curTeamStatus === "pending" || waitTeamStatus === "pending" || isLoading)
+    return <p>Loading...</p>;
+  if (curTeamError || waitTeamError || teamInfoError) return <p>Error</p>;
 
   return (
     <S.SearchTeamWrapper>
-      {/* <TeamDetailModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} /> */}
-      <TeamModifyModal isOpen={isOpen} onClose={onClose} currentMemberList={currentMemberList} inviteMemberList={inviteMemberList} />
-      
+      {teamInfoData?.data.leaderEmail === userInfo.email ? (
+        <TeamModifyModal
+          isOpen={isOpen}
+          onClose={onClose}
+          currentMemberList={currentMemberList}
+          setCurrentMemberList={setCurrentMemberList}
+          inviteMemberList={inviteMemberList}
+          setInviteMemberList={setInviteMemberList}
+          teamId={teamId}
+        />
+      ) : (
+        <TeamDetailModal
+          isOpen={isOpen}
+          onClose={onClose}
+          currentMemberList={currentMemberList}
+          inviteMemberList={inviteMemberList}
+        />
+      )}
+
       <S.SearchTeamTitle>현재 팀 조회</S.SearchTeamTitle>
       <S.SearchTeamSubTitle>참가 대회 소속팀</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <Thead>
             <Tr>
               <Th>{competitionName}</Th>
@@ -32,21 +127,23 @@ export const MyPageCurrentTeam = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              curCompetition.map((competition) => (
-                <CurrentTeamList key={competition.competitionId} competition={competition} onOpen={onOpen} />
-              ))
-            }
+            {curTeam.map((competition) => (
+              <CurrentTeamList
+                key={competition.competitionId}
+                competition={competition}
+                onClickTeamDetail={onClickTeamDetail}
+              />
+            ))}
           </Tbody>
         </Table>
       </S.SearchTeamTableContainer>
 
       <S.SearchTeamSubTitle>대기 중인 초대 현황</S.SearchTeamSubTitle>
       <S.SearchTeamTableContainer>
-        <Table variant='simple'>
+        <Table variant="simple">
           <Thead>
             <Tr>
-            <Th>{competitionName}</Th>
+              <Th>{competitionName}</Th>
               <Th>{teamName}</Th>
               <Th>{leaderName}</Th>
               <Th>{date}</Th>
@@ -54,15 +151,15 @@ export const MyPageCurrentTeam = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              curCompetition.map((competition) => (
-                <WaitingTeamList key={competition.competitionId} competition={competition} />
-              ))
-            }
+            {waitTeam.map((competition) => (
+              <WaitingTeamList
+                key={competition.competitionId}
+                competition={competition}
+              />
+            ))}
           </Tbody>
         </Table>
       </S.SearchTeamTableContainer>
-
     </S.SearchTeamWrapper>
-  )
-}
+  );
+};

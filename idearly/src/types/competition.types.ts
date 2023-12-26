@@ -9,3 +9,15 @@ export interface ICompetition {
   teamId: number;
   teamName: string;
 }
+
+export type CompetitionRequest = {
+  title: string;
+  startDateTime: string;
+  endDateTime: string;
+  description: string;
+};
+
+export type ICompetitionProblem = {
+  name: string;
+  description: string;
+};

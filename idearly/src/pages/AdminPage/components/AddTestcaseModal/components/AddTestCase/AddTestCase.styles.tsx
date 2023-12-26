@@ -16,3 +16,9 @@ export const TestCaseDeleteButton = styled(IconButton)`
 export const TestCaseAddButton = styled(Button)`
   margin-top: 1rem;
 `;
+
+export const TestCaseListBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;

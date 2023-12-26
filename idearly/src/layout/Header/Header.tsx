@@ -29,7 +29,6 @@ export const Header = () => {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          // setIsLoginState(false);
           setUserInfoState({
             authority: "",
             memberId: "",

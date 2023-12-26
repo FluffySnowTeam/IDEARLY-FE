@@ -3,6 +3,6 @@ export * from "./AlgorithmNav/AlgorithmNav";
 export * from "./AlgorithmTextChatModal/AlgorithmTextChatModal";
 export * from "./AlgorithmEditor/AlgorithmEditor";
 export * from "./AlgorithmProblem/AlgorithmProblem";
-export * from "./AlgorithmEditor/AlgorithmEditor";
 export * from "./AlgorithmProHeader/AlgorithmProHeader";
-export * from "./AlgorithmResult/AlgorithmResult";
+export * from "./AlgorithmFooter/AlgorithmFooter";
+export * from "./AlgorithmExitModal/AlgorithmExitModal";

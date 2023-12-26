@@ -2,17 +2,24 @@ import { Button, Tbody, Td, Tr } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import type { ICompetitionInfoList } from "./CompetitionInfoList.styles";
 import { useNavigate } from "react-router-dom";
+import { dateChange } from "../../../../../../utils/dateChange";
 
 export const CompetitionInfoList = ({
   competition,
-  onOpen,
+  onTestcodeOpen,
+  onProblemlOpen,
 }: PropsWithChildren<ICompetitionInfoList>) => {
-  const { competitionId, title, startDateTime } = competition;
+  const { competitionId, title, startDateTime, endDateTime } = competition;
   const navigate = useNavigate();
 
-  const handleModalOpen = () => {
-    navigate(`/admin/competition?id=${competitionId}`);
-    onOpen();
+  const handleTestcaseModalOpen = () => {
+    navigate(`/admin/competition?competitionId=${competitionId}`);
+    onTestcodeOpen();
+  };
+
+  const handleProblemModalOpen = () => {
+    navigate(`/admin/competition?competitionId=${competitionId}`);
+    onProblemlOpen();
   };
 
   return (
@@ -20,9 +27,13 @@ export const CompetitionInfoList = ({
       <Tr>
         <Td>{competitionId}</Td>
         <Td>{title}</Td>
-        <Td>{startDateTime}</Td>
         <Td>
-          <Button onClick={handleModalOpen}>문제 수정</Button>
+          {dateChange({ date: startDateTime })} ~
+          {dateChange({ date: endDateTime })}
+        </Td>
+        <Td>
+          <Button onClick={handleProblemModalOpen}>문제 추가</Button>
+          <Button onClick={handleTestcaseModalOpen}>테스트케이스 추가</Button>
         </Td>
       </Tr>
     </Tbody>

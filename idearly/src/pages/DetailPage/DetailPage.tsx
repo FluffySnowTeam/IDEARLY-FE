@@ -7,6 +7,8 @@ import { CompetitionsModal } from "../HomePage/components/CompetitionsModal/Comp
 import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { competitionDataAtom } from "../../store";
 
 export const DetailPage = () => {
@@ -47,8 +49,9 @@ export const DetailPage = () => {
           </S.CompeDetailDate>
         )}
         <S.CompeDetailDescription>
-          {competition?.description}
-          {/* <Markdown remarkPlugins={[remarkGfm]}>{description}</Markdown> */}
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {competition.description}
+          </ReactMarkdown>
         </S.CompeDetailDescription>
         <Button onClick={handleMoveToWaiting}>대회 참여하기</Button>
       </S.CompetitionDetailContainer>

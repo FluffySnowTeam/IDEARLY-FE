@@ -1,10 +1,11 @@
-// // src/mocks/handlers.ts
+// // [msw] src/mocks/handlers.ts
 // import { http, HttpResponse } from "msw";
 // import { IUserType } from "../../../pages/TeamMatchingPage/TeamMatchingPage.types";
 
 // const allPosts = new Map<number, IPost>();
 
 // export interface IPost {
+
 //   id: number,
 //   content: string,
 // }
@@ -76,7 +77,7 @@
 //         }
 //       });
 //     }
-//     // else 
+//     // else
 //     return HttpResponse.json({
 //       status: "success",
 //       data: {
@@ -110,5 +111,169 @@
 //       }
 //     });
 //   }),
+
+//   // 마이페이지 - 현재 팀 조회
+//   http.get(`https://idearly.site/api/teams`, async ({request}) => {
+//     const url = new URL(request.url)
+//     const invite = url.searchParams.get('invite')
+
+//     console.log('invite === ', invite);
+//     console.log('Updating get "%s" with: 마이페이지 현재 팀 조회');
+//     if (invite === "true") {
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teams: [
+//             {
+//               teamId: 123,
+//               teamName: "snow",
+//               competitionId: 1,
+//               competitionTitle: "대회1",
+//               startDateTime: "2023-12-07T13:33:03.969Z",
+//               endDateTime: "2023-12-08T13:33:03.969Z",
+//               leaderName: "강윤지",
+//               leaderEmail: "dbswl701@naver.com"
+//             },
+//             {
+//               teamId: 456,
+//               teamName: "fluffy",
+//               competitionId: 2,
+//               competitionTitle: "대회2",
+//               startDateTime: "2023-12-07T13:33:03.969Z",
+//               endDateTime: "2023-12-08T13:33:03.969Z",
+//               leaderName: "이름1",
+//               leaderEmail: "aaa@naver.com"
+//             }
+//           ]
+//         }
+//       });
+//     } else {
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teams: [
+//             {
+//               teamId: 1234,
+//               teamName: "snow2",
+//               competitionId: 1,
+//               competitionTitle: "대회1",
+//               startDateTime: "2023-12-07T13:33:03.969Z",
+//               endDateTime: "2023-12-08T13:33:03.969Z",
+//               leaderName: "강윤지",
+//               leaderEmail: "dbswl701@naver.com"
+//             },
+//             {
+//               teamId: 4567,
+//               teamName: "fluffy2",
+//               competitionId: 2,
+//               competitionTitle: "대회2",
+//               startDateTime: "2023-12-07T13:33:03.969Z",
+//               endDateTime: "2023-12-08T13:33:03.969Z",
+//               leaderName: "이름1",
+//               leaderEmail: "aaa@naver.com"
+//             }
+//           ]
+//         }
+//       });
+//     }
+//   }),
+
+//   // 마이페이지 - 팀 요청 수락 / 거절
+//   http.post(`https://idearly.site/api/teams/:teamId`, async ({ request, params }) => {
+//     const { teamId } = params;
+//     const {accept} = await request.json() as REQ;
+//     console.log('teamId', teamId, 'accept: ', accept);
+//     if (accept){
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teamId: teamId,
+//           accept: true
+//         }
+//       });
+//     } else {
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teamId: teamId,
+//           accept: false
+//         }
+//       })
+//     }
+//   }),
+
+//   // 특정 팀 조회
+//   http.get(`https://idearly.site/api/teams/:teamId`, async ({ params }) => {
+//     const { teamId } = params;
+
+//     if (teamId == '123') {
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teamId: teamId,
+//           teamName: "snow",
+//           competitionId: 1,
+//           competitionName: "알고리즘 대회 이름",
+//           leaderName: "강윤지",
+//           leaderEmail: "dbswl701@naver.com",
+//           teammates: [
+//             {
+//               name: "강윤지",
+//               email: "dbswl701@naver.com",
+//               inviteStatus: "accept"
+//             },
+//             {
+//               name: "이름2",
+//               email: "bbb@naver.com",
+//               inviteStatus: "accept"
+//             },
+//             {
+//               name: "이름3",
+//               email: "ccc@naver.com",
+//               inviteStatus: "invite"
+//             }
+//           ]
+//         }
+//       });
+//     } else {
+//       return HttpResponse.json({
+//         status: "success",
+//         data: {
+//           teamId: teamId,
+//           teamName: "snow",
+//           competitionId: 1,
+//           competitionName: "알고리즘 대회 이름",
+//           leaderName: "이름1",
+//           leaderEmail: "aaa@naver.com",
+//           teammates: [
+//             {
+//               name: "이름12",
+//               email: "aaa@naver.com",
+//               inviteStatus: "accept"
+//             },
+//             {
+//               name: "이름22",
+//               email: "bbb@naver.com",
+//               inviteStatus: "accept"
+//             },
+//             {
+//               name: "이름32",
+//               email: "ccc@naver.com",
+//               inviteStatus: "invite"
+//             }
+//           ]
+//         }
+//       });
+//     }
+//   }),
+
+//   http.patch(`https://idearly.site/api/teams/:teamId`, async ({ params }) => {
+//     const { teamId } = params;
+
+//     return HttpResponse.json()
+//   })
 // ]
 
+// interface REQ {
+//   accept: boolean,
+// }

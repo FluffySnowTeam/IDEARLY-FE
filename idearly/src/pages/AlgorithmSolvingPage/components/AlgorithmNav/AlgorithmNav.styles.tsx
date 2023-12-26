@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
+import { Box, Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const AlgorithmNavContainer = styled(Box)`
@@ -28,6 +29,12 @@ export const ProblemNumber = styled.div`
     background-color: #01228a !important;
     color: white !important;
   }
+  position: relative;
+`;
+
+export const ExitBtn = styled(Button)`
+  font-size: 0.9rem;
+  width: 35px;
 `;
 
 export const NavIcons = styled.div`
@@ -45,4 +52,10 @@ export const NavIcons = styled.div`
       color: #9999;
     }
   }
+`;
+
+export const CheckIcon = styled(CheckCircleIcon)`
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
 `;
