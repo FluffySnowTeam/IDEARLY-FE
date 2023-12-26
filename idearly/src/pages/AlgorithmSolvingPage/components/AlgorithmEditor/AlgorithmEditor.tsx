@@ -66,6 +66,12 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
   useEffect(() => {
     doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+    console.log(
+      "problemId 변경: ",
+      problemId,
+      "key: ",
+      `${teamId}___${problemId}`
+    );
   }, [problemId]);
 
   const initYorkie = async () => {
