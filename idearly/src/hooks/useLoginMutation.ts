@@ -9,7 +9,6 @@ import { userInfoAtom } from "../store";
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const toast = useToast();
-  const { state } = useLocation();
   const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
@@ -39,7 +38,7 @@ export const useLoginMutation = () => {
       setTimeout(() => {
         //authority "ADMIN", "USER"
         if (isUser) {
-          navigate(state);
+          navigate("/");
         } else {
           navigate("/admin/user");
         }
