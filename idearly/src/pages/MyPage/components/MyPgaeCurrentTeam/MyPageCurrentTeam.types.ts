@@ -1,12 +1,12 @@
 export interface ITeam {
-  teamId: number,
-  teamName: string,
-  competitionId: number,
-  competitionTitle: string,
-  startDateTime: string,
-  endDateTime: string,
-  leaderName: string,
-  leaderEmail: string
+  teamId: number;
+  teamName: string;
+  competitionId: number;
+  competitionTitle: string;
+  startDateTime: string;
+  endDateTime: string;
+  leaderName: string;
+  leaderEmail: string;
 }
 
 export interface ICompetitionProp {
@@ -19,9 +19,9 @@ export interface IWaitingCompetitionProp {
 }
 
 export interface ITeamMember {
-  name: string,
-  email: string,
-  inviteStatus?: string,
+  name: string;
+  email: string;
+  inviteStatus?: string;
 }
 
 export interface IModifyTeamlModal {
@@ -32,6 +32,7 @@ export interface IModifyTeamlModal {
   setCurrentMemberList: React.Dispatch<React.SetStateAction<ITeamMember[]>>;
   setInviteMemberList: React.Dispatch<React.SetStateAction<ITeamMember[]>>;
   teamId: number;
+  competitionId: string;
 }
 
 export interface IDetailTeamlModal {
