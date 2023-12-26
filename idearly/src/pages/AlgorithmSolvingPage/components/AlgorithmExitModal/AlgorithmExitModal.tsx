@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";

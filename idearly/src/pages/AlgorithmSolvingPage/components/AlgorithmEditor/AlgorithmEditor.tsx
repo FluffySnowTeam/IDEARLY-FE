@@ -171,7 +171,7 @@ export const AlgorithmEditor = ({ competitionId, problemId }: Prop) => {
     <>
       <div ref={editorParentRef} />
       {resultState === "none" ? (
-        <></>
+        <S.AlgorithmResultContainer></S.AlgorithmResultContainer>
       ) : resultState === "test" ? (
         <AlgorithmTestResult />
       ) : (
