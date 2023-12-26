@@ -21,10 +21,12 @@ export const AddCompetitionModal = ({
 }: PropsWithChildren<IAddCompetitionModal>) => {
   const [formData, setFormData] = useState<CompetitionRequest>({
     title: "",
+    //"2023-12-26T10:10:10" 형식으로 보내기
     startDateTime: "",
     endDateTime: "",
     description: "",
   });
+
   const handleChange = (key: string, value: string) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
