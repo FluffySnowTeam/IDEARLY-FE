@@ -27,6 +27,7 @@ export const TeamModifyModal = ({
   setCurrentMemberList,
   setInviteMemberList,
   teamId,
+  competitionId,
 }: PropsWithChildren<IModifyTeamlModal>) => {
   const MAX_MEMBER = 3;
   const userInfo = useAtomValue(userInfoAtom);
@@ -75,6 +76,7 @@ export const TeamModifyModal = ({
           <AddTeamMembers
             setAddedMembers={setInviteMemberList}
             isErrorCount={isFullMember}
+            competitionId={competitionId}
           />
           <S.ModalSubTitle>수락 대기중인 맴버</S.ModalSubTitle>
 

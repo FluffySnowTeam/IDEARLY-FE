@@ -49,26 +49,26 @@ export const MyPageCurrentTeam = () => {
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
     if (curTeamStatus === "success" && curTeamData) {
-      setCurTeam(curTeamData.data.teams);
+      setCurTeam(curTeamData.result.teams);
     }
   }, [curTeamData, curTeamStatus]);
 
   useEffect(() => {
     if (waitTeamStatus === "success" && waitTeamData) {
-      setWaitTeam(waitTeamData.data.teams);
+      setWaitTeam(waitTeamData.result.teams);
     }
   }, [waitTeamData, waitTeamStatus]);
 
   useEffect(() => {
     if (teamInfoData) {
-      setTeamMembers(teamInfoData.data.teammates);
+      setTeamMembers(teamInfoData.result.teammates);
       setCurrentMemberList(
-        teamInfoData.data.teammates.filter(
+        teamInfoData.result.teammates.filter(
           (member: any) => member.inviteStatus === "accept"
         )
       );
       setInviteMemberList(
-        teamInfoData.data.teammates.filter(
+        teamInfoData.result.teammates.filter(
           (member: any) => member.inviteStatus === "invite"
         )
       );
@@ -94,7 +94,7 @@ export const MyPageCurrentTeam = () => {
 
   return (
     <S.SearchTeamWrapper>
-      {teamInfoData?.data.leaderEmail === userInfo.email ? (
+      {teamInfoData?.result.leaderEmail === userInfo.email ? (
         <TeamModifyModal
           isOpen={isOpen}
           onClose={onClose}
@@ -103,6 +103,7 @@ export const MyPageCurrentTeam = () => {
           inviteMemberList={inviteMemberList}
           setInviteMemberList={setInviteMemberList}
           teamId={teamId}
+          competitionId={teamInfoData.result.competitionId}
         />
       ) : (
         <TeamDetailModal
