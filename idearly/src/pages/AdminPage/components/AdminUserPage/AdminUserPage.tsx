@@ -6,6 +6,7 @@ import { AdminUserPageConfig } from "../../../../constants";
 import { Pagination } from "../../../../components";
 import { useEffect, useState } from "react";
 import { useAdminUserList } from "../../../../hooks/useAdminCompetitionMutation";
+import type { IUserListResponse } from "../../../../types/admin.types";
 
 export const AdminUserPage = () => {
   const { id, name, email, competition, team } = AdminUserPageConfig;
@@ -14,15 +15,16 @@ export const AdminUserPage = () => {
   const startIdx = currentPage * itemsPerPage;
   const endIdx = (currentPage + 1) * itemsPerPage;
 
-  const [userList, setUserList] = useState();
+  const [userList, setUserList] = useState<IUserListResponse[]>();
   const { data, status, error } = useAdminUserList();
 
   console.log("userList", userList);
 
   useEffect(() => {
     if (data) {
-      setUserList(data.data);
-      console.log(data.data);
+      const users: IUserListResponse[] = data.data.result;
+      console.log(users);
+      setUserList(users);
     }
   }, [data]);
 
@@ -58,12 +60,15 @@ export const AdminUserPage = () => {
                 <Th>{team}</Th>
               </Tr>
             </Thead>
-            {/**
-             * 실제 데이터로 변경하기 userList!!!
-             */}
-            {fakeUserInfo.slice(startIdx, endIdx).map((userInfo) => (
-              <UserInfoList key={userInfo.id} userInfo={userInfo} />
-            ))}
+            {userList &&
+              userList
+                .slice(startIdx, endIdx)
+                .map((userInfo) => (
+                  <UserInfoList
+                    key={userInfo.competitionIdList}
+                    userInfo={userInfo}
+                  />
+                ))}
           </Table>
         </S.AdminTableContainer>
       </S.AdminUserTableContainer>

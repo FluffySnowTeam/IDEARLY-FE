@@ -10,3 +10,13 @@ export type ICompetitionResponse = {
   startDateTime: string;
   title: string;
 };
+
+export type IUserListResponse = {
+  competitionIdList: number;
+  competitionTitleList: string[];
+  email: string;
+  memberId: number;
+  name: string;
+  teamIdList: number[];
+  teamNameList: string[];
+};
