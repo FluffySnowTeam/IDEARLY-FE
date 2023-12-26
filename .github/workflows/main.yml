@@ -27,13 +27,9 @@ jobs:
       # Github Repository Secrets를 통해 환경 변수 파일을 생성합니다.
       - name: Generate Environment Variables File for Production
         run: |
-          echo "VITE_APP_KAKAO_ID=$VITE_APP_KAKAO_ID" >> .env.production
-          echo "VITE_APP_KAKAO_SECRET_KEY=$VITE_APP_KAKAO_SECRET_KEY" >> .env.production
-          echo "VITE_APP_YORKIE_API_KEY=$VITE_APP_YORKIE_API_KEY" >> .env.production
-        env:
-          VITE_APP_KAKAO_ID: ${{ secrets.VITE_APP_KAKAO_ID }}
-          VITE_APP_KAKAO_SECRET_KEY: ${{ secrets.VITE_APP_KAKAO_SECRET_KEY }}
-          VITE_APP_YORKIE_API_KEY: ${{ secrets.VITE_APP_YORKIE_API_KEY }}
+          echo "VITE_APP_KAKAO_ID=${{ secrets.VITE_APP_KAKAO_ID }}" >> .env
+          echo "VITE_APP_KAKAO_SECRET_KEY=${{ secrets.VITE_APP_KAKAO_SECRET_KEY }}" >> .env
+          echo "VITE_APP_YORKIE_API_KEY=${{ secrets.VITE_APP_YORKIE_API_KEY }}" >> .env
 
       # push할 때마다 npm을 install 해야할까? 아니다.
       # 해당 프로젝트의 node_modules가 변했는지 안 변했는지를 이용해서
