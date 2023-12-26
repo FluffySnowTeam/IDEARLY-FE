@@ -32,17 +32,16 @@ export const AlgorithmProblem = () => {
   }, [data]);
 
   if (status === "pending") {
-    return <span>Loading...</span>;
+    return <S.AlgorithmContainer>Loading...</S.AlgorithmContainer>;
   }
-
   return (
     <S.AlgorithmContainer>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {problemsData?.name}
       </ReactMarkdown>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
         {problemsData?.description}
-      </ReactMarkdown>
+      </S.MarkdownContainer>
     </S.AlgorithmContainer>
   );
 };
