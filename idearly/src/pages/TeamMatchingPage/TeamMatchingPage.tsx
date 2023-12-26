@@ -32,8 +32,8 @@ export const TeamMatchingPage = () => {
 
   const handleCreate = () => {
     const payload = {
-      teammates: teamName,
-      members: addedMembers,
+      teamName: teamName,
+      teammates: addedMembers,
     };
     mutate({ competitionId: competitionId, payload });
   };
