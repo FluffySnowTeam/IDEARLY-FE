@@ -49,13 +49,13 @@ export const MyPageCurrentTeam = () => {
   // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
     if (curTeamStatus === "success" && curTeamData) {
-      setCurTeam(curTeamData.result.teams);
+      setCurTeam(curTeamData.result);
     }
   }, [curTeamData, curTeamStatus]);
 
   useEffect(() => {
     if (waitTeamStatus === "success" && waitTeamData) {
-      setWaitTeam(waitTeamData.result.teams);
+      setWaitTeam(waitTeamData.result);
     }
   }, [waitTeamData, waitTeamStatus]);
 
