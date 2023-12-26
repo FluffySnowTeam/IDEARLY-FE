@@ -12,7 +12,7 @@ export const AdminProtectedRoute = () => {
     if (userInfo.authority === "USER" && !userInfo.isLogin) {
       navigate("/");
     }
-  }, [userInfo.authority, navigate]);
+  }, [userInfo, userInfo.authority, navigate]);
 
   return <Outlet />;
 };
