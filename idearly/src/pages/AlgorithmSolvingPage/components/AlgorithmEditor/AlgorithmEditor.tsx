@@ -47,32 +47,38 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
+  const docRef = useRef<typeof yorkie.Document | undefined>();
 
   const [docKey, setDocKey] = useState(problemId);
 
   useEffect(() => {
+    let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+    console.log("[doc]: ", doc);
     setDocKey(problemId);
+    console.log("docKey", docKey);
+    initYorkie(doc); // 여기에 docKey 값 전달
   }, [problemId]);
-
-  let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${docKey}`);
 
   console.log("doc key: ", docKey);
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
 
+  //2
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
     executeMutate({ competitionId, problemId, code });
     setResultState("test");
   };
 
+  //3
   const handleSubmit = () => {
     const code = viewRef.current?.state.doc.toString();
     runMutate({ competitionId, problemId, code });
     setResultState("submit");
   };
 
-  const initYorkie = async () => {
+  const initYorkie = async (doc: any) => {
+    console.log("initYorkie doc", doc);
     // 01. create client with RPCAddr(envoy) then activate it.
     const client = new yorkie.Client("https://api.yorkie.dev", {
       // apiKey: yorkie_key,
@@ -159,6 +165,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     });
 
     viewRef.current = view;
+    docRef.current = doc;
 
     // 03-3. define event handler that apply remote changes to local
     function handleOperations(operations: Array<OperationInfo>) {
@@ -189,10 +196,13 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
   // code editor 관련
   useEffect(() => {
-    initYorkie();
+    // @ts-ignore
+    initYorkie(doc);
   }, []);
 
+  //1
   const handleInitButton = async () => {
+    // @ts-ignore
     doc.update((root: any) => {
       root.content.edit(0, root.content.length, "");
     }, "init content");
