@@ -54,7 +54,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
           >
             <div>{index + 1}</div>
             {/* 만약 해당 문제가 제출되었다면 체크 표시 */}
-            <S.CheckIcon />
+            {/* <S.CheckIcon /> */}
           </S.ProblemNumber>
         ))}
       </div>
