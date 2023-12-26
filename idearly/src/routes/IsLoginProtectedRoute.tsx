@@ -10,7 +10,7 @@ export const IsLoginProtectedRoute = () => {
   useEffect(() => {
     // 현재 로그인 상태라면 홈 페이지로 리다이렉트
     if (userInfo.isLogin) {
-      navigate("/", { replace: true });
+      navigate("/");
     }
   }, [userInfo.isLogin, navigate]);
 
