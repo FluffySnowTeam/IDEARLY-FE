@@ -58,7 +58,6 @@ const router = createBrowserRouter([
             path: "/algorithm-solving/:id",
             element: <AlgorithmSolvingPage />,
           },
-
           {
             path: "/complete",
             element: <CompletePage />,

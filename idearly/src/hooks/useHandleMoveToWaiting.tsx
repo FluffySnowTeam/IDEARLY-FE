@@ -34,10 +34,19 @@ const useHandleMoveToWaiting = (competition?: ICompetition) => {
     now.setHours(0, 0, 0, 0);
     startDate.setHours(0, 0, 0, 0);
 
-    navigate(`/waiting/${competitionId}`);
-    // if (participate === false) {
-    //   navigate("/matching");
-    // }
+    if (startDate.getTime() === now.getTime()) {
+      // 만약 대회 날짜가 오늘이면
+      navigate(`/waiting/${competitionId}`);
+    } else if (participate === false) {
+      navigate(`/matching/${competitionId}`);
+    } else {
+      // 대회 날짜가 오늘이 아니면 모달 표시
+      onOpen();
+      setOverlay(<OverlayOne />);
+    }
+
+    // 만약 대회에 소속된 팀이 없다면?
+    // navigate(`/matching`);
   }, [navigate, competitionId, startDateTime, participate, onOpen, setOverlay]);
 
   return { isOpen, onClose, overlay, handleMoveToWaiting };
