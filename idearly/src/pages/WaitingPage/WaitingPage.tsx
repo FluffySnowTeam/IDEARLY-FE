@@ -48,7 +48,6 @@ export const WaitingPage = () => {
   }, [problemIds]);
 
   const { title: compeTitle, startDateTime, endDateTime, teamId } = competition;
-  console.log("competition", competition);
 
   const { timeLeft, timerVisible } = useCompetitionTimer(
     startDateTime,
@@ -59,7 +58,7 @@ export const WaitingPage = () => {
   const handleMoveToAlgorithmSolving = () => {
     if (problemIds) {
       navigate(
-        `algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${problemList[0]}`
+        `/algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${problemList[0]}`
       );
     }
   };
