@@ -49,6 +49,13 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const viewRef = useRef<EditorView | undefined>();
   let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
 
+  const [docKey, setDocKey] = useState(problemId);
+
+  useEffect(() => {
+    setDocKey(problemId);
+  }, [problemId]);
+
+  console.log("doc key: ", docKey);
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
 
