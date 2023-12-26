@@ -123,16 +123,6 @@ export const AlgorithmVoiceChat = () => {
 
   return (
     <div>
-      연결 확인 로그용
-      <div id="status">{statusText}</div>
-      <div id="log-list">
-        <h3>Log</h3>
-        <ul id="log">
-          {logs.map((log, index) => (
-            <li key={index}>{log}</li>
-          ))}
-        </ul>
-      </div>
       <span
         onClick={() => {
           toggleFeature("micOn");
