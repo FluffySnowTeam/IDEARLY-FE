@@ -39,12 +39,9 @@ export const submitCode = async (
   return response.data;
 };
 
-export const getAlgorithmProblem = async (
-  problemId: number,
-  language: string
-) => {
+export const getAlgorithmProblem = async (problemId: number) => {
   const response = await axiosInstance.get(
-    `/api/competitions/{competitionId}/problems/${problemId}?language=${language}`
+    `/api/competitions/{competitionId}/problems/${problemId}?language=PYTHON`
   );
   return response;
 };

@@ -1,14 +1,16 @@
-import { executeResult } from "../../../../../../mocks/algorithmResult.mock";
 import * as S from "./AlgorithmSubmitResult.styles";
+import { useAtomValue } from "jotai";
+import { executeResultAtom } from "../../../../../../store/Algorithm.atoms";
 
 export const AlgorithmSubmitResult = () => {
-  console.log(executeResult);
+  const executeResult = useAtomValue(executeResultAtom);
+  console.log("executeResult: ", executeResult);
 
   // 실행인지 제출인지 여부에 따라 렌더링 결정
 
   return (
     <S.AlgorithmResultContainer>
-      {executeResult.data.testcases.map((test) => (
+      {executeResult.map((test) => (
         <div key={test.testCaseId}>
           <S.TestCaseContainer>
             <S.ResultContainer>

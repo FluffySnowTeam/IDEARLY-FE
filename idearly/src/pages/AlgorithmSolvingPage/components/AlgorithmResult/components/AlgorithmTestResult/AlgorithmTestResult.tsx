@@ -1,14 +1,14 @@
-import { testResult } from "../../../../../../mocks/algorithmResult.mock";
+import { testResultAtom } from "../../../../../../store/Algorithm.atoms";
 import * as S from "./AlgorithmTestResult.styles";
+import { useAtomValue } from "jotai";
 
 export const AlgorithmTestResult = () => {
-  console.log(testResult);
-
-  // 실행인지 제출인지 여부에 따라 렌더링 결정
+  const testResult = useAtomValue(testResultAtom);
+  console.log("testResult: ", testResult);
 
   return (
     <S.AlgorithmResultContainer>
-      {testResult.data.map((test) => (
+      {testResult.map((test) => (
         <div key={test.testCaseId}>
           <S.TestCaseContainer>
             <S.TestCase>테스트 {test.testCaseId}</S.TestCase>
