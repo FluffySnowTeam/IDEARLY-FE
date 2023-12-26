@@ -10,10 +10,3 @@ export type ICompetitionResponse = {
   startDateTime: string;
   title: string;
 };
-
-export type IOneCompetition = {
-  competitionId: number;
-  endDateTime: string;
-  startDateTime: string;
-  title: string;
-};
