@@ -1,18 +1,21 @@
 import { useState } from "react";
 import ConnectLive from "@connectlive/connectlive-web-sdk";
 import type { IRoom, ILocalMedia } from "@connectlive/connectlive-web-sdk";
+import { useSearchParams } from "react-router-dom";
 
 export const AlgorithmVoiceChat = () => {
   const [localMedia, setLocalMedia] = useState<ILocalMedia | null>(null);
   const [room, setRoom] = useState<IRoom | null>(null);
   const [statusText, setStatusText] = useState<string>("Disconnected");
   const [logs, setLogs] = useState<string[]>(["Ready to connect"]);
-  const roomId = "icl-voice-call";
+  // const roomId = "icl-voice-call";
   const k1 = "ZY2JWWA";
   const k2 = "3GQTR";
   const s1 = "ZY2JWWA3G";
   const s2 = "QTR8S1X:oJBg";
   const s3 = "COsX0G77EGNh";
+  const [searchParams] = useSearchParams();
+  const teamId = searchParams.get("teamId");
 
   const addLog = (text: string) => {
     setLogs((prevLogs) => [...prevLogs, text]);
@@ -46,7 +49,14 @@ export const AlgorithmVoiceChat = () => {
       setRoom(newRoom);
       addLog("Conference Created");
 
-      await newRoom.connect(roomId);
+      // teamId
+      if (teamId) {
+        await newRoom.connect(teamId);
+      } else {
+        // teamId가 null일 때의 처리
+        console.error("teamId is null");
+        // 또는 기본값을 사용하거나 다른 처리를 할 수 있습니다.
+      }
       await newRoom.publish([newLocalMedia]);
       addLog("Voice Connected");
 
