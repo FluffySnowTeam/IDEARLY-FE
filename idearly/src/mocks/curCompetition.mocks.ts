@@ -1,6 +1,6 @@
-import { ICompetition } from "../pages/MyPage/components/MyPgaeCurrentTeam/MyPageCurrentTeam.types";
+import { ITeam } from "../pages/MyPage/components/MyPgaeCurrentTeam/MyPageCurrentTeam.types";
 
-export const curCompetition: ICompetition[] = [
+export const curCompetition: ITeam[] = [
   {
     teamId: 123,
     teamName: "snow",

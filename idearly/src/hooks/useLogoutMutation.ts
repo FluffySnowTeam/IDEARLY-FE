@@ -17,7 +17,6 @@ export const useLogoutMutation = () => {
     },
     onSuccess: (data) => {
       console.log(data);
-      // setIsLoginState(false);
       setUserInfoState({
         authority: "",
         memberId: "",
