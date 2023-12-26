@@ -1,6 +1,7 @@
 import { Input, Textarea } from "@chakra-ui/react";
 import { CompetitionInfoFormConfig } from "../../../../../../constants";
 import { PropsWithChildren } from "react";
+import * as S from "./CompetitionInfoForm.styles";
 import type { ICompetitionInfoForm } from "./CompetitionInfoForm.types";
 
 export const CompetitionInfoForm = ({
@@ -10,11 +11,12 @@ export const CompetitionInfoForm = ({
   return (
     <div>
       {CompetitionInfoFormConfig.map((formConfig) => (
-        <div key={formConfig.name}>
+        <S.CompetitionInfoFormContainer key={formConfig.name}>
           <div>{formConfig.label}</div>
           {formConfig.type !== "textarea" ? (
             <Input
               value={formData[formConfig.name]}
+              placeholder={formConfig.placeholder}
               onChange={(e) => {
                 handleChange(formConfig.name, e.target.value);
               }}
@@ -22,12 +24,13 @@ export const CompetitionInfoForm = ({
           ) : (
             <Textarea
               value={formData[formConfig.name]}
+              placeholder={formConfig.placeholder}
               onChange={(e) => {
                 handleChange(formConfig.name, e.target.value);
               }}
             />
           )}
-        </div>
+        </S.CompetitionInfoFormContainer>
       ))}
     </div>
   );

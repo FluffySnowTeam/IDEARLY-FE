@@ -59,4 +59,23 @@ export const chatDate = ({ date }: { date: string }) => {
   return `${getHour(dateObj)}:${getMinutes(dateObj)}`;
 };
 
-export const formDateChange = ({ date }: { date: string }) => {};
+export const formDateChange = ({ date }: { date: string }) => {
+  const regex = /^\d{8}\/\d{4}$/;
+  // 입력된 문자열이 정규 표현식과 일치하는지 검사
+  if (!regex.test(date)) {
+    alert("날짜 형식이 올바르지 않습니다. 올바른 형식: YYYYMMDD/HHMM");
+    return;
+  }
+  // 입력된 날짜와 시간을 분리합니다.
+  const [datePart, timePart] = date.split("/");
+
+  // 날짜와 시간을 YYYY-MM-DD와 HH:MM:SS 포맷으로 변환합니다.
+  const year = datePart.substring(0, 4);
+  const month = datePart.substring(4, 6);
+  const day = datePart.substring(6, 8);
+  const hour = timePart.substring(0, 2);
+  const minute = timePart.substring(2, 4);
+
+  // 변환된 포맷을 합쳐서 반환합니다.
+  return `${year}-${month}-${day}T${hour}:${minute}:00`;
+};

@@ -14,6 +14,7 @@ import type { IAddCompetitionModal } from "./AddCompetitionModal.types";
 import { CompetitionInfoForm } from "./components";
 import { CompetitionRequest } from "../../../../types";
 import { useAdminCompetitionMutation } from "../../../../hooks/useAdminCompetitionMutation";
+import { formDateChange } from "../../../../utils/dateChange";
 
 export const AddCompetitionModal = ({
   onClose,
@@ -56,8 +57,10 @@ export const AddCompetitionModal = ({
     if (allFieldsFilled) {
       mutate({
         title: formData.title,
-        startDateTime: formData.startDateTime,
-        endDateTime: formData.endDateTime,
+        startDateTime: formDateChange({
+          date: formData.startDateTime,
+        }) as string,
+        endDateTime: formDateChange({ date: formData.endDateTime }) as string,
         description: formData.description,
       });
     } else {
