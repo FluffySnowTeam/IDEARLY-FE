@@ -1,23 +1,44 @@
 import * as S from "./AlgorithmNav.styles";
 import type { Prop } from "./AlgorithmNav.types";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
 import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
-import { useAtomValue } from "jotai";
+import { useCompetitionProblemIdsMutation } from "../../../../hooks/useCompetitionMutation";
 import { problemListAtom } from "../../../../store";
+import { useAtom } from "jotai";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
-  const problemIds = useAtomValue(problemListAtom);
   const [searchParams] = useSearchParams();
   const teamId = searchParams.get("teamId");
-  const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
   const { id: competitionId } = useParams<{ id: string }>();
+  const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
+  const [problemList, setProblemList] = useAtom(problemListAtom);
+
+  console.log(problemList);
+
+  const {
+    data: problemIds,
+    mutate: problemsMutate,
+    status: problemStatus,
+  } = useCompetitionProblemIdsMutation();
+
+  useEffect(() => {
+    problemsMutate(Number(competitionId));
+  }, [competitionId, problemsMutate]);
+
+  useEffect(() => {
+    if (problemIds) {
+      setProblemList(problemIds.result.problemIdList);
+      console.log(problemIds.result.problemIdList);
+    }
+  }, [problemIds]);
+
   const navigate = useNavigate();
 
   const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
-    problemIds[0]
+    problemList[0]
   );
   const selectedStyle = {
     backgroundColor: "#01228a",
@@ -36,11 +57,14 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
       setSelectedProblemId(id);
     }
   };
+
+  if (problemStatus === "pending") return <div>...Loading</div>;
+
   return (
     <S.AlgorithmNavContainer>
       <AlgorithmExitModal isOpen={isOpen} onClose={onClose} />
       <div>
-        {problemIds.map((id, index) => (
+        {problemList.map((id, index) => (
           <S.ProblemNumber
             key={id}
             onClick={() => {
