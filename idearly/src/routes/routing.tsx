@@ -43,6 +43,10 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
+        path: "/matching/:competitionId",
+        element: <TeamMatchingPage />,
+      },
+      {
         element: <AdminProtectedRoute />,
         children: [
           {
@@ -58,7 +62,6 @@ const router = createBrowserRouter([
             path: "/algorithm-solving/:id",
             element: <AlgorithmSolvingPage />,
           },
-
           {
             path: "/complete",
             element: <CompletePage />,
@@ -67,10 +70,7 @@ const router = createBrowserRouter([
             path: "/mypage/:path",
             element: <MyPage />,
           },
-          {
-            path: "/matching/:competitionId",
-            element: <TeamMatchingPage />,
-          },
+
           {
             path: "/waiting/:id",
             element: <WaitingPage />,
