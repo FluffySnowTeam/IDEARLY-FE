@@ -53,6 +53,6 @@ interface IuseAlgorithmProblem {
 export const useAlgorithmProblem = () => {
   return useMutation({
     mutationFn: ({ competitionId, problemId }: IuseAlgorithmProblem) =>
-      getAlgorithmProblem(competitionId, problemId),
+      getAlgorithmProblem(String(competitionId), String(problemId)),
   });
 };

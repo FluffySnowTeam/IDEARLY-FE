@@ -40,8 +40,8 @@ export const submitCode = async (
 };
 
 export const getAlgorithmProblem = async (
-  competitionId: number,
-  problemId: number
+  competitionId: string,
+  problemId: string
 ) => {
   const response = await axiosInstance.get(
     `/api/competitions/${competitionId}/problems/${problemId}?language=PYTHON`

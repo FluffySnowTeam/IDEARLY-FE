@@ -14,11 +14,15 @@ export const AlgorithmProblem = () => {
   const [searchParams] = useSearchParams();
   const problemId = searchParams.get("problemId");
   const [problemsData, setProblemsData] = useState<IProblemsData>();
+  console.log("competitionId", competitionId);
+  console.log("problemId", problemId);
 
   const { data, status, mutate } = useAlgorithmProblem();
 
   useEffect(() => {
     if (problemId) {
+      console.log("competitionId", competitionId);
+      console.log("problemId", problemId);
       mutate({
         competitionId: Number(competitionId),
         problemId: Number(problemId),
