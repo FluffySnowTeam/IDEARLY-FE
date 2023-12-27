@@ -27,7 +27,7 @@ export const AlgorithmTestResult = ({
     }
   };
 
-  if (executeStatus === "pending") <LoadingComponent />;
+  if (executeStatus === "pending") return <LoadingComponent />;
 
   return (
     <S.AlgorithmResultContainer>

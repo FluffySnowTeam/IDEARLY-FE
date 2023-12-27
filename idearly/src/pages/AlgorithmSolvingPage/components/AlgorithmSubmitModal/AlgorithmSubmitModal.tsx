@@ -46,7 +46,7 @@ export const AlgorithmSubmitModal = ({
 
   executeResult.map((test) => console.log(test.status));
 
-  if (runStatus === "pending") <LoadingComponent />;
+  if (runStatus === "pending") return <LoadingComponent />;
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
