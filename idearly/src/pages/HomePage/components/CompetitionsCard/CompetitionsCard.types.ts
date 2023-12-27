@@ -1,4 +1,5 @@
 export interface ICompetitionCard {
+  isPrevCompe: boolean;
   competition: {
     competitionId: number;
     title: string;

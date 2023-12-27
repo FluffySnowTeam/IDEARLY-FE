@@ -6,6 +6,11 @@ export const getCompetitions = async () => {
   return response.data;
 };
 
+export const getPrevCompetitions = async () => {
+  const response = await axiosInstance.get("/api/competitions?available=false");
+  return response.data;
+};
+
 /**
 // {
     "competitionId": 1,
