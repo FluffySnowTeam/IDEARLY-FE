@@ -1,6 +1,6 @@
 import { Button, Td, Tr } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
-import { IWaitingCompetitionProp } from "../../MyPageCurrentTeam.types";
+import type { IWaitingCompetitionProp } from "../../MyPageCurrentTeam.types";
 import { dateChange } from "../../../../../../utils/dateChange";
 import * as S from "./WaitingTeamList.styles";
 import { useHandleInviteMutation } from "../../../../../../hooks/useMyPageMutation";
@@ -18,12 +18,10 @@ export const WaitingTeamList = ({
     leaderName,
     startDateTime,
   } = competition;
-
   const { mutate } = useHandleInviteMutation();
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
 
   const handleSuccess = () => {
-    // 삭제하기
     const accetedTeam = waitTeam.filter((team) => team.teamId == teamId)[0];
     setWaitTeam((prev) => prev.filter((team) => team.teamId !== teamId));
     try {
@@ -37,6 +35,7 @@ export const WaitingTeamList = ({
     setWaitTeam((prev) => prev.filter((team) => team.teamId !== teamId));
     mutate({ teamId, isAccept: false });
   };
+
   return (
     <Tr key={competitionId}>
       <Td>{competitionTitle}</Td>

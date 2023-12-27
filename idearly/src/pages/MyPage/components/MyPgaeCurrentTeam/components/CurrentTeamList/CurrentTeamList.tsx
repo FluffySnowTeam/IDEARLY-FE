@@ -1,7 +1,7 @@
 import { Button, Td, Tr } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import { dateChange } from "../../../../../../utils/dateChange";
-import { ICompetitionProp } from "../../MyPageCurrentTeam.types";
+import type { ICompetitionProp } from "../../MyPageCurrentTeam.types";
 
 export const CurrentTeamList = ({
   competition,
@@ -19,6 +19,7 @@ export const CurrentTeamList = ({
   const handleClick = () => {
     onClickTeamDetail(teamId);
   };
+
   return (
     <Tr key={competitionId}>
       <Td>{competitionTitle}</Td>

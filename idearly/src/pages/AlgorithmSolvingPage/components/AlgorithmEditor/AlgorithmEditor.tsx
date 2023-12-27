@@ -13,8 +13,6 @@ import { useAtomValue } from "jotai";
 import { AlgorithmTestResult } from "../AlgorithmTestResult/AlgorithmTestResult";
 import { useDisclosure } from "@chakra-ui/react";
 
-// const codeDummy = "def solution(arr):\n  answer = []\n  return answer";
-
 export const AlgorithmEditor = ({
   competitionId,
   problemId,

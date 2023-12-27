@@ -10,7 +10,6 @@ export const CompetitionsCard = ({
 }: PropsWithChildren<ICompetitionCard>) => {
   const navigate = useNavigate();
 
-  // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
     navigate(`/detail/${competition.competitionId}?prev=${isPrevCompe}`);
   };

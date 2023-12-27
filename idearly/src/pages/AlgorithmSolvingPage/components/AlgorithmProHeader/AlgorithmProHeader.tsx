@@ -9,6 +9,7 @@ export const AlgorithmProHeader = ({
     setLanguage(e.target.value);
   };
   const languages = ["python", "java", "javascript"];
+
   return (
     <S.AlgorithmContainer>
       <div>

@@ -3,7 +3,7 @@ import * as S from "./AdminUserPage.styles";
 import { UserInfoList } from "./components";
 import { fakeUserInfo } from "../../../../mocks/adminUserInfo.mocks";
 import { AdminUserPageConfig } from "../../../../constants";
-import { Pagination } from "../../../../components";
+import { LoadingComponent, Pagination } from "../../../../components";
 import { useEffect, useState } from "react";
 import { useAdminUserList } from "../../../../hooks/useAdminCompetitionMutation";
 import type { IUserListResponse } from "../../../../types/admin.types";
@@ -29,9 +29,8 @@ export const AdminUserPage = () => {
   }, [data]);
 
   if (status === "pending") {
-    return <span>Loading...</span>;
+    return <LoadingComponent />;
   }
-
   if (status === "error") {
     return <span>Error: {error?.message}</span>;
   }

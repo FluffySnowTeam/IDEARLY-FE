@@ -1,20 +1,18 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { ICompetitionsSection } from "./CompetitionsSection.types";
+import type { ICompetitionsSection } from "./CompetitionsSection.types";
 import * as S from "./CompetitionsSection.styles";
 import { CompetitionsCard } from "..";
 import { useCompetitionQuery } from "../../../../hooks/useCompetitionMutation";
-import { ICompetition } from "../../../../types";
+import type { ICompetition } from "../../../../types";
 import { useNavigate } from "react-router-dom";
+import { LoadingComponent } from "../../../../components";
 
 export const CompetitionsSection = ({
   config,
 }: PropsWithChildren<ICompetitionsSection>) => {
   const { title, subTitle } = config;
   const navigate = useNavigate();
-
-  const { competitionData, status, error } = useCompetitionQuery();
-
-  // 받아온 데이터로 상태 관리
+  const { competitionData, status } = useCompetitionQuery();
   const [competitions, setCompetitions] = useState<ICompetition[]>([]);
 
   useEffect(() => {
@@ -25,13 +23,11 @@ export const CompetitionsSection = ({
   }, [competitionData]);
 
   if (status === "pending") {
-    // 이후 시간이 남으면 스켈레톤 ui로 수정하기
-    <div>...Loading</div>;
+    <LoadingComponent />;
   }
 
   if (status === "error") {
     navigate("/error");
-    console.log(error);
   }
 
   return (

@@ -9,6 +9,7 @@ import {
   useCompetitionDetailMutation,
   useCompetitionProblemIdsMutation,
 } from "../../hooks/useCompetitionMutation";
+import { LoadingComponent } from "../../components";
 
 export const WaitingPage = () => {
   const navigate = useNavigate();
@@ -16,10 +17,20 @@ export const WaitingPage = () => {
   const { title, subTitle, content } = WaitingPageConfig;
   const [competition, setCompetition] = useAtom(competitionDataAtom);
   const [problemList, setProblemList] = useAtom(problemListAtom);
-
   const { data, mutate, status } = useCompetitionDetailMutation(
     Number(competitionId)
   );
+  const { title: compeTitle, startDateTime, endDateTime, teamId } = competition;
+  const { timeLeft, timerVisible } = useCompetitionTimer(
+    startDateTime,
+    endDateTime
+  );
+  const {
+    data: problemIds,
+    mutate: problemsMutate,
+    status: problemStatus,
+  } = useCompetitionProblemIdsMutation();
+
   useEffect(() => {
     mutate();
   }, [competitionId, mutate]);
@@ -30,12 +41,6 @@ export const WaitingPage = () => {
       setCompetition(newCompetition);
     }
   }, [data]);
-
-  const {
-    data: problemIds,
-    mutate: problemsMutate,
-    status: problemStatus,
-  } = useCompetitionProblemIdsMutation();
 
   useEffect(() => {
     problemsMutate(Number(competitionId));
@@ -48,14 +53,6 @@ export const WaitingPage = () => {
     }
   }, [problemIds]);
 
-  const { title: compeTitle, startDateTime, endDateTime, teamId } = competition;
-
-  const { timeLeft, timerVisible } = useCompetitionTimer(
-    startDateTime,
-    endDateTime
-  );
-
-  // algorithm-solving/${competitionId}?teamId=123&problemId=123
   const handleMoveToAlgorithmSolving = () => {
     if (problemIds && timerVisible) {
       navigate(
@@ -65,7 +62,7 @@ export const WaitingPage = () => {
   };
 
   if (status === "pending" && problemStatus === "pending")
-    return <div>...Loading</div>;
+    return <LoadingComponent />;
 
   return (
     <S.WaitingCardWrapper>

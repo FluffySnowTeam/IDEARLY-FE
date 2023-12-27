@@ -12,6 +12,7 @@ import {
   useAdminCompetitionProblems,
   useAdminTestCaseMutation,
 } from "../../../../hooks/useAdminCompetitionMutation";
+import { LoadingComponent } from "../../../../components";
 
 export const AddTestCaseModal = ({
   isOpen,
@@ -84,7 +85,7 @@ export const AddTestCaseModal = ({
     setSearchParams(searchParams);
   };
 
-  if (status === "pending") return <div>...Loading</div>;
+  if (status === "pending") return <LoadingComponent />;
 
   return (
     <S.TestcaseModalContainer isOpen={isOpen} onClose={onClose}>

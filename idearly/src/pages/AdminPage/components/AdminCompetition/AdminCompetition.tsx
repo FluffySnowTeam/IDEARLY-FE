@@ -2,7 +2,7 @@ import { Table, Th, Thead, Tr, useDisclosure } from "@chakra-ui/react";
 import * as S from "./AdminCompetition.styles";
 import { AdminCompePageConfig } from "../../../../constants";
 import { CompetitionInfoList } from "./components";
-import { Pagination } from "../../../../components";
+import { LoadingComponent, Pagination } from "../../../../components";
 import { useEffect, useState } from "react";
 import { AddProblemModal, AddTestCaseModal } from "..";
 import { AddCompetitionModal } from "../AddCompetitionModal/AddCompetitionModal";
@@ -44,7 +44,7 @@ export const AdminCompetition = () => {
   }, [data]);
 
   if (status === "pending") {
-    return <span>Loading...</span>;
+    return <LoadingComponent />;
   }
 
   if (status === "error") {

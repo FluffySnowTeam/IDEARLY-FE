@@ -23,7 +23,6 @@ export const AlgorithmSubmitModal = ({
   onClose,
 }: PropsWithChildren<Prop>) => {
   const executeResult = useAtomValue(executeResultAtom);
-  console.log("executeResult: ", executeResult);
 
   const printResult = (data: string) => {
     switch (data) {

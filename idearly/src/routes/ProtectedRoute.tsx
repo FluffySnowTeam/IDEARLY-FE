@@ -15,7 +15,6 @@ const ProtectedRoute = () => {
     if (!userInfo.isLogin) {
       navigate("/login");
     }
-    // 인터셉터 설정
     const axiosInterceptor = axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -27,7 +26,6 @@ const ProtectedRoute = () => {
             duration: 1000,
             isClosable: true,
           });
-          // 인증 오류가 발생하면 로그인 페이지로 리다이렉션
           navigate("/login");
         }
         if (error.response && error.response.status === 403) {
@@ -38,18 +36,13 @@ const ProtectedRoute = () => {
             duration: 1000,
             isClosable: true,
           });
-          // 이전 페이지로 리다이렉트
           const previousPath = location.state?.from?.pathname || "/";
-          navigate(previousPath, { replace: true }); // replace: true를 사용하여 히스토리 스택을 조작
-
-          // 뒤로 가기 방지를 위해 히스토리 스택에 새 항목 추가
-          navigate(0);
+          navigate(previousPath, { replace: true });
         }
         return Promise.reject(error);
       }
     );
 
-    // 컴포넌트가 언마운트될 때 인터셉터 제거
     return () => {
       axiosInstance.interceptors.response.eject(axiosInterceptor);
     };

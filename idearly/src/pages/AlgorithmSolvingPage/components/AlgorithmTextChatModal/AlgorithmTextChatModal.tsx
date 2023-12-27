@@ -1,4 +1,3 @@
-// sockJS + STOMPJS
 import {
   Modal,
   ModalContent,

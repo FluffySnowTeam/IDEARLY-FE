@@ -8,14 +8,15 @@ import { useAtom } from "jotai";
 import { competitionDataAtom } from "../../store";
 import MarkDownPost from "../../components/MarkdownContent/MarkdownContent";
 import { PrevCompeProblemList } from "./components";
+import { LoadingComponent } from "../../components";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const IsPrevCompetition = searchParams.get("prev") === "true";
   const [competition, setCompetition] = useAtom(competitionDataAtom);
-
   const { data, mutate, status } = useCompetitionDetailMutation(Number(id));
+
   useEffect(() => {
     mutate();
   }, [id, mutate]);
@@ -29,7 +30,7 @@ export const DetailPage = () => {
 
   const { handleMoveToWaiting } = useHandleMoveToWaiting(competition);
 
-  if (status === "pending") return <div>...Loading</div>;
+  if (status === "pending") return <LoadingComponent />;
 
   return (
     <>

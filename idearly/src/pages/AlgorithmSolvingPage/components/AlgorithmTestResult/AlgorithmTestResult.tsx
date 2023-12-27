@@ -5,7 +5,6 @@ import { testResultAtom } from "../../../../store/Algorithm.atoms";
 
 export const AlgorithmTestResult = () => {
   const testResult = useAtomValue(testResultAtom);
-  console.log("testResult: ", testResult);
   const printResult = (data: string) => {
     switch (data) {
       case "pass": {

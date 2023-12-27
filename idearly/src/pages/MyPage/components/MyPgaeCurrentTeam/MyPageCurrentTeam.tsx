@@ -16,16 +16,15 @@ import {
 } from "../../../../hooks/useMyPageMutation";
 import { useAtom, useAtomValue } from "jotai";
 import { curTeamAtom, userInfoAtom, waitTeamAtom } from "../../../../store";
+import { LoadingComponent } from "../../../../components";
 
 export const MyPageCurrentTeam = () => {
   const { competitionName, teamName, leaderName, date, manage, choose } =
     MyPageCurrentTeamConfig;
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const userInfo = useAtomValue(userInfoAtom);
   const [curTeam, setCurTeam] = useAtom(curTeamAtom);
   const [waitTeam, setWaitTeam] = useAtom(waitTeamAtom);
-
   const [teamId, setTeamId] = useState(0);
   const [isClick, setIsClick] = useState(false);
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
@@ -46,7 +45,6 @@ export const MyPageCurrentTeam = () => {
     isLoading,
   } = useTeamInfoQuery(isClick, teamId);
 
-  // 참가 대회 소속팀 / 대기중인 초대 현황 정보 불러오기
   useEffect(() => {
     if (curTeamStatus === "success" && curTeamData) {
       setCurTeam(curTeamData.result);
@@ -89,7 +87,8 @@ export const MyPageCurrentTeam = () => {
   };
 
   if (curTeamStatus === "pending" || waitTeamStatus === "pending" || isLoading)
-    return <p>Loading...</p>;
+    return <LoadingComponent />;
+
   if (curTeamError || waitTeamError || teamInfoError) return <p>Error</p>;
 
   return (

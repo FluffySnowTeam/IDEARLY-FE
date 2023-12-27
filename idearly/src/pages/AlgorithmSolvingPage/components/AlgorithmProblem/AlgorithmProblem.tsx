@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import MarkDownPost from "../../../../components/MarkdownContent/MarkdownContent";
+import { LoadingComponent } from "../../../../components";
 
 export const AlgorithmProblem = () => {
   const { id: competitionId } = useParams<{ id: string }>();
@@ -32,7 +33,7 @@ export const AlgorithmProblem = () => {
   }, [data]);
 
   if (status === "pending") {
-    return <S.AlgorithmContainer>Loading...</S.AlgorithmContainer>;
+    return <LoadingComponent />;
   }
   return (
     <S.AlgorithmContainer>
