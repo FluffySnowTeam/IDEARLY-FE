@@ -55,6 +55,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     }
 
     let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+    //docRef.current = doc;
 
     disactivateClient();
     initYorkie(doc);
@@ -74,10 +75,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
       if (!root.content) {
         root.content = new yorkie.Text();
       }
-
-      if (problemData) {
-        root.content.edit(0, root.content.length, problemData.code);
-      }
+      root.content.edit(0, root.content.length, problemData.code);
     }, "create content if not exists");
 
     // 02-2. subscribe document event.
