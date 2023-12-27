@@ -11,6 +11,20 @@ export default function MarkDownPost({ post }: postType) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
+          code({ node, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+            return match ? (
+              <pre style={{ backgroundColor: "#f5f5f5", padding: "15px" }}>
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              </pre>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
           hr() {
             return (
               <hr
@@ -119,14 +133,6 @@ export default function MarkDownPost({ post }: postType) {
                 }}
                 {...props}
               />
-            );
-          },
-          code({ node, className, children, ...props }) {
-            // `code` 태그로 간단하게 코드 블록을 표시합니다.
-            return (
-              <code className={className} {...props}>
-                {children}
-              </code>
             );
           },
           img: (image) => (
