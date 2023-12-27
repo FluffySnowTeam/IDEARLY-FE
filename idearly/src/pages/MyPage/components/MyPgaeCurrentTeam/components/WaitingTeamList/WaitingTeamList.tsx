@@ -45,8 +45,12 @@ export const WaitingTeamList = ({
       <Td>{dateChange({ date: startDateTime })}</Td>
       <Td>
         <S.ButtonGroup>
-          <Button onClick={handleSuccess}>수락</Button>
-          <Button onClick={handleReject}>거절</Button>
+          <Button onClick={handleSuccess} colorScheme="green">
+            수락
+          </Button>
+          <Button onClick={handleReject} colorScheme="red">
+            거절
+          </Button>
         </S.ButtonGroup>
       </Td>
     </Tr>
