@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { Client as StompClient } from "stompjs";
 
