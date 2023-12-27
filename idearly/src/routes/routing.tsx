@@ -13,9 +13,9 @@ import {
   TeamMatchingPage,
   WaitingPage,
 } from "../pages";
-// import ProtectedRoute from "./ProtectedRoute";
 import { IsLoginProtectedRoute } from "./IsLoginProtectedRoute";
 import { AdminProtectedRoute } from "./AdminProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,10 +43,6 @@ const router = createBrowserRouter([
         element: <DetailPage />,
       },
       {
-        path: "/matching/:competitionId",
-        element: <TeamMatchingPage />,
-      },
-      {
         element: <AdminProtectedRoute />,
         children: [
           {
@@ -56,33 +52,36 @@ const router = createBrowserRouter([
         ],
       },
       {
-        // element: <ProtectedRoute />,
-        // children: [
-        //   {
-        path: "/algorithm-solving/:id",
-        element: <AlgorithmSolvingPage />,
-      },
-      {
-        path: "/complete",
-        element: <CompletePage />,
-      },
-      {
-        path: "/mypage/:path",
-        element: <MyPage />,
-      },
-
-      {
-        path: "/waiting/:id",
-        element: <WaitingPage />,
-      },
-      {
-        path: "/error",
-        element: <ErrorPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/algorithm-solving/:id",
+            element: <AlgorithmSolvingPage />,
+          },
+          {
+            path: "/complete",
+            element: <CompletePage />,
+          },
+          {
+            path: "/mypage/:path",
+            element: <MyPage />,
+          },
+          {
+            path: "/matching/:competitionId",
+            element: <TeamMatchingPage />,
+          },
+          {
+            path: "/waiting/:id",
+            element: <WaitingPage />,
+          },
+          {
+            path: "/error",
+            element: <ErrorPage />,
+          },
+        ],
       },
     ],
   },
-  //   ],
-  // },
 ]);
 
 export default router;
