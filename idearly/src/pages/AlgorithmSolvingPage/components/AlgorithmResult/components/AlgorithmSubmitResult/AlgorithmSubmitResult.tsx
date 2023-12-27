@@ -8,6 +8,22 @@ export const AlgorithmSubmitResult = () => {
 
   // 실행인지 제출인지 여부에 따라 렌더링 결정
 
+  const result = (data: string) => {
+    switch (data) {
+      case "pass": {
+        return "통과";
+      }
+      case "failed": {
+        return "실패";
+      }
+      case "error": {
+        return "에러";
+      }
+      case "timeout": {
+        return "시간초과";
+      }
+    }
+  };
   return (
     <S.AlgorithmResultContainer>
       {executeResult.map((test) => (
@@ -17,7 +33,8 @@ export const AlgorithmSubmitResult = () => {
               <S.InfoText>
                 테스트 {test.testCaseId} {">"}
               </S.InfoText>
-              <S.ValueText>{test.status ? "통과" : "실패"}</S.ValueText>
+              {/* <S.ValueText>{test.status ? "통과" : "실패"}</S.ValueText> */}
+              <S.ValueText>{result(test.status)}</S.ValueText>
             </S.ResultContainer>
           </S.TestCaseContainer>
         </div>
