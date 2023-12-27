@@ -72,8 +72,26 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
     doc.update((root: any) => {
       if (!root.content) {
-        root.content = new yorkie.Text();
+        // root.content = new yorkie.Text();
+        // 하나하나 돌면서 값을 넣어준다.
+        let newContent = problemData.code;
+        newContent.split("").map((code, index) => {
+          doc.update((root: any) => {
+            root.content.edit(index, index + 1, code);
+          }, `update content byA ${client!.getID()}`);
+        });
       }
+      (
+        fromA: any,
+        toA: any,
+        _: any,
+        __: any,
+        inserted: { toJSON: () => any[] }
+      ) => {
+        doc.update((root: any) => {
+          root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
+        }, `update content byA ${client!.getID()}`);
+      };
     }, "create content if not exists");
 
     // 02-2. subscribe document event.
@@ -136,7 +154,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
     // 03-2. create codemirror instance
     const view = new EditorView({
-      doc: problemData.code,
+      doc: "",
       extensions: [basicSetup, python(), updateListener],
       parent: editorParentRef.current || undefined,
     });
@@ -175,7 +193,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     // @ts-ignore
     docRef.current.update((root: any) => {
       // root.content.edit(0, root.content.length, "");
-      root.content.edit(0, root.content.length, problemData.code);
+      root.content.edit(0, root.content.length, "");
     }, "init content");
 
     if (viewRef.current) {
