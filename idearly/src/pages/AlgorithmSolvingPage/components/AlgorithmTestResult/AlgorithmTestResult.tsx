@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
-import { testResultAtom } from "../../../../../../store/Algorithm.atoms";
 import * as S from "./AlgorithmTestResult.styles";
 import { useAtomValue } from "jotai";
+import { testResultAtom } from "../../../../store/Algorithm.atoms";
 
 export const AlgorithmTestResult = () => {
   const testResult = useAtomValue(testResultAtom);

@@ -8,9 +8,10 @@ import type { IAlgorithmEditor, YorkieDoc } from "./AlgorithmEditor.types";
 import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
-import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import { useAtomValue } from "jotai";
+import { AlgorithmTestResult } from "../AlgorithmTestResult/AlgorithmTestResult";
+import { AlgorithmSubmitResult } from "../AlgorithmSubmitResult/AlgorithmSubmitResult";
 
 // const codeDummy = "def solution(arr):\n  answer = []\n  return answer";
 

@@ -1,6 +1,6 @@
 import * as S from "./AlgorithmSubmitResult.styles";
 import { useAtomValue } from "jotai";
-import { executeResultAtom } from "../../../../../../store/Algorithm.atoms";
+import { executeResultAtom } from "../../../../store/Algorithm.atoms";
 
 export const AlgorithmSubmitResult = () => {
   const executeResult = useAtomValue(executeResultAtom);
