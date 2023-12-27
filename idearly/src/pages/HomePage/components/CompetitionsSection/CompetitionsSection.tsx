@@ -41,6 +41,7 @@ export const CompetitionsSection = ({
       <S.CompeCardContainer>
         {competitions?.map((competition) => (
           <CompetitionsCard
+            isPrevCompe={false}
             key={competition.competitionId}
             competition={competition}
           />

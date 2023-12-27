@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { dateChange } from "../../../../utils/dateChange";
 
 export const CompetitionsCard = ({
+  isPrevCompe,
   competition,
 }: PropsWithChildren<ICompetitionCard>) => {
   const navigate = useNavigate();
 
   // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
-    navigate(`/detail/${competition.competitionId}`);
+    navigate(`/detail/${competition.competitionId}?prev=${isPrevCompe}`);
   };
 
   return (
@@ -33,7 +34,7 @@ export const CompetitionsCard = ({
               대회 종료: {dateChange({ date: competition?.endDateTime })}
             </S.CompeText>
             <S.CardDetailButton onClick={handleMoveToDetail}>
-              대회 상세보기 및 참가하기
+              {isPrevCompe ? "이전 대회 문제보기" : "대회 상세보기 및 참가하기"}
             </S.CardDetailButton>
           </S.CompeCardBody>
         </S.CompeCardBox>
