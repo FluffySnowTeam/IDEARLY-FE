@@ -3,8 +3,9 @@ import * as S from "./AlgorithmProblem.styles";
 import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
+import remarkGfm from "remark-gfm";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
-import { MarkDownContent } from "../../../../components";
+// import { MarkDownContent } from "../../../../components";
 
 export const AlgorithmProblem = () => {
   const { id: competitionId } = useParams<{ id: string }>();
@@ -36,14 +37,14 @@ export const AlgorithmProblem = () => {
   }
   return (
     <S.AlgorithmContainer>
-      {/* <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
+      <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
         {problemsData?.name}
       </S.MarkdownContainer>
       <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
         {problemsData?.description}
-      </S.MarkdownContainer> */}
-      <MarkDownContent content={problemsData?.name} />
-      <MarkDownContent content={problemsData?.description} />
+      </S.MarkdownContainer>
+      {/* <MarkDownContent content={problemsData?.name} />
+      <MarkDownContent content={problemsData?.description} /> */}
     </S.AlgorithmContainer>
   );
 };
