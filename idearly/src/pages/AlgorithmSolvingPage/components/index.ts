@@ -6,3 +6,4 @@ export * from "./AlgorithmProblem/AlgorithmProblem";
 export * from "./AlgorithmProHeader/AlgorithmProHeader";
 export * from "./AlgorithmFooter/AlgorithmFooter";
 export * from "./AlgorithmExitModal/AlgorithmExitModal";
+export * from "./AlgorithmVoiceChatWebRTC/AlgorithmVoiceChatWebRTC";

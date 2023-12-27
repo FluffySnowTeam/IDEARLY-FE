@@ -8,6 +8,7 @@ import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
 import { useCompetitionProblemIdsMutation } from "../../../../hooks/useCompetitionMutation";
 import { problemListAtom } from "../../../../store";
 import { useAtom } from "jotai";
+import AlgorithmVoiceChatWebRTC from "../AlgorithmVoiceChatWebRTC/AlgorithmVoiceChatWebRTC";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const [searchParams] = useSearchParams();
@@ -79,7 +80,8 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         ))}
       </div>
       <S.NavIcons>
-        <AlgorithmVoiceChat />
+        <AlgorithmVoiceChatWebRTC />
+        {/* <AlgorithmVoiceChat /> */}
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>
