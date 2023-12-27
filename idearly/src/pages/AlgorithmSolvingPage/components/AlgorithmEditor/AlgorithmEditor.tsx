@@ -10,8 +10,8 @@ import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
-import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
-import { useAtomValue } from "jotai";
+// import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
+// import { useAtomValue } from "jotai";
 
 interface Prop {
   competitionId: string | undefined;
@@ -25,7 +25,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
   const docRef = useRef<typeof yorkie.Document | undefined>();
-  const problemData = useAtomValue(algorithmProblemsAtom);
+  // const problemData = useAtomValue(algorithmProblemsAtom);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
@@ -72,14 +72,14 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
     doc.update((root: any) => {
       if (!root.content) {
-        // root.content = new yorkie.Text();
+        root.content = new yorkie.Text();
         // 하나하나 돌면서 값을 넣어준다.
-        let newContent = problemData.code;
-        newContent.split("").map((code, index) => {
-          doc.update((root: any) => {
-            root.content.edit(index, index + 1, code);
-          }, `update content byA ${client!.getID()}`);
-        });
+        // let newContent = problemData.code;
+        // newContent.split("").map((code, index) => {
+        //   doc.update((root: any) => {
+        //     root.content.edit(index, index + 1, code);
+        //   }, `update content byA ${client!.getID()}`);
+        // });
       }
     }, "create content if not exists");
 
@@ -132,6 +132,13 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
               __: any,
               inserted: { toJSON: () => any[] }
             ) => {
+              console.log(
+                " [[[[[[[[ fromA:",
+                fromA,
+                "toA: ",
+                toA,
+                " ]]]]]]]]]]"
+              );
               doc.update((root: any) => {
                 root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
               }, `update content byA ${client!.getID()}`);
