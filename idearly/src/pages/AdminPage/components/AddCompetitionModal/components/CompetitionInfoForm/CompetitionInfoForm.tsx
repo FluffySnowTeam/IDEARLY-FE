@@ -1,4 +1,4 @@
-import { Input, Textarea } from "@chakra-ui/react";
+import { Input, Text, Textarea } from "@chakra-ui/react";
 import { CompetitionInfoFormConfig } from "../../../../../../constants";
 import { PropsWithChildren } from "react";
 import * as S from "./CompetitionInfoForm.styles";
@@ -12,7 +12,9 @@ export const CompetitionInfoForm = ({
     <div>
       {CompetitionInfoFormConfig.map((formConfig) => (
         <S.CompetitionInfoFormContainer key={formConfig.name}>
-          <div>{formConfig.label}</div>
+          <Text fontSize={"lg"} as="b" mb="1">
+            ▶︎ {formConfig.label}
+          </Text>
           {formConfig.type !== "textarea" ? (
             <Input
               value={formData[formConfig.name]}

@@ -1,5 +1,5 @@
-import { CloseIcon } from "@chakra-ui/icons";
-import { Input, ModalBody, Select, Textarea } from "@chakra-ui/react";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import { Input, ModalBody, Select, Text, Textarea } from "@chakra-ui/react";
 import { PropsWithChildren, useState } from "react";
 import * as S from "./AddTestCase.styles";
 import type { IAddTestCase } from "./AddTesxtCase.types";
@@ -66,14 +66,19 @@ export const AddTestCase = ({
           ></S.TestCaseDeleteButton>
         </S.TestCaseList>
       ))}
-      <div>입력값</div>
+      <Text fontSize="lg" as="b">
+        입력값
+      </Text>
       <Textarea
         value={testCaseValue.input}
         onChange={(e) => {
           setTestCaseValue({ ...testCaseValue, input: e.target.value });
         }}
+        mb="5"
       />
-      <div>히든여부</div>
+      <Text fontSize="lg" as="b">
+        히든여부
+      </Text>
       <Select
         value={testCaseValue.hidden.toString()}
         onChange={(e) => {
@@ -82,18 +87,22 @@ export const AddTestCase = ({
             hidden: e.target.value === "true",
           });
         }}
+        mb="5"
       >
         <option>false</option>
         <option>true</option>
       </Select>
-      <div>정답</div>
+      <Text fontSize="lg" as="b">
+        정답
+      </Text>
       <Input
         value={testCaseValue.answer}
         onChange={(e) => {
           setTestCaseValue({ ...testCaseValue, answer: e.target.value });
         }}
       />
-      <S.TestCaseAddButton onClick={handleAddTestCase}>
+      <S.TestCaseAddButton onClick={handleAddTestCase} colorScheme="facebook">
+        <AddIcon mr="2" />
         추가
       </S.TestCaseAddButton>
     </ModalBody>

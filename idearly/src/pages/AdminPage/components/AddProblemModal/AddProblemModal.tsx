@@ -47,11 +47,11 @@ export const AddProblemModal = ({
         <ModalCloseButton onClick={handleClose} />
         <AddProblem formData={formData} setFormData={setFormData} />
         <ModalFooter>
-          <Button onClick={handleSubmit} colorScheme="blue">
-            저장하기
-          </Button>
-          <Button variant="ghost" ml={3} onClick={handleClose}>
+          <Button colorScheme="gray" onClick={handleClose}>
             닫기
+          </Button>
+          <Button onClick={handleSubmit} colorScheme="facebook" ml={3}>
+            저장하기
           </Button>
         </ModalFooter>
       </ModalContent>

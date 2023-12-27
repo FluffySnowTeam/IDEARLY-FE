@@ -5,7 +5,7 @@ export const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0 2rem 0;
+  margin: 2rem 0 2rem 0;
 `;
 
 export const PaginationContainer = styled.div`
@@ -21,7 +21,7 @@ export const PaginationButton = styled(Button)`
   align-items: center;
   margin: 0.3rem;
   font-weight: bold;
-  background-color: ${(props) => (props.isActive ? "#319795" : "white")};
+  background-color: ${(props) => (props.isActive ? "#01228A" : "white")};
   color: ${(props) => (props.isActive ? "white" : "black")};
 `;
 

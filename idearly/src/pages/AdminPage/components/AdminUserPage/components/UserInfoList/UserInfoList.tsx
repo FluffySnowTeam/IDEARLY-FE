@@ -1,4 +1,4 @@
-import { Tbody, Td, Tr } from "@chakra-ui/react";
+import { Tbody, Td, Text, Tr } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import type { IUserInfoList } from "./UserInfoList.types";
 import * as S from "./UserInfoList.styles";
@@ -7,7 +7,6 @@ export const UserInfoList = ({
   userInfo,
 }: PropsWithChildren<IUserInfoList>) => {
   const { memberId, name, email, competitionTitleList, teamIdList } = userInfo;
-  const competitionStr = competitionTitleList.join(", "); // 쉼표로 구분하여 합치기
   const teamStr = teamIdList.join(", "); // 쉼표로 구분하여 합치기
   return (
     <Tbody>
@@ -27,7 +26,11 @@ export const UserInfoList = ({
         <Td>{memberId}</Td>
         <Td>{name}</Td>
         <Td>{email}</Td>
-        <S.WrapTextTd>{competitionStr}</S.WrapTextTd>
+        <S.WrapTextTd>
+          {competitionTitleList.map((title, index) => (
+            <Text key={index}>◆ {title}</Text>
+          ))}
+        </S.WrapTextTd>
         <S.WrapTextTd>{teamStr}</S.WrapTextTd>
       </Tr>
     </Tbody>
