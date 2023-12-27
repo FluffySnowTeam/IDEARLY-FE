@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { IValidationInput } from "./SignupValidationInput.types";
+import type { IValidationInput } from "./SignupValidationInput.types";
 import * as S from "./SignupValidationInput.styles";
 import { useEmailCheckMutation } from "../../../../hooks/useSignupMutation";
 

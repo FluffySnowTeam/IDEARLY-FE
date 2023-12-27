@@ -30,9 +30,10 @@ export const AlgorithmExitModal = ({ isOpen, onClose }: IExitModalProp) => {
       isClosable: true,
     });
     setTimeout(() => {
-      navigate("/"); // 종료 페이지로 이동으로 나중에 변경
+      navigate("/");
     }, 1000);
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

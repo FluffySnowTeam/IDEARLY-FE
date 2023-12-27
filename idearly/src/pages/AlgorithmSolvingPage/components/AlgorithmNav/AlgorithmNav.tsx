@@ -8,6 +8,7 @@ import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
 import { useCompetitionProblemIdsMutation } from "../../../../hooks/useCompetitionMutation";
 import { problemListAtom } from "../../../../store";
 import { useAtom } from "jotai";
+import { LoadingComponent } from "../../../../components";
 // import AlgorithmVoiceChatWebRTC from "../AlgorithmVoiceChatWebRTC/AlgorithmVoiceChatWebRTC";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
@@ -59,7 +60,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     }
   };
 
-  if (problemStatus === "pending") return <div>...Loading</div>;
+  if (problemStatus === "pending") return <LoadingComponent />;
 
   return (
     <S.AlgorithmNavContainer>

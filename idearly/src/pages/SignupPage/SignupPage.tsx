@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as S from "./SignupPage.styles";
 import { SignupForm } from "./components";
 import { RegisterSchemaType, SIGNUP_SCHEMA } from "../../schemas";
-import { IUserSignupRequest } from "../../types";
+import type { IUserSignupRequest } from "../../types";
 import { useSignupMutation } from "../../hooks/useSignupMutation";
 import { useNavigate } from "react-router-dom";
 import { useAtomValue } from "jotai";
@@ -27,9 +27,7 @@ export const SignupPage = () => {
     },
   });
   const watchedValues = watch();
-  // 폼이 오류 상태인지 확인
   const hasErrors = Object.keys(errors).length > 0;
-  // 폼이 현재 비어있는 상태인지 확인
   const isCurrentlyEmpty = Object.values(watchedValues).every(
     (value) => value === ""
   );
@@ -38,11 +36,11 @@ export const SignupPage = () => {
   );
   const isNoneOfTheConditionsTrue =
     isDirty && !hasErrors && !isCurrentlyEmpty && isAllFieldsFilled;
-
   const isEmailCheck = useAtomValue(EmailCheckAtom);
   const toast = useToast();
-
+  const navigate = useNavigate();
   const { mutate } = useSignupMutation();
+
   const handleSignup = (data: IUserSignupRequest) => {
     if (!isEmailCheck) {
       mutate({
@@ -60,8 +58,6 @@ export const SignupPage = () => {
       });
     }
   };
-
-  const navigate = useNavigate();
 
   const handleMoveToLogin = () => {
     navigate("/login");

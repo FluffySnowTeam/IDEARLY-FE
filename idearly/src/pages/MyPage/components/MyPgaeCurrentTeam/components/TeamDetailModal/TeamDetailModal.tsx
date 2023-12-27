@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import * as S from "./TeamDetailModal.styles";
 import { PropsWithChildren } from "react";
-import { IDetailTeamlModal } from "../../MyPageCurrentTeam.types";
+import type { IDetailTeamlModal } from "../../MyPageCurrentTeam.types";
 
 export const TeamDetailModal = ({
   isOpen,
@@ -19,6 +19,7 @@ export const TeamDetailModal = ({
   inviteMemberList,
 }: PropsWithChildren<IDetailTeamlModal>) => {
   const MAXMEMBER = 2;
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

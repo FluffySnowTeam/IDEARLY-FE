@@ -13,7 +13,6 @@ export const AddProblem = ({
     }));
   };
 
-  console.log(formData);
   return (
     <ModalBody>
       <div>

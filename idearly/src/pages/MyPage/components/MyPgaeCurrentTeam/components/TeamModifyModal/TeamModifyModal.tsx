@@ -9,13 +9,16 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
-import { IModifyTeamlModal, ITeamMember } from "../../MyPageCurrentTeam.types";
+import type {
+  IModifyTeamlModal,
+  ITeamMember,
+} from "../../MyPageCurrentTeam.types";
 import { AddTeamMembers } from "../../../../../../components/AddTeamMembers/AddTeamMembers";
-import { IUserType } from "../../../../../TeamMatchingPage/TeamMatchingPage.types";
+import type { IUserType } from "../../../../../TeamMatchingPage/TeamMatchingPage.types";
 import * as S from "./TeamModifyModal.styles";
 import { CloseIcon } from "@chakra-ui/icons";
 import { useModifyTeamMembersMutation } from "../../../../../../hooks/useMyPageMutation";
-import { IReqTeamMember } from "../../../../../../types";
+import type { IReqTeamMember } from "../../../../../../types";
 import { useAtomValue } from "jotai";
 import { userInfoAtom } from "../../../../../../store";
 
@@ -33,7 +36,7 @@ export const TeamModifyModal = ({
   const userInfo = useAtomValue(userInfoAtom);
   const { mutate } = useModifyTeamMembersMutation();
   const totalMemberNum = currentMemberList?.length + inviteMemberList?.length;
-  const isFullMember = totalMemberNum !== MAX_MEMBER; // 만약 팀 생성을 눌렀을 때, 인원이 다 안모였다면 활성화
+  const isFullMember = totalMemberNum !== MAX_MEMBER;
 
   const handleDropoutMember = (email: string) => {
     setCurrentMemberList(

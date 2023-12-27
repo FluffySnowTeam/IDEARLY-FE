@@ -5,16 +5,14 @@ import { usePrevCompetitionQuery } from "../../../../hooks/useCompetitionMutatio
 import { ICompetition } from "../../../../types";
 import { useNavigate } from "react-router-dom";
 import type { IPrevCompetitionsSection } from "./PrevCompetitionsSection.types";
+import { LoadingComponent } from "../../../../components";
 
 export const PrevCompetitionsSection = ({
   config,
 }: PropsWithChildren<IPrevCompetitionsSection>) => {
   const { title, subTitle } = config;
   const navigate = useNavigate();
-
   const { prevCompeData, status, error } = usePrevCompetitionQuery();
-
-  // 받아온 데이터로 상태 관리
   const [prevCompetitions, setPrevCompetitions] = useState<ICompetition[]>([]);
 
   useEffect(() => {
@@ -25,7 +23,7 @@ export const PrevCompetitionsSection = ({
   }, [prevCompeData]);
 
   if (status === "pending") {
-    <div>...Loading</div>;
+    <LoadingComponent />;
   }
 
   if (status === "error") {

@@ -14,14 +14,11 @@ export const AddTestCase = ({
     hidden: false,
   });
 
-  console.log(testCaseValue, testcaseData);
-
   const handleAddTestCase = () => {
     if (
       testCaseValue.input.trim() === "" ||
       testCaseValue.answer.trim() === ""
     ) {
-      console.log("모든 필드를 채워주세요.");
       return;
     }
     const randomId =
