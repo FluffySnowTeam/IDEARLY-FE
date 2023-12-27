@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import SockJS from "sockjs-client";
-import Stomp from "stompjs";
-import { Client as StompClient } from "stompjs";
+// import Stomp from "stompjs";
+// import { Client as StompClient } from "@stomp/stompjs";
+import * as Stomp from "@stomp/stompjs";
 
 const AlgorithmVoiceChatWebRTC = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +12,8 @@ const AlgorithmVoiceChatWebRTC = () => {
   const [localStream, setLocalStream] = useState<MediaStream | undefined>(
     undefined
   );
-  const stompClient = useRef<StompClient | null>(null);
+  //const stompClient = useRef(null);
+  const stompClient = useRef<Stomp.Client | null>(null);
   const pcListMap = useRef<Map<string, RTCPeerConnection>>(new Map());
   const [remoteStreams, setRemoteStreams] = useState<{
     [key: string]: MediaStream;
@@ -42,7 +43,7 @@ const AlgorithmVoiceChatWebRTC = () => {
   useEffect(() => {
     if (myKey && stompClient.current) {
       console.log("myKey", myKey);
-      stompClient.current.send(`/app/call/key`);
+      stompClient.current.publish({ destination: `/app/call/key`, body: " " });
     }
   }, [myKey]);
 
@@ -98,19 +99,22 @@ const AlgorithmVoiceChatWebRTC = () => {
   const connectSocket = async () => {
     console.log("connectSocket");
     if (myKey === undefined) {
-      const socket = new SockJS("https://idearly.site/ws/signaling");
-      stompClient.current = Stomp.over(socket);
-      //   stompClient.current.debug = null;
+      // const socket = new WebSocket("wss://idearly.site/ws/signaling");
+      // stompClient.current = Stomp.over(socket);
+      stompClient.current = new Stomp.Client({
+        brokerURL: "wss://idearly.site/ws/signaling",
+      });
+      stompClient.current.activate();
     }
     if (stompClient.current) {
-      stompClient.current.connect({}, function () {
+      stompClient.current.onConnect = () => {
         console.log("Connected to WebRTC server");
 
         stompClient.current?.subscribe(`/topic/user/connected`, (message) => {
           const connectedKey = JSON.parse(message.body).sessionId;
           updateMyKey(connectedKey);
         });
-      });
+      };
     }
   };
 
@@ -187,14 +191,13 @@ const AlgorithmVoiceChatWebRTC = () => {
 
       const sendIceCandidate = () => {
         if (stompClient.current && pc && pc.remoteDescription) {
-          stompClient.current.send(
-            `/app/peer/iceCandidate/${otherKey}/${teamId}`,
-            {},
-            JSON.stringify({
+          stompClient.current.publish({
+            destination: `/app/peer/iceCandidate/${otherKey}/${teamId}`,
+            body: JSON.stringify({
               key: myKey,
               body: event.candidate,
-            })
-          );
+            }),
+          });
         }
       };
 
@@ -223,14 +226,13 @@ const AlgorithmVoiceChatWebRTC = () => {
   const sendOffer = (pc: RTCPeerConnection, otherKey: string) => {
     pc.createOffer().then((offer) => {
       pc.setLocalDescription(offer).then(() => {
-        stompClient.current?.send(
-          `/app/peer/offer/${otherKey}/${teamId}`,
-          {},
-          JSON.stringify({
+        stompClient.current?.publish({
+          destination: `/app/peer/offer/${otherKey}/${teamId}`,
+          body: JSON.stringify({
             key: myKey,
             body: offer,
-          })
-        );
+          }),
+        });
         console.log("Send offer");
       });
     });
@@ -239,14 +241,13 @@ const AlgorithmVoiceChatWebRTC = () => {
   const sendAnswer = (pc: RTCPeerConnection, otherKey: string) => {
     pc.createAnswer().then((answer) => {
       pc.setLocalDescription(answer).then(() => {
-        stompClient.current?.send(
-          `/app/peer/answer/${otherKey}/${teamId}`,
-          {},
-          JSON.stringify({
+        stompClient.current?.publish({
+          destination: `/app/peer/answer/${otherKey}/${teamId}`,
+          body: JSON.stringify({
             key: myKey,
             body: answer,
-          })
-        );
+          }),
+        });
         console.log("Send answer");
       });
     });
@@ -391,7 +392,10 @@ const AlgorithmVoiceChatWebRTC = () => {
       stompClient.current?.subscribe(`/topic/call/key`, () => {
         // 자신의 key를 보내는 send
         console.log("보내는 key", myKey);
-        stompClient.current?.send(`/app/send/key`, {}, JSON.stringify(myKey));
+        stompClient.current?.publish({
+          destination: `/app/send/key`,
+          body: JSON.stringify(myKey),
+        });
       });
 
       // 상대방의 key를 받는 subscribe

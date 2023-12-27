@@ -21,6 +21,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*", // 기존의 src 폴더 내 모든 파일 포함
+    "src/types/MarkDownPost.d.ts" // 사용자 정의 타입 선언 파일 경로 추가
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
