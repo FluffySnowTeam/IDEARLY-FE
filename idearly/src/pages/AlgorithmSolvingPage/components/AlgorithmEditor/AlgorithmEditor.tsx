@@ -1,21 +1,25 @@
+// algorithmEditor.tsx
 import { useEffect, useRef, useState } from "react";
 import yorkie, { Client, OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
-import type { IAlgorithmEditor, YorkieDoc } from "./AlgorithmEditor.types";
+// import { yorkie_key } from "./yorkie_api.json";
+import { YorkieDoc } from "./AlgorithmEditor.types";
 import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
-import { useAtomValue } from "jotai";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
+import { useAtomValue } from "jotai";
 
-export const AlgorithmEditor = ({
-  competitionId,
-  problemId,
-  teamId,
-}: IAlgorithmEditor) => {
+interface Prop {
+  competitionId: string | undefined;
+  problemId: string | null;
+  teamId: string | null;
+}
+
+export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
   let client: Client | null;
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
@@ -51,7 +55,6 @@ export const AlgorithmEditor = ({
     }
 
     let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
-    //docRef.current = doc;
 
     disactivateClient();
     initYorkie(doc);
@@ -71,30 +74,20 @@ export const AlgorithmEditor = ({
       if (!root.content) {
         root.content = new yorkie.Text();
       }
-      root.content.edit(0, root.content.length, problemData.code);
     }, "create content if not exists");
 
     // 02-2. subscribe document event.
     const syncText = () => {
-      if (viewRef.current && problemData) {
-        const updateEditor = {
+      const text = doc.getRoot().content;
+      if (viewRef.current) {
+        viewRef.current.dispatch({
           changes: {
             from: 0,
             to: viewRef.current.state.doc.length,
-            insert: problemData.code || "",
+            insert: text.toString(),
           },
           annotations: [Transaction.remote.of(true)],
-        };
-        viewRef.current.dispatch(updateEditor);
-        // const text = doc.getRoot().content;
-        // viewRef.current.dispatch({
-        //   changes: {
-        //     from: 0,
-        //     to: viewRef.current.state.doc.length,
-        //     insert: text.toString(),
-        //   },
-        //   annotations: [Transaction.remote.of(true)],
-        // });
+        });
       }
     };
 
@@ -143,7 +136,7 @@ export const AlgorithmEditor = ({
 
     // 03-2. create codemirror instance
     const view = new EditorView({
-      doc: "",
+      doc: problemData.code,
       extensions: [basicSetup, python(), updateListener],
       parent: editorParentRef.current || undefined,
     });
@@ -181,7 +174,8 @@ export const AlgorithmEditor = ({
   const handleInitButton = async () => {
     // @ts-ignore
     docRef.current.update((root: any) => {
-      root.content.edit(0, root.content.length, "");
+      // root.content.edit(0, root.content.length, "");
+      root.content.edit(0, root.content.length, problemData.code);
     }, "init content");
 
     if (viewRef.current) {
