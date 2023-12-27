@@ -115,11 +115,15 @@ export const AddTestCaseModal = ({
           setTestcaseData={setTestcaseData}
         />
         <S.TestcaseModalFooter>
-          <S.TestcaseButton onClick={handleSubmit} colorScheme="blue">
-            저장하기
-          </S.TestcaseButton>
-          <S.TestcaseButton variant="ghost" ml={3} onClick={handleClose}>
+          <S.TestcaseButton colorScheme="gray" onClick={handleClose}>
             닫기
+          </S.TestcaseButton>
+          <S.TestcaseButton
+            ml={3}
+            onClick={handleSubmit}
+            colorScheme="facebook"
+          >
+            저장하기
           </S.TestcaseButton>
         </S.TestcaseModalFooter>
       </S.TestcaseModalContent>

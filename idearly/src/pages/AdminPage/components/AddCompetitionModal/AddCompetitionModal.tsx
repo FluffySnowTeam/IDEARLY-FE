@@ -91,10 +91,10 @@ export const AddCompetitionModal = ({
           />
         </ModalBody>
         <ModalFooter>
-          <Button variant="ghost" mr={3} onClick={handleCloseModal}>
+          <Button colorScheme="gray" mr={3} onClick={handleCloseModal}>
             닫기
           </Button>
-          <Button onClick={handleSubmit} colorScheme="blue" mr={3}>
+          <Button onClick={handleSubmit} colorScheme="facebook" mr={3}>
             저장하기
           </Button>
         </ModalFooter>

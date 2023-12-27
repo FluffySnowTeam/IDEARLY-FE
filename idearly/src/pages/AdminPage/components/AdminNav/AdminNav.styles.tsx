@@ -24,4 +24,8 @@ export const AdminNavSubTitle = styled.div`
   cursor: pointer;
   margin-bottom: 1.4rem;
   font-size: 1rem;
+  :hover {
+    color: #13228a;
+    font-weight: bold;
+  }
 `;
