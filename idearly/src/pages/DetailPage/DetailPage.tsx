@@ -1,5 +1,4 @@
 import { useParams, useSearchParams } from "react-router-dom";
-import { Button } from "@chakra-ui/react";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
 import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
