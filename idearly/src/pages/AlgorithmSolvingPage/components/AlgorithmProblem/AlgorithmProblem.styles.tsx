@@ -10,6 +10,11 @@ export const AlgorithmContainer = styled(Box)`
   overflow-y: scroll;
 `;
 
+export const AlgorithmTitle = styled.div`
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+
 export const MarkdownContainer = styled(ReactMarkdown)`
   overflow: auto;
   height: 90vh;
