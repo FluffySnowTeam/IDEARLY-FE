@@ -3,6 +3,7 @@ import {
   getCompetitionDetail,
   getCompetitions,
 } from "../services/apis/competition.apis";
+import { getCompetitionProblemIds } from "../services/apis/waiting.apis";
 
 export const useCompetitionDetailMutation = (competitionId: number) => {
   return useMutation({
@@ -27,4 +28,18 @@ export const useCompetitionQuery = () => {
     staleTime: 2 * 60 * 1000,
   });
   return { competitionData, status, error };
+};
+
+//ICompetitionProblemIds
+export const useCompetitionProblemIdsMutation = () => {
+  return useMutation({
+    mutationFn: (competitionId: number) =>
+      getCompetitionProblemIds(competitionId),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.error("error", error);
+    },
+  });
 };

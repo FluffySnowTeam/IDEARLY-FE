@@ -55,8 +55,18 @@ export const chatDate = ({ date }: { date: string }) => {
   if (!date) {
     return "유효하지 않은 날짜";
   }
+
   const dateObj = new Date(date);
-  return `${getHour(dateObj)}:${getMinutes(dateObj)}`;
+
+  // 한국 시간(KST, UTC+9)으로 조정합니다.
+  dateObj.setHours(dateObj.getHours() + 9);
+
+  // 시간과 분을 추출합니다
+  const hours = dateObj.getHours().toString().padStart(2, "0");
+  const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+
+  // 변환된 날짜 형식을 반환합니다.
+  return `${hours}:${minutes}`;
 };
 
 export const formDateChange = ({ date }: { date: string }) => {

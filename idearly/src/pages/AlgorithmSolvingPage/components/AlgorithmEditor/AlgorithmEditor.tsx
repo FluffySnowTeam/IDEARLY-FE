@@ -1,6 +1,6 @@
 // algorithmEditor.tsx
 import { useEffect, useRef, useState } from "react";
-import yorkie, { OperationInfo } from "yorkie-js-sdk";
+import yorkie, { Client, OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
@@ -10,6 +10,8 @@ import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
+import { useAtomValue } from "jotai";
+import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 
 interface Prop {
   competitionId: string | undefined;
@@ -18,10 +20,12 @@ interface Prop {
 }
 
 export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
+  let client: Client | null;
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
-  const doc = new yorkie.Document<YorkieDoc>(`${teamId}_${problemId}`);
+  const docRef = useRef<typeof yorkie.Document | undefined>();
+  const problemData = useAtomValue(algorithmProblemsAtom);
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
@@ -38,23 +42,40 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     setResultState("submit");
   };
 
-  const initYorkie = async () => {
+  useEffect(() => {
+    const disactivateClient = async () => {
+      if (client) {
+        await client.deactivate();
+      }
+    };
+
+    if (viewRef.current) {
+      viewRef.current.destroy();
+      viewRef.current = undefined;
+    }
+
+    let doc = new yorkie.Document<YorkieDoc>(`${teamId}___${problemId}`);
+    //docRef.current = doc;
+
+    disactivateClient();
+    initYorkie(doc);
+  }, [problemId]);
+
+  const initYorkie = async (doc: any) => {
     // 01. create client with RPCAddr(envoy) then activate it.
-    const client = new yorkie.Client("https://api.yorkie.dev", {
-      // apiKey: yorkie_key,
-      apiKey: import.meta.env.VITE_REACT_APP_YORKIE_API_KEY,
+    client = new yorkie.Client("https://api.yorkie.dev", {
+      apiKey: import.meta.env.VITE_APP_YORKIE_API_KEY,
     });
     await client.activate();
 
     // 02-1. create a document then attach it into the client.
-
-    // teamId로 구성! -> teamId는 어떻게 넘어오지?
     await client.attach(doc);
 
     doc.update((root: any) => {
       if (!root.content) {
         root.content = new yorkie.Text();
       }
+      root.content.edit(0, root.content.length, problemData.code);
     }, "create content if not exists");
 
     // 02-2. subscribe document event.
@@ -85,7 +106,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
         handleOperations(operations);
       }
     });
-
     await client.sync();
 
     // 03-1. define function that bind the document with the codemirror(broadcast local changes to peers)
@@ -109,7 +129,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
             ) => {
               doc.update((root: any) => {
                 root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
-              }, `update content byA ${client.getID()}`);
+              }, `update content byA ${client!.getID()}`);
             }
           );
         }
@@ -124,6 +144,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     });
 
     viewRef.current = view;
+    docRef.current = doc;
 
     // 03-3. define event handler that apply remote changes to local
     function handleOperations(operations: Array<OperationInfo>) {
@@ -152,13 +173,9 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     syncText();
   };
 
-  // code editor 관련
-  useEffect(() => {
-    initYorkie();
-  }, []);
-
   const handleInitButton = async () => {
-    doc.update((root: any) => {
+    // @ts-ignore
+    docRef.current.update((root: any) => {
       root.content.edit(0, root.content.length, "");
     }, "init content");
 

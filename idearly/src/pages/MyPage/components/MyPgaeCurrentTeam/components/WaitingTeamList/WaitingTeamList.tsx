@@ -25,7 +25,7 @@ export const WaitingTeamList = ({
   const handleSuccess = () => {
     // 삭제하기
     const accetedTeam = waitTeam.filter((team) => team.teamId == teamId)[0];
-    setWaitTeam((prev) => prev.filter((team) => team.teamId == teamId));
+    setWaitTeam((prev) => prev.filter((team) => team.teamId !== teamId));
     try {
       mutate({ teamId, isAccept: true });
     } catch {
@@ -34,7 +34,7 @@ export const WaitingTeamList = ({
   };
 
   const handleReject = () => {
-    setWaitTeam((prev) => prev.filter((team) => team.teamId == teamId));
+    setWaitTeam((prev) => prev.filter((team) => team.teamId !== teamId));
     mutate({ teamId, isAccept: false });
   };
   return (

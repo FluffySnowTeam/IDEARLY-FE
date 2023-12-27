@@ -2,6 +2,11 @@ FROM node:lts as build
 
 WORKDIR /app
 
+# Set environment variables
+ENV VITE_APP_KAKAO_ID=DX636IQUIWZK \
+    VITE_APP_KAKAO_SECRET_KEY=DX636IQUIWZK5TIA:ezmzIaUc81b7qrt5 \
+    VITE_APP_YORKIE_API_KEY=clskuqbj2k70uv115dv0
+
 COPY idearly/package.json .
 
 RUN yarn install

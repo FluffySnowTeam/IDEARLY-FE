@@ -1,5 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { executeTest, submitCode } from "../services/apis/algorithm.apis";
+import {
+  executeTest,
+  getAlgorithmProblem,
+  submitCode,
+} from "../services/apis/algorithm.apis";
 import { useSetAtom } from "jotai";
 import { executeResultAtom, testResultAtom } from "../store/Algorithm.atoms";
 
@@ -16,7 +20,7 @@ export const useExcuteTestMutation = () => {
       executeTest(competitionId, problemId, code),
     onSuccess: (data) => {
       // 컴파일 결과 보여주기
-      setTestResult(data.data);
+      setTestResult(data.result.testcases);
       console.log("컴파일 결과:", data);
     },
     onError: (error) => {
@@ -33,10 +37,22 @@ export const useRunMutation = () => {
     onSuccess: (data) => {
       // 컴파일 결과 보여주기
       console.log("제출 결과:", data);
-      setExecuteResult(data.data);
+      setExecuteResult(data.result.testcases);
     },
     onError: (error) => {
       console.log("에러: ", error);
     },
+  });
+};
+
+interface IuseAlgorithmProblem {
+  competitionId: string;
+  problemId: string;
+}
+
+export const useAlgorithmProblem = () => {
+  return useMutation({
+    mutationFn: ({ competitionId, problemId }: IuseAlgorithmProblem) =>
+      getAlgorithmProblem(String(competitionId), String(problemId)),
   });
 };

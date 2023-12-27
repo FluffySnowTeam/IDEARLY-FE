@@ -1,19 +1,44 @@
 import * as S from "./AlgorithmNav.styles";
-// import { AlgorithmVoiceChat } from "..";
-import { fakeProblem } from "../../../../mocks/problem.mocks";
 import type { Prop } from "./AlgorithmNav.types";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
+import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
+import { useCompetitionProblemIdsMutation } from "../../../../hooks/useCompetitionMutation";
+import { problemListAtom } from "../../../../store";
+import { useAtom } from "jotai";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
-  const navigate = useNavigate();
-  const path = useLocation();
+  const [searchParams] = useSearchParams();
+  const teamId = searchParams.get("teamId");
+  const { id: competitionId } = useParams<{ id: string }>();
   const { isOpen, onOpen: onOpenExit, onClose } = useDisclosure();
+  const [problemList, setProblemList] = useAtom(problemListAtom);
 
-  const [selectedProblemId, setSelectedProblemId] = useState<string | null>(
-    fakeProblem[0].id
+  console.log(problemList);
+
+  const {
+    data: problemIds,
+    mutate: problemsMutate,
+    status: problemStatus,
+  } = useCompetitionProblemIdsMutation();
+
+  useEffect(() => {
+    problemsMutate(Number(competitionId));
+  }, [competitionId, problemsMutate]);
+
+  useEffect(() => {
+    if (problemIds) {
+      setProblemList(problemIds.result.problemIdList);
+      console.log(problemIds.result.problemIdList);
+    }
+  }, [problemIds]);
+
+  const navigate = useNavigate();
+
+  const [selectedProblemId, setSelectedProblemId] = useState<number | null>(
+    problemList[0]
   );
   const selectedStyle = {
     backgroundColor: "#01228a",
@@ -24,27 +49,28 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
     color: "#01228a",
   };
 
-  window.onload = () => {
-    navigate(`${path.pathname}?id=${fakeProblem[0].id}`);
+  const handleProblems = (id: number) => {
+    if (problemIds) {
+      navigate(
+        `/algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${id}`
+      );
+      setSelectedProblemId(id);
+    }
   };
 
-  const handleProblems = (id: string) => {
-    navigate(`${path.pathname}?id=${id}`);
-    setSelectedProblemId(id);
-  };
+  if (problemStatus === "pending") return <div>...Loading</div>;
+
   return (
     <S.AlgorithmNavContainer>
       <AlgorithmExitModal isOpen={isOpen} onClose={onClose} />
       <div>
-        {fakeProblem.map((problem, index) => (
+        {problemList.map((id, index) => (
           <S.ProblemNumber
-            key={problem.id}
+            key={id}
             onClick={() => {
-              handleProblems(problem.id);
+              handleProblems(id);
             }}
-            style={
-              problem.id === selectedProblemId ? selectedStyle : defaultStyle
-            }
+            style={id === selectedProblemId ? selectedStyle : defaultStyle}
           >
             <div>{index + 1}</div>
             {/* 만약 해당 문제가 제출되었다면 체크 표시 */}
@@ -53,7 +79,7 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         ))}
       </div>
       <S.NavIcons>
-        {/* <AlgorithmVoiceChat /> */}
+        <AlgorithmVoiceChat />
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>

@@ -13,7 +13,7 @@ import {
   TeamMatchingPage,
   WaitingPage,
 } from "../pages";
-import ProtectedRoute from "./ProtectedRoute";
+// import ProtectedRoute from "./ProtectedRoute";
 import { IsLoginProtectedRoute } from "./IsLoginProtectedRoute";
 import { AdminProtectedRoute } from "./AdminProtectedRoute";
 
@@ -56,33 +56,33 @@ const router = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute />,
-        children: [
-          {
-            path: "/algorithm-solving/:id",
-            element: <AlgorithmSolvingPage />,
-          },
-          {
-            path: "/complete",
-            element: <CompletePage />,
-          },
-          {
-            path: "/mypage/:path",
-            element: <MyPage />,
-          },
+        // element: <ProtectedRoute />,
+        // children: [
+        //   {
+        path: "/algorithm-solving/:id",
+        element: <AlgorithmSolvingPage />,
+      },
+      {
+        path: "/complete",
+        element: <CompletePage />,
+      },
+      {
+        path: "/mypage/:path",
+        element: <MyPage />,
+      },
 
-          {
-            path: "/waiting/:id",
-            element: <WaitingPage />,
-          },
-          {
-            path: "/error",
-            element: <ErrorPage />,
-          },
-        ],
+      {
+        path: "/waiting/:id",
+        element: <WaitingPage />,
+      },
+      {
+        path: "/error",
+        element: <ErrorPage />,
       },
     ],
   },
+  //   ],
+  // },
 ]);
 
 export default router;

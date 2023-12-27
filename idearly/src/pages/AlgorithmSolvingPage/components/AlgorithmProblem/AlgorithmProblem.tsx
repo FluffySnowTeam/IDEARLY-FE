@@ -1,29 +1,48 @@
-import { useSearchParams } from "react-router-dom";
-import { AlgorithmPageConfig } from "../../../../constants";
+import { useParams, useSearchParams } from "react-router-dom";
 import * as S from "./AlgorithmProblem.styles";
-import { fakeProblem } from "../../../../mocks/problem.mocks";
-import { AlgorithmSection } from "./components";
+import { useAlgorithmProblem } from "../../../../hooks";
+import { useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useAtom } from "jotai";
+import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 
 export const AlgorithmProblem = () => {
-  const { problem, limitations, inputOutput } = AlgorithmPageConfig;
+  const { id: competitionId } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
-  const selectedProblem = fakeProblem.find((pro) => pro.id === id);
+  const problemId = searchParams.get("problemId");
+  const [problemsData, setProblemsData] = useAtom(algorithmProblemsAtom);
 
+  const { data, status, mutate } = useAlgorithmProblem();
+
+  useEffect(() => {
+    if (problemId && competitionId) {
+      mutate({
+        competitionId: competitionId,
+        problemId: problemId,
+      });
+    }
+  }, [problemId, competitionId]);
+
+  useEffect(() => {
+    if (data) {
+      const problems = data.data.result;
+      console.log("data", data.data.result);
+      setProblemsData(problems);
+    }
+  }, [data]);
+
+  if (status === "pending") {
+    return <S.AlgorithmContainer>Loading...</S.AlgorithmContainer>;
+  }
   return (
     <S.AlgorithmContainer>
-      <AlgorithmSection
-        title={problem}
-        content={selectedProblem?.problem || "문제 내용이 없습니다."}
-      />
-      <AlgorithmSection
-        title={limitations}
-        content={selectedProblem?.limitations || "제한 사항이 없습니다."}
-      />
-      <AlgorithmSection
-        title={inputOutput}
-        content={selectedProblem?.inputOutput || "입출력 정보가 없습니다."}
-      />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        {problemsData?.name}
+      </ReactMarkdown>
+      <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
+        {problemsData?.description}
+      </S.MarkdownContainer>
     </S.AlgorithmContainer>
   );
 };

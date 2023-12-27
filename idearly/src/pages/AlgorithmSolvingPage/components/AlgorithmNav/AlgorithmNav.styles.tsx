@@ -3,6 +3,9 @@ import { Box, Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const AlgorithmNavContainer = styled(Box)`
+  position: sticky;
+  top: 7vh;
+  z-index: 100;
   border-right: 1px solid #cccccc;
   display: flex;
   flex-direction: column;
