@@ -14,3 +14,10 @@ export const MyPageNavItem = styled.div`
 export const MyPageContainer = styled.div`
   margin-top: 1rem;
 `;
+
+export const MypageNavTitle = styled.div`
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+`;
