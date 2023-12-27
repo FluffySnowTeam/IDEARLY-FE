@@ -5,7 +5,7 @@ export const WithdrawalContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 5rem 12rem;  
+  padding: 5rem 12rem;
 `;
 
 export const WithdrawalTitle = styled.div`
