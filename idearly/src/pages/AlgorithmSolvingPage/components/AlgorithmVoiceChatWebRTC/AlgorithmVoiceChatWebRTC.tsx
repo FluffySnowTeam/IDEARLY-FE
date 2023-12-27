@@ -388,7 +388,7 @@ const AlgorithmVoiceChatWebRTC = () => {
       );
 
       // key를 보내라는 신호를 받은 subscribe
-      stompClient.current?.subscribe(`/topic/call/key`, (message) => {
+      stompClient.current?.subscribe(`/topic/call/key`, () => {
         // 자신의 key를 보내는 send
         console.log("보내는 key", myKey);
         stompClient.current?.send(`/app/send/key`, {}, JSON.stringify(myKey));
