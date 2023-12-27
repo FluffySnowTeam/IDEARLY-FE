@@ -23,7 +23,7 @@ export const AlgorithmTestResult = () => {
             </S.ResultContainer>
             <S.ResultContainer>
               <S.InfoText>실행 결과</S.InfoText>
-              {test.status ? (
+              {test.status === "pass" ? (
                 <Text color="#438BFF">테스트를 통과하였습니다.</Text>
               ) : (
                 <Text color="#F4483C">실패</Text>
