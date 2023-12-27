@@ -33,3 +33,10 @@ export const HeaderNavContainer = styled.div`
     font-weight: bold;
   }
 `;
+
+export const HeaderText = styled.div`
+  :hover {
+    color: #13228a;
+    font-weight: bold;
+  }
+`;
