@@ -8,18 +8,18 @@ export const AlgorithmResultContainer = styled.div`
   overflow: auto;
 `;
 
-export const TestCase = styled.div`
-
-`;
+export const TestCase = styled.div``;
 
 export const InfoText = styled.div`
-// margin-left: 2rem;
+  // margin-left: 2rem;
   width: 8rem;
   text-align: right;
+  color: #44576c;
 `;
 
 export const ValueText = styled.div`
   margin-left: 1rem;
+  color: #99a9ba;
 `;
 
 export const ResultContainer = styled.div`
