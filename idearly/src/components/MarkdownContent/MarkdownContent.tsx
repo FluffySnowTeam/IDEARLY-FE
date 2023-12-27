@@ -1,4 +1,3 @@
-import classes from "./MarkDownPost.module.css";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -8,7 +7,7 @@ type postType = {
 
 export default function MarkDownPost({ post }: postType) {
   return (
-    <div className={classes.markdown_container}>
+    <div>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -26,7 +25,6 @@ export default function MarkDownPost({ post }: postType) {
               alt={image.alt || ""}
               width={500}
               height={300}
-              className={classes.markdown_container_img}
             />
           ),
           table({ node, ...props }) {
