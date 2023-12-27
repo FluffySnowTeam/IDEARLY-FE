@@ -1,3 +1,4 @@
+import { Text } from "@chakra-ui/react";
 import { testResultAtom } from "../../../../../../store/Algorithm.atoms";
 import * as S from "./AlgorithmTestResult.styles";
 import { useAtomValue } from "jotai";
@@ -22,9 +23,11 @@ export const AlgorithmTestResult = () => {
             </S.ResultContainer>
             <S.ResultContainer>
               <S.InfoText>실행 결과</S.InfoText>
-              <S.ValueText>
-                {test.status ? "테스트를 통과하였습니다" : "실패"}
-              </S.ValueText>
+              {test.status === "pass" ? (
+                <Text color="#438BFF">테스트를 통과하였습니다.</Text>
+              ) : (
+                <Text color="#F4483C">실패</Text>
+              )}
             </S.ResultContainer>
           </S.TestCaseContainer>
         </div>
