@@ -4,11 +4,11 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import { AlgorithmExitModal } from "..";
-// import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
+import { AlgorithmVoiceChat } from "../AlgorithmVoiceChat/AlgorithmVoiceChat";
 import { useCompetitionProblemIdsMutation } from "../../../../hooks/useCompetitionMutation";
 import { problemListAtom } from "../../../../store";
 import { useAtom } from "jotai";
-import AlgorithmVoiceChatWebRTC from "../AlgorithmVoiceChatWebRTC/AlgorithmVoiceChatWebRTC";
+// import AlgorithmVoiceChatWebRTC from "../AlgorithmVoiceChatWebRTC/AlgorithmVoiceChatWebRTC";
 
 export const AlgorithmNav = ({ onOpen }: Prop) => {
   const [searchParams] = useSearchParams();
@@ -80,8 +80,8 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         ))}
       </div>
       <S.NavIcons>
-        <AlgorithmVoiceChatWebRTC />
-        {/* <AlgorithmVoiceChat /> */}
+        {/* <AlgorithmVoiceChatWebRTC /> */}
+        <AlgorithmVoiceChat />
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>
