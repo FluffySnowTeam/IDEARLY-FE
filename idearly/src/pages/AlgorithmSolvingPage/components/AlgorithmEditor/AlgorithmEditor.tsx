@@ -76,16 +76,25 @@ export const AlgorithmEditor = ({
 
     // 02-2. subscribe document event.
     const syncText = () => {
-      const text = doc.getRoot().content;
-      if (viewRef.current) {
-        viewRef.current.dispatch({
+      if (viewRef.current && problemData) {
+        const updateEditor = {
           changes: {
             from: 0,
             to: viewRef.current.state.doc.length,
-            insert: text.toString(),
+            insert: problemData.code || "",
           },
           annotations: [Transaction.remote.of(true)],
-        });
+        };
+        viewRef.current.dispatch(updateEditor);
+        // const text = doc.getRoot().content;
+        // viewRef.current.dispatch({
+        //   changes: {
+        //     from: 0,
+        //     to: viewRef.current.state.doc.length,
+        //     insert: text.toString(),
+        //   },
+        //   annotations: [Transaction.remote.of(true)],
+        // });
       }
     };
 
