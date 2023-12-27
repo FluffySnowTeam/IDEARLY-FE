@@ -141,6 +141,7 @@ export default function MarkDownPost({ post }: postType) {
             return (
               <th
                 style={{
+                  backgroundColor: "#cccccc",
                   border: "1px solid #cccccc",
                   textAlign: "center",
                   padding: "0.2rem", // 셀에 패딩 추가
