@@ -85,7 +85,12 @@ export const AlgorithmNav = ({ onOpen }: Prop) => {
         <span className="material-icons" onClick={onOpen}>
           chat
         </span>
-        <S.ExitBtn colorScheme="red" onClick={onOpenExit}>
+        <S.ExitBtn
+          backgroundColor="#940201"
+          color="white"
+          colorScheme="red"
+          onClick={onOpenExit}
+        >
           종료
         </S.ExitBtn>
       </S.NavIcons>
