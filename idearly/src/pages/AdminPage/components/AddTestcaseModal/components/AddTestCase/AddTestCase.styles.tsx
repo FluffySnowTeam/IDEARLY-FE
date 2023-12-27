@@ -15,6 +15,8 @@ export const TestCaseDeleteButton = styled(IconButton)`
 
 export const TestCaseAddButton = styled(Button)`
   margin-top: 1rem;
+  display: flex;
+  align-items: center;
 `;
 
 export const TestCaseListBox = styled.div`

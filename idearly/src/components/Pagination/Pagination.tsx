@@ -49,7 +49,7 @@ export const Pagination = ({
         <S.PaginationIconButton
           isRound={true}
           variant="solid"
-          colorScheme="teal"
+          colorScheme="facebook"
           size="xs"
           aria-label="Done"
           fontSize="20px"
@@ -61,7 +61,7 @@ export const Pagination = ({
         <S.PaginationIconButton
           isRound={true}
           variant="solid"
-          colorScheme="teal"
+          colorScheme="facebook"
           size="xs"
           aria-label="Done"
           fontSize="20px"
@@ -79,7 +79,6 @@ export const Pagination = ({
               handlePaginationClick(pageNum);
             }}
             size="xs"
-            colorScheme="teal"
             variant="outline"
           >
             {pageNum + 1}
@@ -89,7 +88,7 @@ export const Pagination = ({
         <S.PaginationIconButton
           isRound={true}
           variant="solid"
-          colorScheme="teal"
+          colorScheme="facebook"
           size="xs"
           aria-label="Done"
           fontSize="20px"
@@ -101,7 +100,7 @@ export const Pagination = ({
         <S.PaginationIconButton
           isRound={true}
           variant="solid"
-          colorScheme="teal"
+          colorScheme="facebook"
           size="xs"
           aria-label="Done"
           fontSize="20px"

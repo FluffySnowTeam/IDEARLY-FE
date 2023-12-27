@@ -8,6 +8,7 @@ import { AddProblemModal, AddTestCaseModal } from "..";
 import { AddCompetitionModal } from "../AddCompetitionModal/AddCompetitionModal";
 import { useAdminCompetitionList } from "../../../../hooks/useAdminCompetitionMutation";
 import type { ICompetitionResponse } from "../../../../types/admin.types";
+import { AddIcon } from "@chakra-ui/icons";
 
 export const AdminCompetition = () => {
   const { id, name, date, edit } = AdminCompePageConfig;
@@ -66,7 +67,11 @@ export const AdminCompetition = () => {
       />
       <S.AdminCompeTitleBox>
         <S.AdminCompeTitle>대회 정보 리스트</S.AdminCompeTitle>
-        <S.AdminCompeAddButton onClick={onCompetitionModalOpen}>
+        <S.AdminCompeAddButton
+          onClick={onCompetitionModalOpen}
+          colorScheme="facebook"
+        >
+          <AddIcon mr="2" />
           대회 추가하기
         </S.AdminCompeAddButton>
       </S.AdminCompeTitleBox>

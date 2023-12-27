@@ -12,6 +12,7 @@ export const MyPageNav = () => {
 
   return (
     <S.MyPageContainer>
+      <S.MypageNavTitle>마이페이지</S.MypageNavTitle>
       <S.MyPageNavItem onClick={() => handleMoveToPath("currentTeam")}>
         <SearchIcon mr="2" />
         {currentTeam}
