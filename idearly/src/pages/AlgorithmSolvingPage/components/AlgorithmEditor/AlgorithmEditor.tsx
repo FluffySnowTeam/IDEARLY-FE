@@ -12,6 +12,8 @@ import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import { useAtomValue } from "jotai";
 
+// const codeDummy = "def solution(arr):\n  answer = []\n  return answer";
+
 export const AlgorithmEditor = ({
   competitionId,
   problemId,
