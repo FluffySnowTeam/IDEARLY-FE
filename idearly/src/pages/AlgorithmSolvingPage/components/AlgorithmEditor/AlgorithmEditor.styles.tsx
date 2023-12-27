@@ -11,6 +11,7 @@ export const EditorButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 0.45rem;
+  flex-direction: column;
 `;
 
 export const AlgorithmResultContainer = styled.div`

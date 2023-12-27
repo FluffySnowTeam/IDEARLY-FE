@@ -1,17 +1,17 @@
 // algorithmEditor.tsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import yorkie, { Client, OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
 import type { IAlgorithmEditor, YorkieDoc } from "./AlgorithmEditor.types";
-import { AlgorithmFooter } from "..";
+import { AlgorithmFooter, AlgorithmSubmitModal } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import { useAtomValue } from "jotai";
 import { AlgorithmTestResult } from "../AlgorithmTestResult/AlgorithmTestResult";
-import { AlgorithmSubmitResult } from "../AlgorithmSubmitResult/AlgorithmSubmitResult";
+import { useDisclosure } from "@chakra-ui/react";
 
 // const codeDummy = "def solution(arr):\n  answer = []\n  return answer";
 
@@ -21,11 +21,11 @@ export const AlgorithmEditor = ({
   teamId,
 }: IAlgorithmEditor) => {
   let client: Client | null;
-  const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | undefined>();
   const docRef = useRef<typeof yorkie.Document | undefined>();
   const problemData = useAtomValue(algorithmProblemsAtom);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { mutate: executeMutate } = useExcuteTestMutation();
   const { mutate: runMutate } = useRunMutation();
@@ -33,13 +33,12 @@ export const AlgorithmEditor = ({
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
     executeMutate({ competitionId, problemId, code });
-    setResultState("test");
   };
 
   const handleSubmit = () => {
     const code = viewRef.current?.state.doc.toString();
     runMutate({ competitionId, problemId, code });
-    setResultState("submit");
+    onOpen();
   };
 
   useEffect(() => {
@@ -205,19 +204,13 @@ export const AlgorithmEditor = ({
         annotations: [Transaction.remote.of(true)],
       });
     }
-    setResultState("none");
   };
 
   return (
     <>
       <S.CodeMirrorContainer ref={editorParentRef} />
-      {resultState === "none" ? (
-        <S.AlgorithmResultContainer></S.AlgorithmResultContainer>
-      ) : resultState === "test" ? (
-        <AlgorithmTestResult />
-      ) : (
-        <AlgorithmSubmitResult />
-      )}
+      <AlgorithmSubmitModal isOpen={isOpen} onClose={onClose} />
+      <AlgorithmTestResult />
       <S.EditorButtonWrapper>
         <AlgorithmFooter
           handleInitButton={handleInitButton}
