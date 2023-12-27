@@ -72,8 +72,7 @@ export const AddTeamMembers = ({
       {isShowUser && (
         <S.ShowUserTag colorScheme="gray" onClick={handleUserClick}>
           <TagLeftIcon boxSize="12px" as={AddIcon} />
-          {userInfo.name}
-          {userInfo.email}
+          {userInfo.name} {userInfo.email}
         </S.ShowUserTag>
       )}
     </>

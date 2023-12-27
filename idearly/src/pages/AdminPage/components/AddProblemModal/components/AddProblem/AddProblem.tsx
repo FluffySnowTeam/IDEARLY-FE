@@ -1,4 +1,4 @@
-import { Input, ModalBody, Textarea } from "@chakra-ui/react";
+import { Input, ModalBody, Text, Textarea } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
 import type { IAddProblem } from "./AddProblem.types";
 
@@ -17,16 +17,21 @@ export const AddProblem = ({
   return (
     <ModalBody>
       <div>
-        <div>문제 제목</div>
+        <Text fontSize={"lg"} as={"b"}>
+          문제 제목
+        </Text>
         <Input
           value={formData.name}
           onChange={(e) => {
             handleChange("name", e.target.value);
           }}
+          mb="3"
         />
       </div>
       <div>
-        <div>문제 내용</div>
+        <Text fontSize={"lg"} as={"b"}>
+          문제 내용
+        </Text>
         <Textarea
           value={formData.description}
           onChange={(e) => {

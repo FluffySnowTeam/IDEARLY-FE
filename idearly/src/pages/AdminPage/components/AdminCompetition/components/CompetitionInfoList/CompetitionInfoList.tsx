@@ -32,8 +32,16 @@ export const CompetitionInfoList = ({
           {dateChange({ date: endDateTime })}
         </Td>
         <Td>
-          <Button onClick={handleProblemModalOpen}>문제 추가</Button>
-          <Button onClick={handleTestcaseModalOpen}>테스트케이스 추가</Button>
+          <Button
+            onClick={handleProblemModalOpen}
+            colorScheme="facebook"
+            mr="2"
+          >
+            문제 추가
+          </Button>
+          <Button onClick={handleTestcaseModalOpen} colorScheme="facebook">
+            테스트케이스 추가
+          </Button>
         </Td>
       </Tr>
     </Tbody>
