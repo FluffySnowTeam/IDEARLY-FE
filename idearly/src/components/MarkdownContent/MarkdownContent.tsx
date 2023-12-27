@@ -1,6 +1,5 @@
 import classes from "./MarkDownPost.module.css";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
 
 type postType = {
@@ -14,13 +13,11 @@ export default function MarkDownPost({ post }: postType) {
         remarkPlugins={[remarkGfm]}
         components={{
           code({ node, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
-            return match ? (
-              <SyntaxHighlighter language={match[1]} PreTag="div">
-                {String(children).replace(/\n$/, "")}
-              </SyntaxHighlighter>
-            ) : (
-              <code {...props}>{children}</code>
+            // `code` 태그로 간단하게 코드 블록을 표시합니다.
+            return (
+              <code className={className} {...props}>
+                {children}
+              </code>
             );
           },
           img: (image) => (
