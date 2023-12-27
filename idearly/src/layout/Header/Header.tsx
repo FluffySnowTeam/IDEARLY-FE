@@ -59,17 +59,19 @@ export const Header = () => {
       <S.HeaderNavContainer>
         {isAlgorithmPage
           ? AlgorithmHeaderConfig.map(({ text }) => (
-              <div key={text}>{text}</div>
+              <S.HeaderText key={text}>{text}</S.HeaderText>
             ))
           : MainHeaderConfig.map(({ path, text }) => (
-              <div onClick={() => handleMoveToPath(path)} key={text}>
+              <S.HeaderText onClick={() => handleMoveToPath(path)} key={text}>
                 {text}
-              </div>
+              </S.HeaderText>
             ))}
         {isuserInfoState.isLogin ? (
-          <div onClick={handleLogout}>로그아웃</div>
+          <S.HeaderText onClick={handleLogout}>로그아웃</S.HeaderText>
         ) : (
-          <div onClick={() => handleMoveToPath("/login")}>로그인</div>
+          <S.HeaderText onClick={() => handleMoveToPath("/login")}>
+            로그인
+          </S.HeaderText>
         )}
       </S.HeaderNavContainer>
     </S.HeaderContainer>

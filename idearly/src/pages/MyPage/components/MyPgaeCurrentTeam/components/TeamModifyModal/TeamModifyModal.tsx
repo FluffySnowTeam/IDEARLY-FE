@@ -82,6 +82,7 @@ export const TeamModifyModal = ({
                 <S.IconWrapper
                   as={CloseIcon}
                   onClick={() => handleDelete(user.email)}
+                  color="red"
                 />
               </S.MemberWrapper>
             ))}
@@ -97,9 +98,11 @@ export const TeamModifyModal = ({
                   <S.ModalContent key={member.email}>
                     {member.name}({member.email})
                   </S.ModalContent>
-                  <S.Dropout onClick={() => handleDropoutMember(member.email)}>
-                    강퇴
-                  </S.Dropout>
+                  <S.IconWrapper
+                    as={CloseIcon}
+                    onClick={() => handleDropoutMember(member.email)}
+                    color="red"
+                  />
                 </S.MemberWrapper>
               ))}
           </S.MemberListWrapper>

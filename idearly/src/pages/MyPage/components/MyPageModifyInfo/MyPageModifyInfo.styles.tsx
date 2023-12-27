@@ -16,7 +16,7 @@ export const ModifyInput = styled(Input)`
 `;
 
 export const Title = styled.div`
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
 `;
 

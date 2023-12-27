@@ -27,7 +27,12 @@ export const MyPageModifyInfo = () => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <S.ModifyBtn colorScheme="blue" onClick={handleSubmit}>
+        <S.ModifyBtn
+          backgroundColor="#01228A"
+          color="white"
+          colorScheme="facebook"
+          onClick={handleSubmit}
+        >
           수정
         </S.ModifyBtn>
         <S.InfoContainer>

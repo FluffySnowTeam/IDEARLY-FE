@@ -51,35 +51,35 @@ const router = createBrowserRouter([
           },
         ],
       },
+      // {
+      //   element: <ProtectedRoute />,
+      //   children: [
       {
-        element: <ProtectedRoute />,
-        children: [
-          {
-            path: "/algorithm-solving/:id",
-            element: <AlgorithmSolvingPage />,
-          },
-          {
-            path: "/complete",
-            element: <CompletePage />,
-          },
-          {
-            path: "/mypage/:path",
-            element: <MyPage />,
-          },
-          {
-            path: "/matching/:competitionId",
-            element: <TeamMatchingPage />,
-          },
-          {
-            path: "/waiting/:id",
-            element: <WaitingPage />,
-          },
-          {
-            path: "/error",
-            element: <ErrorPage />,
-          },
-        ],
+        path: "/algorithm-solving/:id",
+        element: <AlgorithmSolvingPage />,
       },
+      {
+        path: "/complete",
+        element: <CompletePage />,
+      },
+      {
+        path: "/mypage/:path",
+        element: <MyPage />,
+      },
+      {
+        path: "/matching/:competitionId",
+        element: <TeamMatchingPage />,
+      },
+      {
+        path: "/waiting/:id",
+        element: <WaitingPage />,
+      },
+      {
+        path: "/error",
+        element: <ErrorPage />,
+      },
+      //   ],
+      // },
     ],
   },
 ]);
