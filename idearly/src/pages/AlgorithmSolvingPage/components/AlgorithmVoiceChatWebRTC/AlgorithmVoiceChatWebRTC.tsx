@@ -98,7 +98,7 @@ const AlgorithmVoiceChatWebRTC = () => {
   const connectSocket = async () => {
     console.log("connectSocket");
     if (myKey === undefined) {
-      const socket = new SockJS("https://idearly.site/ws/signaling");
+      const socket = new WebSocket("ws://idearly.site/ws/signaling");
       stompClient.current = Stomp.over(socket);
       //   stompClient.current.debug = null;
     }
