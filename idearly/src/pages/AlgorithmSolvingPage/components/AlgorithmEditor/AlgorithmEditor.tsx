@@ -81,17 +81,6 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
           }, `update content byA ${client!.getID()}`);
         });
       }
-      (
-        fromA: any,
-        toA: any,
-        _: any,
-        __: any,
-        inserted: { toJSON: () => any[] }
-      ) => {
-        doc.update((root: any) => {
-          root.content.edit(fromA, toA, inserted.toJSON().join("\n"));
-        }, `update content byA ${client!.getID()}`);
-      };
     }, "create content if not exists");
 
     // 02-2. subscribe document event.
