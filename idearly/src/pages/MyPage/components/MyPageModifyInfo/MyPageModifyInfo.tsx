@@ -16,6 +16,7 @@ export const MyPageModifyInfo = () => {
     watch,
     formState: { errors, isDirty },
     handleSubmit,
+    reset,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(MYPAGE_SCHEMA),
     mode: "onChange",
@@ -37,6 +38,7 @@ export const MyPageModifyInfo = () => {
   const handleMdoify = () => {
     if (nameValue) {
       mutate(nameValue);
+      reset();
     }
   };
 
