@@ -6,7 +6,22 @@ import { useAtomValue } from "jotai";
 export const AlgorithmTestResult = () => {
   const testResult = useAtomValue(testResultAtom);
   console.log("testResult: ", testResult);
-
+  const printResult = (data: string) => {
+    switch (data) {
+      case "pass": {
+        return <Text color="#438BFF">테스트를 통과하였습니다.</Text>;
+      }
+      case "failed": {
+        return <Text color="#F4483C">실패</Text>;
+      }
+      case "error": {
+        return <Text color="#F4483C">에러</Text>;
+      }
+      case "timeout": {
+        return <Text color="#F4483C">시간초과</Text>;
+      }
+    }
+  };
   return (
     <S.AlgorithmResultContainer>
       {testResult.map((test) => (
@@ -23,11 +38,7 @@ export const AlgorithmTestResult = () => {
             </S.ResultContainer>
             <S.ResultContainer>
               <S.InfoText>실행 결과</S.InfoText>
-              {test.status === "pass" ? (
-                <Text color="#438BFF">테스트를 통과하였습니다.</Text>
-              ) : (
-                <Text color="#F4483C">실패</Text>
-              )}
+              <S.ValueText>{printResult(test.status)}</S.ValueText>
             </S.ResultContainer>
           </S.TestCaseContainer>
         </div>
