@@ -1,11 +1,9 @@
-// algorithmEditor.tsx
 import { useEffect, useRef, useState } from "react";
 import yorkie, { Client, OperationInfo } from "yorkie-js-sdk";
 import { basicSetup, EditorView } from "codemirror";
 import { python } from "@codemirror/lang-python";
 import { Transaction } from "@codemirror/state";
-// import { yorkie_key } from "./yorkie_api.json";
-import { YorkieDoc } from "./AlgorithmEditor.types";
+import type { IAlgorithmEditor, YorkieDoc } from "./AlgorithmEditor.types";
 import { AlgorithmFooter } from "..";
 import * as S from "./AlgorithmEditor.styles";
 import { useExcuteTestMutation, useRunMutation } from "../../../../hooks";
@@ -13,13 +11,11 @@ import { AlgorithmSubmitResult, AlgorithmTestResult } from "../AlgorithmResult";
 import { useAtomValue } from "jotai";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 
-interface Prop {
-  competitionId: string | undefined;
-  problemId: string | null;
-  teamId: string | null;
-}
-
-export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
+export const AlgorithmEditor = ({
+  competitionId,
+  problemId,
+  teamId,
+}: IAlgorithmEditor) => {
   let client: Client | null;
   const [resultState, setResultState] = useState<string>("none");
   const editorParentRef = useRef<HTMLDivElement>(null);
