@@ -12,7 +12,6 @@ import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import { useAtomValue } from "jotai";
 import { AlgorithmTestResult } from "../AlgorithmTestResult/AlgorithmTestResult";
 import { useDisclosure } from "@chakra-ui/react";
-import { LoadingComponent } from "../../../../components";
 
 export const AlgorithmEditor = ({
   competitionId,
