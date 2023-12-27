@@ -60,7 +60,7 @@ export const LoginPage = () => {
             <LoginForm register={register} errors={errors} />
           </S.CardBodySection>
           <S.SignupPrompt>
-            회원이 아니신가신가요?
+            회원이 아니신가요?
             <div onClick={handleMoveToSignup}>회원가입하기</div>
           </S.SignupPrompt>
           <S.CardFooterSection>
