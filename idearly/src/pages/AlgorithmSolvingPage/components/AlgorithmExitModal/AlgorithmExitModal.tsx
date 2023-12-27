@@ -46,10 +46,10 @@ export const AlgorithmExitModal = ({ isOpen, onClose }: IExitModalProp) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button variant="ghost" onClick={onClose}>
+          <Button colorScheme="gray" onClick={onClose}>
             취소
           </Button>
-          <Button colorScheme="blue" mr={3} onClick={handleExit}>
+          <Button colorScheme="facebook" mr={3} onClick={handleExit}>
             확인
           </Button>
         </ModalFooter>
