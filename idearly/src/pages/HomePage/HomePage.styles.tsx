@@ -14,7 +14,7 @@ export const HomeContainer = styled(Box)`
 
 export const MainContainer = styled(Box)`
   display: flex;
-  margin: 2rem 2rem 0 8rem;
+  margin: 2rem 2rem 0 10rem;
 `;
 
 export const TextContainer = styled.div`
