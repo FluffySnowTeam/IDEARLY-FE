@@ -41,6 +41,7 @@ export const AlgorithmSubmitModal = ({
     }
   };
 
+  executeResult.map((test) => console.log(test.status));
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,12 +53,12 @@ export const AlgorithmSubmitModal = ({
             {executeResult.map((test) => (
               <div key={test.testCaseId}>
                 <S.TestCaseContainer>
-                  <S.ResultContainer>
-                    <S.InfoText>
-                      테스트 {test.testCaseId} {">"}
-                    </S.InfoText>
-                    <S.ValueText>{printResult(test.status)}</S.ValueText>
-                  </S.ResultContainer>
+                  <S.InfoText>
+                    테스트 {test.testCaseId} {">"}
+                  </S.InfoText>
+                  <S.ValueText status={test.status}>
+                    {printResult(test.status)}
+                  </S.ValueText>
                 </S.TestCaseContainer>
               </div>
             ))}

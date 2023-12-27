@@ -8,25 +8,31 @@ export const AlgorithmResultContainer = styled.div`
   overflow: auto;
 `;
 
-export const TestCase = styled.div`
-
-`;
+export const TestCase = styled.div``;
 
 export const InfoText = styled.div`
-// margin-left: 2rem;
   width: 8rem;
   text-align: right;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left: 2rem;
+  color: #44576c;
 `;
 
-export const ValueText = styled.div`
-  margin-left: 1rem;
-`;
+interface StatusProps {
+  status: string;
+}
 
-export const ResultContainer = styled.div`
-  display: flex;
-  fiex-direction: row;
+export const ValueText = styled.div<StatusProps>`
+  margin-left: 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: ${(props) => (props.status === "pass" ? "#438BFF" : "#F4483C")};
 `;
 
 export const TestCaseContainer = styled.div`
   margin: 0.5rem;
+  display: flex;
+  fiex-direction: row;
+  // background-color: red;
 `;
