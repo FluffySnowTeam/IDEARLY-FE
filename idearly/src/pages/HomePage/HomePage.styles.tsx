@@ -31,6 +31,6 @@ export const BoldText = styled.span`
 `;
 
 export const MainImage = styled.img`
-  width: 400rem;
-  height: 48rem;
+  width: 200rem;
+  height: 40rem;
 `;
