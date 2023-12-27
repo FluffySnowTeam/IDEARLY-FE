@@ -2,10 +2,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import * as S from "./AlgorithmProblem.styles";
 import { useAlgorithmProblem } from "../../../../hooks";
 import { useEffect } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { useAtom } from "jotai";
 import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
+import { MarkDownContent } from "../../../../components";
 
 export const AlgorithmProblem = () => {
   const { id: competitionId } = useParams<{ id: string }>();
@@ -37,12 +36,14 @@ export const AlgorithmProblem = () => {
   }
   return (
     <S.AlgorithmContainer>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {/* <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
         {problemsData?.name}
-      </ReactMarkdown>
+      </S.MarkdownContainer>
       <S.MarkdownContainer remarkPlugins={[remarkGfm]}>
         {problemsData?.description}
-      </S.MarkdownContainer>
+      </S.MarkdownContainer> */}
+      <MarkDownContent content={problemsData?.name} />
+      <MarkDownContent content={problemsData?.description} />
     </S.AlgorithmContainer>
   );
 };
