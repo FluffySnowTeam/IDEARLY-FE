@@ -17,4 +17,7 @@ export const SubmitButton = styled(Button)`
   margin-right: 1rem;
 `;
 
-
+export const FooterContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
