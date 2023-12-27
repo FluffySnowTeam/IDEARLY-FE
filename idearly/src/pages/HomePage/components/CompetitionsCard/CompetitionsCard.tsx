@@ -12,7 +12,7 @@ export const CompetitionsCard = ({
 
   // 대회 데이터 아이디로 수정해야함
   const handleMoveToDetail = () => {
-    navigate(`/detail/${competition.competitionId}`);
+    navigate(`/detail/${competition.competitionId}?prev=${isPrevCompe}`);
   };
 
   return (

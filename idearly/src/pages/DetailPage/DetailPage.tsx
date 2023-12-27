@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
 import * as S from "./DetailPage.styles";
 import { dateChange } from "../../utils/dateChange";
@@ -8,9 +8,12 @@ import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { competitionDataAtom } from "../../store";
 import MarkDownPost from "../../components/MarkdownContent/MarkdownContent";
+import { PrevCompeProblemList } from "./components";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const IsPrevCompetition = searchParams.get("prev") === "true";
   const [competition, setCompetition] = useAtom(competitionDataAtom);
 
   const { data, mutate, status } = useCompetitionDetailMutation(Number(id));
@@ -41,11 +44,11 @@ export const DetailPage = () => {
         )}
         <S.CompeDetailDescription>
           <MarkDownPost post={competition.description} />
-          {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {competition.description}
-          </ReactMarkdown> */}
+          {IsPrevCompetition && <PrevCompeProblemList />}
         </S.CompeDetailDescription>
-        <Button onClick={handleMoveToWaiting}>대회 참가하기</Button>
+        {!IsPrevCompetition && (
+          <Button onClick={handleMoveToWaiting}>대회 참가하기</Button>
+        )}
       </S.CompetitionDetailContainer>
     </>
   );
