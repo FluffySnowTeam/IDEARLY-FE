@@ -2,8 +2,13 @@ import { Text } from "@chakra-ui/react";
 import * as S from "./AlgorithmTestResult.styles";
 import { useAtomValue } from "jotai";
 import { testResultAtom } from "../../../../store/Algorithm.atoms";
+import { LoadingComponent } from "../../../../components";
 
-export const AlgorithmTestResult = () => {
+export const AlgorithmTestResult = ({
+  executeStatus,
+}: {
+  executeStatus: string;
+}) => {
   const testResult = useAtomValue(testResultAtom);
   const printResult = (data: string) => {
     switch (data) {
@@ -21,6 +26,9 @@ export const AlgorithmTestResult = () => {
       }
     }
   };
+
+  if (executeStatus === "pending") <LoadingComponent />;
+
   return (
     <S.AlgorithmResultContainer>
       {testResult.map((test) => (
