@@ -57,7 +57,7 @@ export const WaitingPage = () => {
 
   // algorithm-solving/${competitionId}?teamId=123&problemId=123
   const handleMoveToAlgorithmSolving = () => {
-    if (problemIds) {
+    if (problemIds && timerVisible) {
       navigate(
         `/algorithm-solving/${competitionId}?teamId=${teamId}&problemId=${problemList[0]}`
       );
