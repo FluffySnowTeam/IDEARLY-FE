@@ -206,14 +206,15 @@ export const AlgorithmEditor = ({
     }
   };
 
-  if (executeStatus === "pending" || runStatus === "pending")
-    <LoadingComponent />;
-
   return (
     <>
       <S.CodeMirrorContainer ref={editorParentRef} />
-      <AlgorithmSubmitModal isOpen={isOpen} onClose={onClose} />
-      <AlgorithmTestResult />
+      <AlgorithmSubmitModal
+        isOpen={isOpen}
+        onClose={onClose}
+        runStatus={runStatus}
+      />
+      <AlgorithmTestResult executeStatus={executeStatus} />
       <S.EditorButtonWrapper>
         <AlgorithmFooter
           handleInitButton={handleInitButton}

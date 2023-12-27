@@ -12,15 +12,18 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
+import { LoadingComponent } from "../../../../components";
 
 interface Prop {
   isOpen: boolean;
   onClose: () => void;
+  runStatus: string;
 }
 
 export const AlgorithmSubmitModal = ({
   isOpen,
   onClose,
+  runStatus,
 }: PropsWithChildren<Prop>) => {
   const executeResult = useAtomValue(executeResultAtom);
 
@@ -42,6 +45,8 @@ export const AlgorithmSubmitModal = ({
   };
 
   executeResult.map((test) => console.log(test.status));
+
+  if (runStatus === "pending") <LoadingComponent />;
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
