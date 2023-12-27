@@ -38,6 +38,7 @@ export const ProblemNumber = styled.div`
 export const ExitBtn = styled(Button)`
   font-size: 0.9rem;
   width: 35px;
+  font-weight: bold;
 `;
 
 export const NavIcons = styled.div`
