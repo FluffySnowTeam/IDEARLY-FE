@@ -9,6 +9,7 @@ import { useAtom } from "jotai";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { competitionDataAtom } from "../../store";
+import { MarkdownViewer } from "../../components";
 
 export const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -41,9 +42,10 @@ export const DetailPage = () => {
           </S.CompeDetailDate>
         )}
         <S.CompeDetailDescription>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <MarkdownViewer contents={competition.description} />
+          {/* <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {competition.description}
-          </ReactMarkdown>
+          </ReactMarkdown> */}
         </S.CompeDetailDescription>
         <Button onClick={handleMoveToWaiting}>대회 참가하기</Button>
       </S.CompetitionDetailContainer>
