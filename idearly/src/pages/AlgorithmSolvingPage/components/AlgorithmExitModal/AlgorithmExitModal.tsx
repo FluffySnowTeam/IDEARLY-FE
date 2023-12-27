@@ -30,7 +30,7 @@ export const AlgorithmExitModal = ({ isOpen, onClose }: IExitModalProp) => {
       isClosable: true,
     });
     setTimeout(() => {
-      navigate("/");
+      navigate("/complete");
     }, 1000);
   };
 
