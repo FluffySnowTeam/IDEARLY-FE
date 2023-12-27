@@ -13,12 +13,12 @@ export const HomeContainer = styled(Box)`
 `;
 
 export const MainContainer = styled(Box)`
+  width: 80%;
   display: flex;
-  margin: 2rem 2rem 0 10rem;
+  margin: 2rem 2rem 0 2rem;
 `;
 
 export const TextContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -31,6 +31,6 @@ export const BoldText = styled.span`
 `;
 
 export const MainImage = styled.img`
-  width: 200rem;
-  height: 40rem;
+  width: 100%;
+  height: 50rem;
 `;
