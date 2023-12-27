@@ -12,6 +12,7 @@ import { algorithmProblemsAtom } from "../../../../store/Algorithm.atoms";
 import { useAtomValue } from "jotai";
 import { AlgorithmTestResult } from "../AlgorithmTestResult/AlgorithmTestResult";
 import { useDisclosure } from "@chakra-ui/react";
+import { LoadingComponent } from "../../../../components";
 
 export const AlgorithmEditor = ({
   competitionId,
@@ -25,8 +26,9 @@ export const AlgorithmEditor = ({
   const problemData = useAtomValue(algorithmProblemsAtom);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { mutate: executeMutate } = useExcuteTestMutation();
-  const { mutate: runMutate } = useRunMutation();
+  const { mutate: executeMutate, status: executeStatus } =
+    useExcuteTestMutation();
+  const { mutate: runMutate, status: runStatus } = useRunMutation();
 
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
@@ -203,6 +205,9 @@ export const AlgorithmEditor = ({
       });
     }
   };
+
+  if (executeStatus === "pending" || runStatus === "pending")
+    <LoadingComponent />;
 
   return (
     <>
