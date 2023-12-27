@@ -24,8 +24,10 @@ export const MyPage = () => {
   };
   return (
     <S.MyPageContainer>
-      <MyPageNav />
-      {renderMyPageContent()}
+      <S.NavContainer>
+        <MyPageNav />
+      </S.NavContainer>
+      <S.ContentContainer>{renderMyPageContent()}</S.ContentContainer>
     </S.MyPageContainer>
   );
 };

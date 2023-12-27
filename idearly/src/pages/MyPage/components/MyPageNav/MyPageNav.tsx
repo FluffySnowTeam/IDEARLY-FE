@@ -10,7 +10,7 @@ export const MyPageNav = () => {
   const { currentTeam, modifyMyInfo, withdrawal } = MyPageNavConfig;
 
   return (
-    <S.MyPageNavContainer>
+    <>
       <S.MyPageNavItem onClick={() => handleMoveToPath("currentTeam")}>
         {currentTeam}
       </S.MyPageNavItem>
@@ -20,6 +20,6 @@ export const MyPageNav = () => {
       <S.MyPageNavItem onClick={() => handleMoveToPath("withdrawal")}>
         {withdrawal}
       </S.MyPageNavItem>
-    </S.MyPageNavContainer>
+    </>
   );
 };
