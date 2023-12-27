@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 
 export const PrevCompeProblemList = () => {
   const { id: competitionId } = useParams<{ id: string }>();
+  console.log(competitionId);
 
   return (
     <div>
