@@ -70,20 +70,28 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
     // 02-1. create a document then attach it into the client.
     await client.attach(doc);
 
+    /**
+     * 
+        let view = new EditorView();
+        view.dispatch({
+          changes: {from: 0, to: view.state.doc.toString().length, insert:''}
+        })
+     */
+
     doc.update((root: any) => {
       if (!root.content) {
         root.content = new yorkie.Text();
         // 하나하나 돌면서 값을 넣어준다.
-        let newContent = problemData.code;
+        // let newContent = problemData.code;
 
-        newContent.split("").map((code, index) => {
-          console.log(
-            `code 하나씩 출력: from: ${index}, to: ${index}, code: ${code}`
-          );
-          doc.update((root: any) => {
-            root.content.edit(index, index, code);
-          }, `update content byA ${client!.getID()}`);
-        });
+        // newContent.split("").map((code, index) => {
+        //   console.log(
+        //     `code 하나씩 출력: from: ${index}, to: ${index}, code: ${code}`
+        //   );
+        //   doc.update((root: any) => {
+        //     root.content.edit(index, index, code);
+        //   }, `update content byA ${client!.getID()}`);
+        // });
       }
     }, "create content if not exists");
 
@@ -154,7 +162,7 @@ export const AlgorithmEditor = ({ competitionId, problemId, teamId }: Prop) => {
 
     // 03-2. create codemirror instance
     const view = new EditorView({
-      doc: "",
+      doc: problemData.code,
       extensions: [basicSetup, python(), updateListener],
       parent: editorParentRef.current || undefined,
     });
