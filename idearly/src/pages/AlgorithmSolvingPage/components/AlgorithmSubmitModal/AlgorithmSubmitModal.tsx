@@ -46,7 +46,6 @@ export const AlgorithmSubmitModal = ({
 
   executeResult.map((test) => console.log(test.status));
 
-  if (runStatus === "pending") return <LoadingComponent />;
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -55,18 +54,22 @@ export const AlgorithmSubmitModal = ({
           <ModalHeader>제출 결과</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {executeResult.map((test) => (
-              <div key={test.testCaseId}>
-                <S.TestCaseContainer>
-                  <S.InfoText>
-                    테스트 {test.testCaseId} {">"}
-                  </S.InfoText>
-                  <S.ValueText status={test.status}>
-                    {printResult(test.status)}
-                  </S.ValueText>
-                </S.TestCaseContainer>
-              </div>
-            ))}
+            {runStatus === "pending" ? (
+              <LoadingComponent />
+            ) : (
+              executeResult.map((test) => (
+                <div key={test.testCaseId}>
+                  <S.TestCaseContainer>
+                    <S.InfoText>
+                      테스트 {test.testCaseId} {">"}
+                    </S.InfoText>
+                    <S.ValueText status={test.status}>
+                      {printResult(test.status)}
+                    </S.ValueText>
+                  </S.TestCaseContainer>
+                </div>
+              ))
+            )}
           </ModalBody>
 
           <ModalFooter>

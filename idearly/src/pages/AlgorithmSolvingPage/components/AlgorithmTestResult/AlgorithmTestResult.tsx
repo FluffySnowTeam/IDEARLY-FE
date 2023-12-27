@@ -27,29 +27,31 @@ export const AlgorithmTestResult = ({
     }
   };
 
-  if (executeStatus === "pending") return <LoadingComponent />;
-
   return (
     <S.AlgorithmResultContainer>
-      {testResult.map((test) => (
-        <div key={test.testCaseId}>
-          <S.TestCaseContainer>
-            <S.TestCase>테스트 {test.testCaseId}</S.TestCase>
-            <S.ResultContainer>
-              <S.InfoText>입력값</S.InfoText>
-              <S.ValueText>{test.input}</S.ValueText>
-            </S.ResultContainer>
-            <S.ResultContainer>
-              <S.InfoText>기댓값</S.InfoText>
-              <S.ValueText>{test.expectedOutput}</S.ValueText>
-            </S.ResultContainer>
-            <S.ResultContainer>
-              <S.InfoText>실행 결과</S.InfoText>
-              <S.ValueText>{printResult(test.status)}</S.ValueText>
-            </S.ResultContainer>
-          </S.TestCaseContainer>
-        </div>
-      ))}
+      {executeStatus === "pending" ? (
+        <LoadingComponent />
+      ) : (
+        testResult.map((test) => (
+          <div key={test.testCaseId}>
+            <S.TestCaseContainer>
+              <S.TestCase>테스트 {test.testCaseId}</S.TestCase>
+              <S.ResultContainer>
+                <S.InfoText>입력값</S.InfoText>
+                <S.ValueText>{test.input}</S.ValueText>
+              </S.ResultContainer>
+              <S.ResultContainer>
+                <S.InfoText>기댓값</S.InfoText>
+                <S.ValueText>{test.expectedOutput}</S.ValueText>
+              </S.ResultContainer>
+              <S.ResultContainer>
+                <S.InfoText>실행 결과</S.InfoText>
+                <S.ValueText>{printResult(test.status)}</S.ValueText>
+              </S.ResultContainer>
+            </S.TestCaseContainer>
+          </div>
+        ))
+      )}
     </S.AlgorithmResultContainer>
   );
 };
