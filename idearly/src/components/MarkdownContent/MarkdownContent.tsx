@@ -29,6 +29,17 @@ export default function MarkDownPost({ post }: postType) {
               className={classes.markdown_container_img}
             />
           ),
+          table({ node, ...props }) {
+            return (
+              <table
+                style={{ border: "1px solid black", ...props.style }}
+                {...props}
+              />
+            );
+          },
+          br() {
+            return <br />;
+          },
         }}
       >
         {post}
