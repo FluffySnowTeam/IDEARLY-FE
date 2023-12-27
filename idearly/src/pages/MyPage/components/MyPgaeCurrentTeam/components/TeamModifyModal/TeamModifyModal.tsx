@@ -42,7 +42,6 @@ export const TeamModifyModal = ({
   };
 
   const handleDelete = (email: string) => {
-    console.log(email);
     setInviteMemberList(
       inviteMemberList.filter((user) => user.email !== email)
     );
@@ -56,12 +55,6 @@ export const TeamModifyModal = ({
     mutate({ teamId, payload });
     onClose();
   };
-  console.log(
-    "In modify modal, currentMemberList: ",
-    currentMemberList,
-    "inviteMemberList:",
-    inviteMemberList
-  );
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

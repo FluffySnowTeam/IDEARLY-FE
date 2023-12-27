@@ -6,15 +6,20 @@ export const MyPageNav = () => {
   const navigate = useNavigate();
   const handleMoveToPath = (path: string) => {
     navigate(`/mypage/${path}`);
-  }
-  const {previousCompetition, currentTeam, modifyMyInfo, withdrawal} = MyPageNavConfig;
+  };
+  const { currentTeam, modifyMyInfo, withdrawal } = MyPageNavConfig;
 
   return (
-    <S.MyPageNavContainer>
-      <S.MyPageNavItem onClick={() => handleMoveToPath('previousCompetition')}>{previousCompetition}</S.MyPageNavItem>
-      <S.MyPageNavItem onClick={() => handleMoveToPath('currentTeam')}>{currentTeam}</S.MyPageNavItem>
-      <S.MyPageNavItem onClick={() => handleMoveToPath('modifyMyInfo')}>{modifyMyInfo}</S.MyPageNavItem>
-      <S.MyPageNavItem onClick={() => handleMoveToPath('withdrawal')}>{withdrawal}</S.MyPageNavItem>
-    </S.MyPageNavContainer>
-  )
-}
+    <>
+      <S.MyPageNavItem onClick={() => handleMoveToPath("currentTeam")}>
+        {currentTeam}
+      </S.MyPageNavItem>
+      <S.MyPageNavItem onClick={() => handleMoveToPath("modifyMyInfo")}>
+        {modifyMyInfo}
+      </S.MyPageNavItem>
+      <S.MyPageNavItem onClick={() => handleMoveToPath("withdrawal")}>
+        {withdrawal}
+      </S.MyPageNavItem>
+    </>
+  );
+};

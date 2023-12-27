@@ -60,7 +60,6 @@ export const useWithdrawalMutation = () => {
 
 export const useModifyUerMutation = () => {
   const toast = useToast();
-  const navigate = useNavigate();
   const setUserInfoState = useSetAtom(userInfoAtom);
 
   return useMutation({
@@ -88,9 +87,6 @@ export const useModifyUerMutation = () => {
         duration: 2000,
         isClosable: true,
       });
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
     },
   });
 };

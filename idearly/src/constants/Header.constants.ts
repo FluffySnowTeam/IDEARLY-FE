@@ -4,7 +4,7 @@ export const MainHeaderConfig = [
     text: "홈",
   },
   {
-    path: "/mypage/previousCompetition",
+    path: "/mypage/currentTeam",
     text: "마이페이지",
   },
 ];
