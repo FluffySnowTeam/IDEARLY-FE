@@ -1,7 +1,7 @@
 import { Button, Input } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
-export const ModifyWrapper = styled.div`
+export const ModifyWrapper = styled.form`
   width: 100%;
   display: flex;
   align-items: center;
@@ -36,4 +36,13 @@ export const Info = styled.div`
 
 export const ModifyBtn = styled(Button)`
   margin-left: 10px;
+`;
+
+export const InputErrorMessage = styled.span`
+  display: flex;
+  text-align: left;
+  padding: 0 3rem 0rem 6rem;
+  font-size: 0.8rem;
+  margin: 0.2rem 0 0.8rem 0.2rem;
+  color: red;
 `;
