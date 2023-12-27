@@ -6,8 +6,6 @@ import useHandleMoveToWaiting from "../../hooks/useHandleMoveToWaiting";
 import { useCompetitionDetailMutation } from "../../hooks/useCompetitionMutation";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { competitionDataAtom } from "../../store";
 import MarkDownPost from "../../components/MarkdownContent/MarkdownContent";
 
