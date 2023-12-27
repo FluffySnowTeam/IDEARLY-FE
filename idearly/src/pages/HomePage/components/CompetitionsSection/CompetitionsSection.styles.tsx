@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const CompeSectionContainer = styled(Box)`
-  margin: 3rem 0px 3rem 0px;
+  margin: 0 0px 3rem 0px;
   padding: 2rem;
 `;
 

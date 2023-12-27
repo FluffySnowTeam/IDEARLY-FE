@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./MyPagNav.styles";
 import { MyPageNavConfig } from "../../../../constants/MyPage.constants";
 import { SettingsIcon, SearchIcon, WarningTwoIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
 
 export const MyPageNav = () => {
   const navigate = useNavigate();
