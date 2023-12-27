@@ -47,7 +47,9 @@ export const DetailPage = () => {
           {IsPrevCompetition && <PrevCompeProblemList />}
         </S.CompeDetailDescription>
         {!IsPrevCompetition && (
-          <Button onClick={handleMoveToWaiting}>대회 참가하기</Button>
+          <S.CompeSubmitButton onClick={handleMoveToWaiting}>
+            대회 참가하기
+          </S.CompeSubmitButton>
         )}
       </S.CompetitionDetailContainer>
     </>

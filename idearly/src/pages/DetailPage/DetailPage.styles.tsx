@@ -1,3 +1,4 @@
+import { Button } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 
 export const CompetitionDetailContainer = styled.div`
@@ -25,4 +26,17 @@ export const CompeDetailDate = styled.div`
 export const CompeDetailDescription = styled.div`
   text-align: center;
   margin-bottom: 4rem;
+`;
+
+export const CompeSubmitButton = styled(Button)`
+  width: 15rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  background-color: #5a84ff;
+  color: white;
+  transition: background-color 0.3s ease;
+  :hover {
+    background-color: rgba(1, 34, 138, 0.5);
+  }
 `;

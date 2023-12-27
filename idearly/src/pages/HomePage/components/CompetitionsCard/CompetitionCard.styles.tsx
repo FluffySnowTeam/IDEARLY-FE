@@ -22,7 +22,8 @@ export const CompeCardBox = styled(Card)`
 `;
 
 export const CompeCardHeading = styled(Heading)`
-  margin-bottom: 15px;
+  margin-bottom: 1.8rem;
+  font-size: 1.3rem;
 `;
 
 export const CompeCardBody = styled(CardBody)``;
@@ -38,6 +39,13 @@ export const CompeCardButton = styled(Button)`
 `;
 
 export const CardDetailButton = styled(Button)`
-  margin-top: 15px;
+  margin-top: 1.2rem;
   margin-right: 10px;
+  background-color: #5a84ff;
+  color: white;
+  font-weight: 800;
+  transition: background-color 0.3s ease;
+  :hover {
+    background-color: rgba(1, 34, 138, 0.5);
+  }
 `;
