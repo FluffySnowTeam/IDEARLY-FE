@@ -17,7 +17,7 @@
 
 ## 🗂️ 문서화
 
-> <a href="https://goorm.notion.site/Web-IDE-461e3022ab5f4b44ab07fcc4a5e24733"><img alt="notion" src ="https://img.shields.io/badge/notion-skyblue.svg?&style=for-the-badge&logo=notion&logoColor=black"/></a> <a href="https://youngandmini.atlassian.net/jira/software/projects/ID/boards/4"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"> </a><a href="https://www.figma.com/file/RJ7we1YcAouCiT4b5Gr8Aw/Wireframe-Designer-(Community)?type=design&node-id=0%3A1&mode=design&t=G3AgTawIhML9QVI7-1"><img alt="figma" src ="https://img.shields.io/badge/figma-pink.svg?&style=for-the-badge&logo=figma&logoColor=black"/></a>
+> <a href="https://goorm.notion.site/Web-IDE-461e3022ab5f4b44ab07fcc4a5e24733"><img alt="notion" src ="https://img.shields.io/badge/notion-skyblue.svg?&style=for-the-badge&logo=notion&logoColor=black"/></a> <a href="https://youngandmini.atlassian.net/jira/software/projects/ID/boards/4"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white"></a> <a href="https://www.figma.com/file/RJ7we1YcAouCiT4b5Gr8Aw/Wireframe-Designer-(Community)?type=design&node-id=0%3A1&mode=design&t=G3AgTawIhML9QVI7-1"><img alt="figma" src ="https://img.shields.io/badge/figma-pink.svg?&style=for-the-badge&logo=figma&logoColor=black"/></a>
 
 ## 📎 배포 링크
 
@@ -33,7 +33,7 @@
 
 ## 🎨 기획 & 디자인
 
-> 2023.12.07 ~ 2023.12.07
+> 2023.12.01 ~ 2023.12.07
 
 ## 🔩 개발
 
