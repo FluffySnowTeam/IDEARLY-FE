@@ -2,7 +2,7 @@
 <h1>IDEARLY PROJECT</h1>
 </div>
 
-![main-1](https://github.com/FluffySnowTeam/IDEARLY-FE/assets/123868471/4f5a4861-4926-43c3-86ca-abec5f8954ed)
+![main-l](https://github.com/FluffySnowTeam/IDEARLY-FE/assets/123868471/d41e3f69-8856-469d-a6b7-3191b1dec28c)
 
 <div align="center">
   <h2><font color="navy">IDEARLY</font><br/>온라인 팀 단위 알고리즘 경쟁 서비스</h2>
@@ -17,16 +17,16 @@
 
 ## 🗂️ 문서화
 
-<a href="https://goorm.notion.site/Web-IDE-461e3022ab5f4b44ab07fcc4a5e24733"><img alt="notion" src ="https://img.shields.io/badge/notion-skyblue.svg?&style=for-the-badge&logo=notion&logoColor=black"/></a>
-<a href="https://youngandmini.atlassian.net/jira/software/projects/ID/boards/4"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white">
-</a>
-<a href="https://www.figma.com/file/RJ7we1YcAouCiT4b5Gr8Aw/Wireframe-Designer-(Community)?type=design&node-id=0%3A1&mode=design&t=G3AgTawIhML9QVI7-1"><img alt="figma" src ="https://img.shields.io/badge/figma-pink.svg?&style=for-the-badge&logo=figma&logoColor=black"/></a>
+> <a href="https://goorm.notion.site/Web-IDE-461e3022ab5f4b44ab07fcc4a5e24733"><img alt="notion" src ="https://img.shields.io/badge/notion-skyblue.svg?&style=for-the-badge&logo=notion&logoColor=black"/></a>
+> <a href="https://youngandmini.atlassian.net/jira/software/projects/ID/boards/4"><img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=jira&logoColor=white">
+> </a>
+> <a href="https://www.figma.com/file/RJ7we1YcAouCiT4b5Gr8Aw/Wireframe-Designer-(Community)?type=design&node-id=0%3A1&mode=design&t=G3AgTawIhML9QVI7-1"><img alt="figma" src ="https://img.shields.io/badge/figma-pink.svg?&style=for-the-badge&logo=figma&logoColor=black"/></a>
 
 ## 📎 배포 링크
 
 > 💡 TEST EMAIL: idearly@idearly.com / PASSWORD: idearly@123
 
-[IDEARLY 사이트 바로가기](https://idearly.site)
+> 👉 [IDEARLY 사이트 바로가기](https://idearly.site)
 
 ## 👩‍💻 프로젝트 기간
 
@@ -43,6 +43,8 @@
 <hr/>
 
 ## 👨‍👩‍👧‍👦 팀원
+
+<div align="center">
 
 <table>
    <tr>
@@ -142,13 +144,18 @@
 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"> &nbsp;
+
+### 라이브러리
+
 <img src="https://img.shields.io/badge/Chakra UI-319795?style=for-the-badge&logo=ChakraUI&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Jotai-gray?style=for-the-badge&&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=Zod&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/CodeMirror-D30707?style=for-the-badge&logo=CodeMirror&logoColor=white"> &nbsp;
+<img src="https://img.shields.io/badge/Yorkie-F7B93E?style=for-the-badge&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Stomp-181717?style=for-the-badge&logoColor=white"> &nbsp;
+<img src="https://img.shields.io/badge/Kakao I ConnectLIve-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"> &nbsp;
 
 ### 💫 배포 환경
 
@@ -168,3 +175,5 @@
 <img src="https://img.shields.io/badge/github action-2088ff?style=for-the-badge&logo=githubActions&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white"> &nbsp;
+
+</div>
