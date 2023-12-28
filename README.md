@@ -176,21 +176,8 @@
 <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white"> &nbsp;
 
 ### ✔️ 커밋 컨벤션
-```
-✨feat: 새로운 기능에 대한 커밋
-🐛fix: 버그 수정에 대한 커밋
-📦chore: 그 외 자잘한 수정에 대한 커밋
-📝docs: 문서 수정에 대한 커밋
-🎨style: 코드 스타일 혹은 포맷 등에 관한 커밋
-💄design: CSS 등 사용자 UI 디자인 변경
-♻️refactor: 코드 리팩토링에 대한 커밋
-✅test: 테스트 코드 수정에 대한 커밋
-💚ci: CI관련 설정 수정에 대한 커밋
-💚build: 빌드 관련 파일 수정에 대한 커밋
-💡comment: 필요한 주석 추가 및 변경에 대한 커밋
-🚚rename: 파일 또는 폴더명의 수정과 이동에 대한 커밋 
-🔥remove: 파일을 삭제하는 작업만 수행한 경우
-```
+
+<img width="365" alt="스크린샷 2023-12-28 오후 12 32 18" src="https://github.com/FluffySnowTeam/IDEARLY-FE/assets/123868471/8efd0c9a-fc50-454e-85ba-5d10b2fabbc9">
 
 ### ☑️ 코드 컨벤션
 
