@@ -175,8 +175,6 @@
 <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=Slack&logoColor=white"> &nbsp;
 <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=white"> &nbsp;
 
-</div>
-
 ### ✔️ 커밋 컨벤션
 ```
 ✨feat: 새로운 기능에 대한 커밋
@@ -197,4 +195,6 @@
 ### ☑️ 코드 컨벤션
 
 <img width="542" alt="스크린샷 2023-12-28 오후 12 28 31" src="https://github.com/FluffySnowTeam/IDEARLY-FE/assets/123868471/0404d6f2-f3b3-4c6a-a1e3-90d64aa9f1a4">
+
+</div>
 
