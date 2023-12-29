@@ -29,7 +29,9 @@ export const AlgorithmTestResult = ({
 
   return (
     <S.AlgorithmResultContainer>
-      {executeStatus === "pending" ? (
+      {testResult.length === 0 ? (
+        <></>
+      ) : executeStatus === "pending" ? (
         <LoadingComponent />
       ) : (
         testResult.map((test) => (

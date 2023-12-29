@@ -29,6 +29,11 @@ export const AlgorithmEditor = ({
     useExcuteTestMutation();
   const { mutate: runMutate, status: runStatus } = useRunMutation();
 
+  /**
+   * 문제: 실행 후, 다른 페이지로 이동하면 결과창이 남아있는 문제 발생.
+   * -> 페이지 이동하면, 즉 problemId가 변하면 결과창을 비워주자!
+   */
+
   const handleExcute = () => {
     const code = viewRef.current?.state.doc.toString();
     executeMutate({ competitionId, problemId, code });

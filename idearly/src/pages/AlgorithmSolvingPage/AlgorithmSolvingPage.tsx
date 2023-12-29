@@ -7,8 +7,10 @@ import {
 } from "./components";
 import * as S from "./AlgorithmSolvingPage.styles";
 import { useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useSetAtom } from "jotai";
+import { testResultAtom } from "../../store/Algorithm.atoms";
 
 export const AlgorithmSolvingPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,6 +20,11 @@ export const AlgorithmSolvingPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const teamId = queryParams.get("teamId");
   const problemId = queryParams.get("problemId");
+
+  const setTestResult = useSetAtom(testResultAtom);
+  useEffect(() => {
+    setTestResult([]);
+  }, [problemId]);
 
   return (
     <S.AlgorithmSolvingPageContainer>
