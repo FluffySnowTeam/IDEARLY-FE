@@ -53,6 +53,7 @@ export const MyPageModifyInfo = () => {
         <S.ModifyInput
           placeholder="변경할 이름을 입력해주세요."
           errors={errors?.name}
+          maxLength={10}
           {...register("name")}
         />
         <S.ModifyBtn
