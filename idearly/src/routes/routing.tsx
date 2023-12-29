@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute />,
+        // element: <ProtectedRoute />,
         children: [
           {
             path: "/algorithm-solving/:id",
